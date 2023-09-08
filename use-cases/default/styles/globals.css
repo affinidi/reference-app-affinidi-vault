@@ -1,0 +1,48 @@
+@import "@fontsource/nunito-sans/400.css";
+@import "@fontsource/nunito-sans/600.css";
+@import "@fontsource/nunito-sans/700.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  height: 100%;
+  font-size: 8px;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-size: 2rem;
+  font-family: "Nunito Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#__next {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+#__next > * {
+  flex: 1;
+  width: 100%;
+  max-width: 1440px;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+
+  font-size: 16px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: azure;
+  width: 100%;
+  height: 100%;
+}

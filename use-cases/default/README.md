@@ -12,7 +12,7 @@ Setting up the reference app is easy, just follow these steps:
     ```
     $ git clone git@github.com:affinidi/reference-app-affinidi-aiv.git
     $ cd reference-app-affinidi-aiv
-    $ cd use-cases/{use-case}
+    $ cd use-cases/default
     ```
 2. Install the dependencies:
     ```

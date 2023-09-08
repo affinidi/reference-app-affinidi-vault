@@ -27,7 +27,7 @@ const WelcomeBanner: FC = () => {
           flex={2}
           alignItems="center"
         >
-          {country.toLowerCase().includes("germany") && (
+          {country && country.toLowerCase().includes("germany") && (
             <Image
               src={GermanFlagIcon.src}
               alt="german flag"

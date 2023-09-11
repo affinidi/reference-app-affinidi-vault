@@ -1,5 +1,5 @@
 {
-  "name": "affinidi-sso",
+  "name": "affinidi-login",
   "version": "1.0.0",
   "description": "This is a ready-to-use reference app that showcases integration with the Affinidi Vault.",
   "main": "index.js",
@@ -23,14 +23,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/affinidi/reference-app-affinidi-sso.git"
+    "url": "git+https://github.com/affinidi/reference-app-affinidi-vault.git"
   },
   "author": "Affinidi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/affinidi/reference-app-affinidi-sso/issues"
+    "url": "https://github.com/affinidi/reference-app-affinidi-vault/issues"
   },
-  "homepage": "https://github.com/affinidi/reference-app-affinidi-sso#readme",
+  "homepage": "https://github.com/affinidi/reference-app-affinidi-vault#readme",
   "devDependencies": {
     "@types/node": "^18.13.0",
     "concurrently": "^7.6.0",

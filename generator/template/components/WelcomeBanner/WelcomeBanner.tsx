@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import Image from "next/image";
 
-import { useExtension } from "hooks/useExtension";
 import Box from "components/Box/Box";
 
 import close from "assets/close.png";
@@ -11,12 +10,11 @@ import * as S from "./WelcomeBanner.styled";
 import { useLocalContent } from "../../hooks/useLocalContent";
 
 const WelcomeBanner: FC = () => {
-  const { isInitializing } = useExtension();
   const [isClosed, setIsClosed] = useState(false);
 
   const { country } = useLocalContent();
 
-  if (isClosed || isInitializing) return null;
+  if (isClosed) return null;
 
   return (
     <S.BannerContainer>

@@ -1,5 +1,5 @@
 # reference-app-affinidi-vault
-This is a ready-to-use reference app that showcases how to use Affinidi Identity Vault (AIV) to perform authentication and to interact with the vault. It accomplishes this through AIV's Chrome Extension using the [OpenID for Verifiable Presentations specification.](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
+This is a ready-to-use reference app that showcases how to use Affinidi Vault to perform authentication and to interact with the vault. It accomplishes this through AV's Chrome Extension using the [OpenID for Verifiable Presentations specification.](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
 
 ## Introduction
 
@@ -10,8 +10,8 @@ This is a ready-to-use reference app that showcases how to use Affinidi Identity
 Setting up the reference app is easy, just follow these steps:  
 1. Clone the repo:
     ```
-    $ git clone git@github.com:affinidi/reference-app-affinidi-aiv.git
-    $ cd reference-app-affinidi-aiv
+    $ git clone git@github.com:affinidi/reference-app-affinidi-vault.git
+    $ cd reference-app-affinidi-vault
     $ cd use-cases/default
     ```
 2. Install the dependencies:
@@ -50,17 +50,6 @@ Read [W3C specification](https://www.w3.org/TR/vc-data-model/).
 
 Learn more about [VCs](https://academy.affinidi.com/what-are-verifiable-credentials-79f1846a7b9), [trust triangle](https://academy.affinidi.com/what-is-the-trust-triangle-9a9caf36b321) and [Decentralized Identifiers (DIDs)](https://academy.affinidi.com/demystifying-decentralized-identifiers-dids-2dc6fc3148fd).
 
-## Data sharing via AIV Lite extension
-
-We use `@affinidi/client-aiv-extension` library for communicating with the extension.  
-Methods:
-- `client.initiateAuth()` for creating authorization request
-- `client.completeAuth()` for parsing the authorization response
-- `client.isInstalled()` for checking if AIV Chrome Extension is installed in user's browser
-- `client.getChromeWebStoreUrl()` to get the Chrome Web Store Listing URL
-
-Read [this guide](./guides/request-data-from-aiv-lite.md) for more information.
-
 ## Identity Provider
 
 To use Affinidi Secure Authentication (ASA) SSO you need an ID provider that allows configuring a social connection, such as Auth0, Cognito or Ory. This reference application has Auth0 pre-configured using `NextAuth.js`. If you want to configure a different provider, please head to [NextAuth's documentation](https://next-auth.js.org/providers/).
@@ -98,60 +87,7 @@ sequenceDiagram; autonumber
   provider->>site: Redirect to site with credentials <br/>(Authorization Code / Access token)
   site->>user: Login complete
 ```
-
-### Email VC Sharing (Can be used for custom auth)
-
-```mermaid
-sequenceDiagram; autonumber
-  actor user as User
-  participant site as Reference App
-  participant ext as Chrome Extension
-
-  user->>site: Clicks "Log in with Affinidi"
-  site->>site: Validate Extension installation
-  site->>site: Define presentation definition
-  site->>+ext: Initiate OIDC4VP
-  ext->>user: Consent to share Email VC
-  user->>ext: Give consent
-  ext->>ext: Generate VP token and ID token (if requested)
-  ext->>-site: Redirect to app with VP token and ID token (if requested)
-  site->>user: Grants access to the website
-```
-
-### AIV Cloud Data Sharing
-
-```mermaid
-sequenceDiagram; autonumber
-  actor user as User
-  participant site as Reference App
-  participant ext as Chrome Extension
-  participant capi as AIV Cloud API
-  participant averif as Affinidi Verifier
-
-  user->>site: I want a discount
-  site->>site: Validate Extension installation
-  site->>site: Build presentation definition
-  site->>+ext: Initiate OIDC4VP
-  ext->>ext: Check local wallet for requested VCs
-  ext->>user: Consent to share VC
-  user->>ext: Give consent
-  ext->>+capi: Request VC
-  note left of ext: Auth done by existing mechanism between Extension and AIV
-  capi->>capi: Issue the VC
-  capi-->>-ext: VC
-  ext->>ext: Store VC in local wallet
-  ext->>ext: Generate VP token
-  ext->>-site: Redirect to app with VP token
-  site->>averif: Verify VP
-  note left of site: Uses Elements Enterprise Auth (M2M version) or API key
-  averif-->>site: Verification Response
-  site->>user: Show discounts
-```
-
 ## Tools & frameworks
-
-We use **AIV Client library** to communicate with AIV Lite browser extension.  
-Read [AIV Client library docs](https://npmjs.com/package/@affinidi/client-aiv-extension).
 
 This project is built with **NextJS** framework, which allows you to quickly build apps using **TypeScript** and **React**. NextJS has built-in router, server-side rendering and backend support.
 Read [NextJS docs](https://nextjs.org/docs/getting-started), [React docs](https://reactjs.org/docs/getting-started.html).  

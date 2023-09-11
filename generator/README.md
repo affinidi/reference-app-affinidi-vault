@@ -42,12 +42,6 @@ How it works:
 - `README.md` file is copied from the root directory to the `use-cases/{use-case}` folder
   > `{use-case}` variable is replaced in the `README.md` file
 
-## Persistent storage
-
-The app uses file database by default ([lowdb](https://www.npmjs.com/package/lowdb)). It works with local setup but won't work with serverless deployment.
-You might want to use your DB of choice depending on the platform and/or hosting provider (e.g. [Vercel KV](https://vercel.com/docs/storage/vercel-kv/quickstart) for Vercel).
-If you want to customize and use other storage options please edit `pages/api/helpers/storage.ts`.
-
 ## Best practices
 
 - Keep overrides as minimal as possible

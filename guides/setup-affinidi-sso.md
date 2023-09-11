@@ -5,7 +5,6 @@ Affinidi SSO is a social provider that allows users to log into your website usi
 ## Prerequisites
 
 - ID provider (Auth0, Ory, Okta, etc.)
-- [Additional Prerequisites](https://lemmatree.atlassian.net/wiki/spaces/NETCORE/pages/2735334981938/ASA+Developer+Guide+-+Get+Started#Prerequisites)
 
 ## Create login configuration
 
@@ -13,20 +12,45 @@ In order to use Affinidi SSO, you first need to create login configuration for y
 
 ### CLI
 
-- [Set up CLI](https://beta-testing.dev.in.affinidi.io/eap-main/getting-started/affinidi-cli-setup/)
-- [Create login configuration](https://lemmatree.atlassian.net/wiki/spaces/NETCORE/pages/2735334981938/ASA+Developer+Guide+-+Get+Started#Creating-a-new-Login-Configuration-(via-CLI))
+- [Set up CLI](https://beta.developer.affinidi.com/eap/getting-started/#step-2-configuring-the-affinidi-developer-tools)
+- [Create login configuration](https://beta.developer.affinidi.com/eap/how-to-guides/lwa-guides/login-config-cli/)
 
 ### API
 
 ![Create login configuration](./images/create-login-configuration.png)  
 
+Example of VP Definition: 
+```json
+{
+  "name": "Reference App Client",
+  "redirectUris": [
+    "https://{domain}/login/callback"
+  ],
+  "vpDefinition": "{\"id\":\"vp_combined_email_user_profile_combined\",\"submission_requirements\":[{\"rule\":\"pick\",\"min\":1,\"from\":\"A\"}],\"input_descriptors\":[{\"id\":\"email_vc\",\"name\":\"Email VC\",\"purpose\":\"Check if VC type is correct\",\"group\":[\"A\"],\"constraints\":{\"fields\":[{\"path\":[\"$.credentialSchema.id\"],\"filter\":{\"type\":\"string\",\"pattern\":\"^https://schema.affinidi.com/EmailV1-0.json$\"}}]}},{\"id\":\"profile_vc\",\"name\":\"profile VC type\",\"purpose\":\"Check if VC type is correct\",\"group\":[\"A\"],\"constraints\":{\"fields\":[{\"path\":[\"$.credentialSchema.id\"],\"filter\":{\"type\":\"string\",\"pattern\":\"^https://schema.affinidi.com/UserProfileV2-0.json$\"}}]}},{\"id\":\"address\",\"name\":\"Address\",\"purpose\":\"To get address for ID Mapping\",\"constraints\":{\"fields\":[{\"path\":[\"$.credentialSubject.address\"]}]}},{\"id\":\"email\",\"name\":\"Email\",\"purpose\":\"To get email for ID Mapping\",\"constraints\":{\"fields\":[{\"path\":[\"$.credentialSubject.email\"]}]}},{\"id\":\"type\",\"name\":\"Type\",\"purpose\":\"To get type for ID Mapping\",\"constraints\":{\"fields\":[{\"path\":[\"$.type\"]}]}}]}",
+  "idTokenMapping": [
+        {
+          "sourceField": "$.type",
+          "idTokenClaim": "type"
+        },
+        {
+          "sourceField": "$.credentialSubject.email",
+          "idTokenClaim": "email"
+        },
+        {
+          "sourceField": "$.credentialSubject.address",
+          "idTokenClaim": "address"
+        }
+      ]
+}
+```
+
 > Use redirect URI provider by your IdP.  
 > 
-> For example, in Auth0 it's `https://{domain}/login/callback` and for Ory it's `https://{project}.projects.oryapis.com/self-service/methods/oidc/callback/{connector}`.
+> For example, in Auth0 it's `https://{domain}/login/callback`.
 
 Copy `clientId` and `clientSecret` fields from the response.
 
-[Guide with more details](https://lemmatree.atlassian.net/wiki/spaces/NETCORE/pages/2735340716109/ASA+Developer+Guide+-+Managing+Login+Configurations#Create-a-New-Login-Configuration-%2Fvpa%2Fv1%2Flogin%2Fconfigurations)
+[Guide with more details](https://beta.developer.affinidi.com/eap/how-to-guides/lwa-guides/login-config-api/)
 
 ## Create a social connector
 
@@ -42,4 +66,4 @@ Paste `clientId`, `clientSecret` from the previous step and use these parameters
 
 ## IdP-specific guides
 
-Check out our guides for [Auth0](./auth0/setup-auth0.md) and [Ory](./ory/setup-ory.md).
+Check out our guides for [Auth0](./auth0/setup-auth0.md).

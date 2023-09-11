@@ -57,6 +57,7 @@ function fetchUserProfile(accessToken, context, callback) {
   const profile = {
     user_id: idToken.sub,
     email: idToken.custom.find(c => c.email).email,
+    profile: idToken.custom,
   };
   
   callback(null, profile, context);

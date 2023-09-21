@@ -1,5 +1,6 @@
 # reference-app-affinidi-vault
-This is a ready-to-use reference app that showcases how to use Affinidi Vault to perform authentication and to interact with the vault. It accomplishes this through AV's Chrome Extension using the [OpenID for Verifiable Presentations specification.](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
+
+This is a ready-to-use reference app that showcases how to use Affinidi Vault to perform authentication and to interact with the vault. It accomplishes this through Affinidi Vault Chrome Extension using the [OpenID for Verifiable Presentations specification.](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
 
 ## Introduction
 
@@ -23,8 +24,8 @@ Setting up the reference app is easy, just follow these steps:
     $ cp .env.example .env
     ```
 
-    > To get the values for `AUTH0_CLIENT_ID`, `AUTH0_CLIENT_SECRET` and `AUTH0_ISSUER` please follow the guide to [set up Affinidi SSO with Auth0](./guides/auth0/setup-auth0.md).
-    
+    > To get the values for `AUTH0_CLIENT_ID`, `AUTH0_CLIENT_SECRET` and `AUTH0_ISSUER` please follow the guide to [set up Affinidi Login with Auth0](./guides/auth0/setup-auth0.md).
+
     > To bypass the window for selecting the social connector, you have the option to specify its name using the `NEXT_PUBLIC_SOCIAL_CONNECTOR_NAME` environment variable. Set this variable to the name you assigned to your social connector on Auth0.
 
 4. Launch the app:
@@ -42,50 +43,44 @@ Read [W3C specification](https://www.w3.org/TR/vc-data-model/).
 **Verifiable Presentation (VP)** – data derived from one or more verifiable credentials, issued by one or more issuers, that is shared with a specific verifier.  
 Read [W3C specification](https://www.w3.org/TR/vc-data-model/).
 
-**Holder** – an entity that owns the verifiable credential. Usually, a holder is the subject of the credential that they hold.  
-
-**Issuer** – an entity that issues the verifiable credential to the holder.  
-
-**Verifier** – an entity that accepts verifiable credentials to verify their validity and authorship.  
-
-Learn more about [VCs](https://academy.affinidi.com/what-are-verifiable-credentials-79f1846a7b9), [trust triangle](https://academy.affinidi.com/what-is-the-trust-triangle-9a9caf36b321) and [Decentralized Identifiers (DIDs)](https://academy.affinidi.com/demystifying-decentralized-identifiers-dids-2dc6fc3148fd).
-
 ## Identity Provider
 
-To use Affinidi Secure Authentication (ASA) SSO you need an ID provider that allows configuring a social connection, such as Auth0, Cognito or Ory. This reference application has Auth0 pre-configured using `NextAuth.js`. If you want to configure a different provider, please head to [NextAuth's documentation](https://next-auth.js.org/providers/).
+This reference application use Auth0 ID provider that is pre-configured using `NextAuth.js`. If you want to configure a different provider, please head to [NextAuth's documentation](https://next-auth.js.org/providers/).
 
-You will also need to create an Affinidi Client Configuration and set it up in you provider. Read [this guide](./guides/setup-affinidi-sso.md) for more information.
+You will also need to create an Affinidi Login Configuration and set it up in you provider. Read [this guide](./guides/setup-login-config.md) for more information.
 
 ## Overview diagrams
 
 > You might want to install [an extension](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid) to view these Mermaid diagrams.
 
-### AIV's Affinidi Secure Authentication (ASA) - SSO
+### Affinidi Login with Auth0
 
 ```mermaid
-sequenceDiagram; autonumber
+sequenceDiagram;
   actor user as User
-  participant site as Reference App
-  participant provider as Customer OIDC Provider <br/> (Auth0, Kratos, Cognito, etc)
-  participant ext as Chrome Extension
-  participant adapter as ASA OIDC4VP SSO Adapter
+  participant site as Website
+  participant provider as Auth0
+  participant adapter as Affinidi Login
+  participant ext as Affinidi Vault
   participant verifier as Affinidi Verifier
 
-  user->>site: I want to login
-  site->>provider: Login (OIDC)
-  provider->>adapter: Affinidi SSO
-  adapter->>adapter: Validate Extension installation
-  adapter->>adapter: Define presentation definition
-  adapter->>+ext: Initiate OIDC4VP
-  ext->>user: Consent to share Email VC
-  user->>ext: Give consent
-  ext->>ext: Generate VP Token
-  ext->>-adapter: VP Token
-  adapter->>verifier: Verify VP
-  verifier->>adapter: Verification Response
-  adapter->>provider: Redirect to provider
-  provider->>site: Redirect to site with credentials <br/>(Authorization Code / Access token)
-  site->>user: Login complete
+  user->>site: My Login
+  site->>provider: trigger OIDC flow
+  note over site, provider: Auth0 application credentials
+  provider->>adapter: Authenticate user
+  note over provider, adapter: login_challenge
+  adapter->>ext: Verify user identity
+  note over adapter, ext: presentationDefinition
+  ext->>user: Request user confirmation to share Email VC 
+  user->>+ext: User confirmed to share Email VC
+  ext->>ext: Generate VP Token from VC
+  ext->>-adapter: Send Email VP Token
+  adapter->>verifier: Validate VP Token
+  note over adapter, verifier: vp_token, presentation_submission, presentation_definition
+  adapter->>adapter: Generate idToken
+  adapter->>provider: Send generated idToken from VP
+  provider->>site: Send JSON Web Token
+  site->>user: Provide access to the user
 ```
 ## Tools & frameworks
 
@@ -103,11 +98,11 @@ Read [Zod docs](https://www.npmjs.com/package/zod), [pino docs](https://www.npmj
 
 ## Telemetry
 
-Affinidi collects usage data to improve our products and services. For information on what data we collect and how we use your data, please refer to our [Privacy Policy](https://build.affinidi.com/dev-tools/privacy-policy.pdf).
+Affinidi collects usage data to improve our products and services. For information on what data we collect and how we use your data, please refer to our [Privacy Notice](https://www.affinidi.com/privacy-notice).
 
 ## Feedback, Support, and Community
 
-[Click here](https://github.com/affinidi/reference-app-oidc4vp/issues) to create a ticket and we will get on it right away. If you are facing technical or other issues, you can reach out to us on [Discord](https://discord.com/invite/jx2hGBk5xE).
+[Click here](https://github.com/affinidi/reference-app-affinidi-vault/issues) to create a ticket and we will get on it right away. If you are facing technical or other issues, you can reach out to us on [Discord](https://discord.com/invite/jx2hGBk5xE).
 
 ## FAQ
 
@@ -143,7 +138,7 @@ We may from time to time impose limits on your use of the Affinidi Developer Too
 
 ### Do I need to provide you with anything?
 
-From time to time, we may request certain information from you to ensure that you are complying with the [Terms of Use](https://build.affinidi.com/dev-tools/terms-of-use.pdf).
+From time to time, we may request certain information from you to ensure that you are complying with the [Terms of Use](https://www.affinidi.com/terms-of-use).
 
 ### Can I share my developer’s account with others?
 
@@ -151,4 +146,4 @@ When you create a developer’s account with us, we will issue you your private 
 
 ## _Disclaimer_
 
-_Please note that this FAQ is provided for informational purposes only and is not to be considered a legal document. For the legal terms and conditions governing your use of the Affinidi Developer Tools, please refer to our [Terms of Use](https://build.affinidi.com/dev-tools/terms-of-use.pdf)._
+_Please note that this FAQ is provided for informational purposes only and is not to be considered a legal document. For the legal terms and conditions governing your use of the Affinidi Developer Tools, please refer to our [Terms of Use](https://www.affinidi.com/terms-of-use)._

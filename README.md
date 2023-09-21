@@ -98,7 +98,7 @@ Read [Zod docs](https://www.npmjs.com/package/zod), [pino docs](https://www.npmj
 
 ## Telemetry
 
-Affinidi collects usage data to improve our products and services. For information on what data we collect and how we use your data, please refer to our [Privacy Policy](https://build.affinidi.com/dev-tools/privacy-policy.pdf).
+Affinidi collects usage data to improve our products and services. For information on what data we collect and how we use your data, please refer to our [Privacy Notice](https://www.affinidi.com/privacy-notice).
 
 ## Feedback, Support, and Community
 
@@ -138,7 +138,7 @@ We may from time to time impose limits on your use of the Affinidi Developer Too
 
 ### Do I need to provide you with anything?
 
-From time to time, we may request certain information from you to ensure that you are complying with the [Terms of Use](https://build.affinidi.com/dev-tools/terms-of-use.pdf).
+From time to time, we may request certain information from you to ensure that you are complying with the [Terms of Use](https://www.affinidi.com/terms-of-use).
 
 ### Can I share my developer’s account with others?
 
@@ -146,4 +146,4 @@ When you create a developer’s account with us, we will issue you your private 
 
 ## _Disclaimer_
 
-_Please note that this FAQ is provided for informational purposes only and is not to be considered a legal document. For the legal terms and conditions governing your use of the Affinidi Developer Tools, please refer to our [Terms of Use](https://build.affinidi.com/dev-tools/terms-of-use.pdf)._
+_Please note that this FAQ is provided for informational purposes only and is not to be considered a legal document. For the legal terms and conditions governing your use of the Affinidi Developer Tools, please refer to our [Terms of Use](https://www.affinidi.com/terms-of-use)._

@@ -15,7 +15,7 @@ const getTextColor = (props: Props) => {
   }
 
   if (props.$disabled) {
-    return props.theme.colors.neutral.primary["30"];
+    return props.theme.colors.brand.secondary["40"];
   }
 
   return "";
@@ -38,13 +38,13 @@ const getIconColor = (props: Props) => {
   }
 
   if (props.$disabled) {
-    return props.theme.colors.neutral.primary["15"];
+    return props.theme.colors.brand.secondary["20"];
   }
 
-  return props.theme.colors.brand.primary["90"];
+  return props.theme.colors.brand.secondary["90"];
 };
 
-export const Icon = styled.div<Props>`
+export const Icon = styled.div<{ $hasError?: boolean; $disabled?: boolean }>`
   position: absolute;
   top: 50%;
   right: ${pxToRem(16)};
@@ -56,65 +56,69 @@ export const Icon = styled.div<Props>`
     display: block;
     fill: ${getIconColor};
   }
+
+  path {
+    fill: ${getIconColor};
+  }
 `;
 
-export const Input = styled.input<
-  Pick<Props, "$hasError"> & { $hasIcon: boolean }
->`
+export const Input = styled.input<{ $hasError?: boolean; $hasIcon: boolean }>`
   width: 100%;
   height: ${pxToRem(48)};
-  padding: ${pxToRem(16)} ${pxToRem(12)};
-  background: ${(props) => props.theme.colors.neutral.secondary["100"]};
-  color: ${(props) => props.theme.colors.neutral.primary["90"]};
-  font-family: "Nunito Sans", sans-serif;
-  font-weight: 500;
+  padding: ${pxToRem(14)} ${pxToRem(16)};
+  background: ${(props) => props.theme.colors.brand.tertiary["100"]};
+  color: ${(props) => props.theme.colors.brand.secondary["90"]};
+  font-family: "Figtree", sans-serif;
+  font-weight: 400;
   font-size: ${pxToRem(16)};
   border-radius: 4px;
-  line-height: ${pxToRem(22)};
+  line-height: ${pxToRem(20)};
   letter-spacing: 0.2px;
   cursor: ${(props) => (props.disabled ? "not-allowed" : "text")};
   transition: border-color 0.125s ease-in-out;
   outline: none;
-  border: 1px solid ${(props) => props.theme.colors.neutral.primary["15"]};
+  border: 1px solid ${(props) => props.theme.colors.brand.secondary["20"]};
 
   ${(props) =>
     props.$hasIcon &&
     css`
       padding-right: ${pxToRem(48)};
     `}
+
   ${(props) =>
     props.value &&
     css`
-      background: ${props.theme.colors.neutral.secondary["100"]};
+      background: ${props.theme.colors.brand.tertiary["100"]};
     `}
+
   ${(props) =>
     props.$hasError &&
     css`
-      color: ${props.theme.colors.utility.danger["100"]};
       padding: ${pxToRem(15)} ${pxToRem(11)};
       border: 2px solid ${props.theme.colors.utility.danger["100"]};
     `}
+
   ${(props) =>
     !props.$hasError &&
     css`
       &:not([disabled]) {
         &:hover {
-          border-color: ${props.theme.colors.brand.primary["90"]};
+          border-color: ${props.theme.colors.accent.primary["100"]};
         }
 
         &:focus {
-          padding: ${pxToRem(15)} ${pxToRem(11)};
-          border: 2px solid ${props.theme.colors.brand.primary["90"]};
+          padding: ${pxToRem(14)} ${pxToRem(16)};
+          border: 2px solid ${props.theme.colors.accent.primary["100"]};
         }
       }
     `}
   ::placeholder {
-    font-weight: 500;
-    color: ${(props) => props.theme.colors.neutral.primary["30"]};
+    font-weight: 400;
+    color: ${(props) => props.theme.colors.brand.secondary["40"]};
   }
 
   &[disabled] {
-    color: ${(props) => props.theme.colors.neutral.primary["30"]};
+    color: ${(props) => props.theme.colors.brand.secondary["40"]};
   }
 `;
 

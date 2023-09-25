@@ -1,159 +1,174 @@
 export type BrandColorsKeys =
-  | '100'
-  | '90'
-  | '70'
-  | '50'
-  | '30'
-  | '15'
-  | '5'
-  | '3'
-  | '1'
-export type BrandColorsNames = 'primary' | 'secondary' | 'tertiary'
-export type NeutralColorsNames = 'primary' | 'secondary'
+  | "100"
+  | "90"
+  | "80"
+  | "60"
+  | "40"
+  | "20"
+  | "10"
+  | "5"
+  | "3"
+  | "1";
+export type BrandColorsNames = "primary" | "secondary" | "tertiary";
+
+export type AccentColorsKeys =
+  | "100"
+  | "80"
+  | "60"
+  | "40"
+  | "20"
+  | "10"
+  | "5"
+  | "3"
+  | "1";
+export type AccentColorsNames = "primary" | "secondary";
+
 export type UtilityColorsKeys =
-  | '100'
-  | '90'
-  | '70'
-  | '50'
-  | '30'
-  | '15'
-  | '10'
-  | '5'
-  | '3'
-export type UtilityColorsNames = 'danger' | 'warning' | 'success' | 'info'
+  | "100"
+  | "90"
+  | "70"
+  | "50"
+  | "30"
+  | "15"
+  | "10"
+  | "5"
+  | "3";
+export type UtilityColorsNames = "danger" | "warning" | "success" | "info";
 
 type BrandColors = {
-  [key in BrandColorsKeys]: string
-}
+  [key in BrandColorsKeys]: string;
+};
 
-const primaryBrand: BrandColors = {
-  100: '#403ea7',
-  90: '#5351b0',
-  70: '#7978c1',
-  50: '#9f9ed3',
-  30: '#c6c5e5',
-  15: '#e2e2f2',
-  5: '#f5f5fb',
-  3: '#f9f9fc',
-  1: '#fdfdfe',
-}
+const brandPrimary: BrandColors = {
+  100: "#1d58fc",
+  90: "#3469fc",
+  80: "#4a79fd",
+  60: "#779bfd",
+  40: "#a5bcfe",
+  20: "#d2defe",
+  10: "#e8eeff",
+  5: "#f4f7ff",
+  3: "#f8faff",
+  1: "#fdfdff",
+};
 
-const secondaryBrand: BrandColors = {
-  100: '#6bf7d4',
-  90: '#7af8d8',
-  70: '#97f9e1',
-  50: '#b5fbe9',
-  30: '#d3fdf2',
-  15: '#e9fef9',
-  5: '#f8fffd',
-  3: '#fbfffe',
-  1: '#feffff',
-}
+const brandSecondary: BrandColors = {
+  100: "#040822",
+  90: "#1d2138",
+  80: "#36394e",
+  60: "#686b7a",
+  40: "#9b9ca7",
+  20: "#cdced3",
+  10: "#e6e6e9",
+  5: "#f2f3f4",
+  3: "#f7f8f8",
+  1: "#fcfdfd",
+};
 
-const tertiaryBrand: BrandColors = {
-  100: '#2eba97',
-  90: '#43c1a1',
-  70: '#6dcfb6',
-  50: '#96ddcb',
-  30: '#c0eae0',
-  15: '#e0f5ef',
-  5: '#f5fcfa',
-  3: '#f9fdfc',
-  1: '#fdfefe',
-}
+const brandTertiary: Partial<BrandColors> = {
+  100: "#ffffff",
+};
 
-type NeutralColors = {
-  [key in BrandColorsKeys]: string
-}
+type AccentColors = {
+  [key in AccentColorsKeys]: string;
+};
 
-const primaryNeutral: NeutralColors = {
-  100: '#313a55',
-  90: '#464e66',
-  70: '#6f7588',
-  50: '#989daa',
-  30: '#c1c4cc',
-  15: '#e0e1e5',
-  5: '#f5f5f7',
-  3: '#f9f9fa',
-  1: '#fdfdfd',
-}
+const accentPrimary: AccentColors = {
+  100: "#1fe5cd",
+  80: "#4cead7",
+  60: "#79efe1",
+  40: "#a6f4eb",
+  20: "#d2faf5",
+  10: "#e9fcfa",
+  5: "#f4fefc",
+  3: "#f8fefd",
+  1: "#fdfffe",
+};
 
-const secondaryNeutral: Partial<NeutralColors> = {
-  100: '#fff',
-}
+const accentSecondary: AccentColors = {
+  100: "#f3ff47",
+  80: "#f5ff6c",
+  60: "#f8ff91",
+  40: "#faffb5",
+  20: "#fdffda",
+  10: "#feffed",
+  5: "#fefff6",
+  3: "#fffff9",
+  1: "#fffffd",
+};
 
 export type Theme = {
   colors: {
     brand: {
-      [key in BrandColorsNames]: BrandColors
-    }
-    neutral: {
-      [key in NeutralColorsNames]: Partial<NeutralColors>
-    }
+      [key in BrandColorsNames]: Partial<BrandColors>;
+    };
+    accent: {
+      [key in AccentColorsNames]: AccentColors;
+    };
     utility: {
       [key in UtilityColorsNames]: {
-        [kei in UtilityColorsKeys]: string
-      }
-    }
-  }
-}
+        [kei in UtilityColorsKeys]: string;
+      };
+    };
+  };
+};
 
 export const theme: Theme = {
   colors: {
     brand: {
-      primary: primaryBrand,
-      secondary: secondaryBrand,
-      tertiary: tertiaryBrand,
+      primary: brandPrimary,
+      secondary: brandSecondary,
+      tertiary: brandTertiary,
     },
-    neutral: {
-      primary: primaryNeutral,
-      secondary: secondaryNeutral,
+    accent: {
+      primary: accentPrimary,
+      secondary: accentSecondary,
     },
     utility: {
       danger: {
-        100: '#e42648',
-        90: '#e73c5b',
-        70: '#ec677f',
-        50: '#f293a4',
-        30: '#f7bec8',
-        15: '#fbdfe4',
-        10: '#fce9ed',
-        5: '#fef4f6',
-        3: '#fef9fa',
+        100: "#f00c5e",
+        90: "#f1246e",
+        70: "#f4558e",
+        50: "#f786af",
+        30: "#fab6cf",
+        15: "#fddbe7",
+        10: "#fde7ef",
+        5: "#fef3f7",
+        3: "#fff8fa",
       },
       warning: {
-        100: '#fccf07',
-        90: '#fcd420',
-        70: '#fddd51',
-        50: '#fee783',
-        30: '#fef1b5',
-        15: '#fff8da',
-        10: '#fffae6',
-        5: '#fffdf3',
-        3: '#fffef8',
+        100: "#ffd400",
+        90: "#ffd81a",
+        70: "#ffe14d",
+        50: "#ffe980",
+        30: "#fff2b2",
+        15: "#fff9d9",
+        10: "#fffbe5",
+        5: "#fffdf2",
+        3: "#fffef7",
       },
       success: {
-        100: '#21ab68',
-        90: '#37b377',
-        70: '#64c495',
-        50: '#90d5b4',
-        30: '#bde6d2',
-        15: '#def2e8',
-        10: '#e9f7f0',
-        5: '#f4fbf8',
-        3: '#f8fdfb',
+        100: "#00a08d",
+        90: "#1aa998",
+        70: "#4dbcaf",
+        50: "#80cfc6",
+        30: "#b2e2dd",
+        15: "#d9f1ee",
+        10: "#e5f5f4",
+        5: "#f2faf9",
+        3: "#f7fcfc",
       },
       info: {
-        100: '#0072b3',
-        90: '#1a80ba',
-        70: '#4d9cc9',
-        50: '#80b9d9',
-        30: '#b2d5e8',
-        15: '#d9eaf4',
-        10: '#e5f1f7',
-        5: '#f2f8fb',
-        3: '#f7fbfd',
+        100: "#008bf4",
+        90: "#1a96f5",
+        70: "#4daef7",
+        50: "#80c5f9",
+        30: "#b2dcfc",
+        15: "#d9eefd",
+        10: "#e5f3fe",
+        5: "#f2f9fe",
+        3: "#f7fcff",
       },
     },
   },
-}
+};

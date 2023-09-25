@@ -55,7 +55,8 @@ Sample response:
   "auth": {
     "clientId": "<CLIENT_ID>",
     "clientSecret": "<CLIENT_SECRET>",
-    "issuer": "https://euw1.vpa.auth.affinidi.io"
+    "issuer": "https://apse1.api.affinidi.io/vpa/v1/login/project/<PROJECT-ID>",
+    "tokenEndpointAuthMethod": "client_secret_post"
   },
   "redirectUris": [
     "https://example.com/authCallback"

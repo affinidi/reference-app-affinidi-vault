@@ -17,8 +17,8 @@
 
    ![Custom connection](./images/auth0_custom_connection.png)
 
-  - **Authorization URL**: https://euw1.vpa.auth.affinidi.io/oauth2/auth
-  - **Token URL**: https://euw1.vpa.auth.affinidi.io/oauth2/token
+  - **Authorization URL**:  `{issuer}/oauth2/auth` where `issuer` is a value from the [Login Configuration](../setup-login-config.md)
+  - **Token URL**: `{issuer}/oauth2/token` where `issuer` is a value from the [Login Configuration](../setup-login-config.md)
   - **Scope**: openid offline_access
   - **Client ID**: value from the [Login Configuration](../setup-login-config.md)
   - **Client Secret**: value from the [Login Configuration](../setup-login-config.md)

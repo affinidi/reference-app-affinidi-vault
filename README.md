@@ -82,6 +82,9 @@ sequenceDiagram;
   provider->>site: Send JSON Web Token
   site->>user: Provide access to the user
 ```
+
+Explore our [documentation](https://docs.affinidi.com/docs/) and [labs](https://docs.affinidi.com/labs/) to learn more about integrating Affinidi Login with Affinidi Vault.
+
 ## Tools & frameworks
 
 This project is built with **NextJS** framework, which allows you to quickly build apps using **TypeScript** and **React**. NextJS has built-in router, server-side rendering and backend support.

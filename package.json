@@ -6,19 +6,15 @@
   "scripts": {
     "dev": "node generator/confirm.mjs && nodemon --exec 'node generator/generate.mjs && npm run start'",
     "generate": "node generator/confirm.mjs && node generator/generate.mjs",
-
     "install-all": "concurrently -n w: npm:install:*",
     "install:template": "npm i --prefix generator/template",
     "install:default": "npm i --prefix use-cases/default",
-
     "start": "concurrently -n w: \"npm:start:*(!template)\"",
     "start:template": "npm run --prefix generator/template dev -- -p 3000",
     "start:default": "npm run --prefix use-cases/default dev -- -p 3001",
-
     "build": "concurrently -n w: \"npm:build:*(!template)\"",
     "build:template": "npm run --prefix generator/template build",
     "build:default": "npm run --prefix use-cases/default build",
-
     "postinstall": "npm run install-all"
   },
   "repository": {
@@ -36,7 +32,7 @@
     "concurrently": "^7.6.0",
     "inquirer": "^9.1.4",
     "mkdirp": "^2.1.3",
-    "nodemon": "^2.0.20",
+    "nodemon": "^3.0.1",
     "rimraf": "^4.1.2"
   },
   "nodemonConfig": {

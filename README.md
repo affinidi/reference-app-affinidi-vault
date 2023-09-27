@@ -141,7 +141,7 @@ We may from time to time impose limits on your use of the Affinidi Developer Too
 
 ### Do I need to provide you with anything?
 
-From time to time, we may request certain information from you to ensure that you are complying with the [Terms of Use](https://www.affinidi.com/terms-of-use).
+From time to time, we may request certain information from you to ensure that you are complying with the [Terms and Conditions](https://www.affinidi.com/terms-conditions).
 
 ### Can I share my developer’s account with others?
 
@@ -149,4 +149,4 @@ When you create a developer’s account with us, we will issue you your private 
 
 ## _Disclaimer_
 
-_Please note that this FAQ is provided for informational purposes only and is not to be considered a legal document. For the legal terms and conditions governing your use of the Affinidi Developer Tools, please refer to our [Terms of Use](https://www.affinidi.com/terms-of-use)._
+_Please note that this FAQ is provided for informational purposes only and is not to be considered a legal document. For the legal terms and conditions governing your use of the Affinidi Developer Tools, please refer to our [Terms and Conditions](https://www.affinidi.com/terms-conditions)._

@@ -8,96 +8,45 @@ This is a reference app template that showcases how to use Affinidi Vault to per
 
 ## Getting started
 
-Setting up the reference app is easy, just follow these steps:  
+Setting up the reference app is easy, just follow these steps:
+
 1. Clone the repo:
-    ```
-    $ git clone git@github.com:affinidi/reference-app-affinidi-vault.git
-    $ cd reference-app-affinidi-vault
-    $ cd use-cases/{use-case}
-    ```
+   ```
+   $ git clone git@github.com:affinidi/reference-app-affinidi-vault.git
+   $ cd reference-app-affinidi-vault
+   $ cd use-cases/{use-case}
+   ```
 2. Install the dependencies:
-    ```
-    $ npm install
-    ```
+   ```
+   $ npm install
+   ```
 3. Create a `.env` file:
-    ```
-    $ cp .env.example .env
-    ```
 
-    > To get the values for `AUTH0_CLIENT_ID`, `AUTH0_CLIENT_SECRET` and `AUTH0_ISSUER` please follow the guide to [set up Affinidi Login with Auth0](./guides/auth0/setup-auth0.md).
+   ```
+   $ cp .env.example .env
+   ```
 
-    > To bypass the window for selecting the social connector, you have the option to specify its name using the `NEXT_PUBLIC_SOCIAL_CONNECTOR_NAME` environment variable. Set this variable to the name you assigned to your social connector on Auth0.
+4. Set up environment variables. Please read the [provider guide](./docs/{use-case}.md).
 
-4. Launch the app:
-    ```
-    $ npm run dev
-    ```
-    
-    App will be available locally on http://localhost:3000.
+5. Launch the app:
 
-## Terminology
+   ```
+   $ npm run dev
+   ```
 
-**Verifiable Credential (VC)** – a tamper-evident credential that has authorship that can be cryptographically verified.  
-Read [W3C specification](https://www.w3.org/TR/vc-data-model/).
+   App will be available locally on http://localhost:3000.
 
-**Verifiable Presentation (VP)** – data derived from one or more verifiable credentials, issued by one or more issuers, that is shared with a specific verifier.  
-Read [W3C specification](https://www.w3.org/TR/vc-data-model/).
-
-## Identity Provider
-
-This reference application use Auth0 ID provider that is pre-configured using `NextAuth.js`. If you want to configure a different provider, please head to [NextAuth's documentation](https://next-auth.js.org/providers/).
-
-You will also need to create an Affinidi Login Configuration and set it up in you provider. Read [this guide](./guides/setup-login-config.md) for more information.
-
-## Overview diagrams
-
-> You might want to install [an extension](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid) to view these Mermaid diagrams.
-
-### Affinidi Login with Auth0
-
-```mermaid
-sequenceDiagram;
-  actor user as User
-  participant site as Website
-  participant provider as Auth0
-  participant adapter as Affinidi Login
-  participant ext as Affinidi Vault
-  participant verifier as Affinidi Verifier
-
-  user->>site: My Login
-  site->>provider: trigger OIDC flow
-  note over site, provider: Auth0 application credentials
-  provider->>adapter: Authenticate user
-  note over provider, adapter: login_challenge
-  adapter->>ext: Verify user identity
-  note over adapter, ext: presentationDefinition
-  ext->>user: Request user confirmation to share Email VC 
-  user->>+ext: User confirmed to share Email VC
-  ext->>ext: Generate VP Token from VC
-  ext->>-adapter: Send Email VP Token
-  adapter->>verifier: Validate VP Token
-  note over adapter, verifier: vp_token, presentation_submission, presentation_definition
-  adapter->>adapter: Generate idToken
-  adapter->>provider: Send generated idToken from VP
-  provider->>site: Send JSON Web Token
-  site->>user: Provide access to the user
-```
+## Read More
 
 Explore our [documentation](https://docs.affinidi.com/docs/) and [labs](https://docs.affinidi.com/labs/) to learn more about integrating Affinidi Login with Affinidi Vault.
 
 ## Tools & frameworks
 
 This project is built with **NextJS** framework, which allows you to quickly build apps using **TypeScript** and **React**. NextJS has built-in router, server-side rendering and backend support.
-Read [NextJS docs](https://nextjs.org/docs/getting-started), [React docs](https://reactjs.org/docs/getting-started.html).  
+Read [NextJS docs](https://nextjs.org/docs/getting-started), [React docs](https://reactjs.org/docs/getting-started.html).
 
 We also use **Styled Components** and **Tailwind CSS** to build the UI.  
-Read [Styled Components docs](https://styled-components.com/docs), [Tailwind CSS docs](https://tailwindcss.com/docs/installation).  
-
-To make API requests, **axios** library is used.  
-Read [axios docs](https://axios-http.com/docs/intro).  
-
-Backend requests are validated with **zod** and logged with **pino**.  
-Read [Zod docs](https://www.npmjs.com/package/zod), [pino docs](https://www.npmjs.com/package/pino).  
+Read [Styled Components docs](https://styled-components.com/docs), [Tailwind CSS docs](https://tailwindcss.com/docs/installation).
 
 ## Telemetry
 

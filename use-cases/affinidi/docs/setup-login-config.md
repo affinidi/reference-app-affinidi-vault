@@ -173,9 +173,7 @@ To update first create JSON configuration file with such content:
 
 After saving file run command:
 
-`affinidi login update-config
---id=<LOGIN_CONFIG_ID>
---file="<./<name_of_your_file>.json"`
+`affinidi login update-config --id=<LOGIN_CONFIG_ID> --file="<./<name_of_your_file>.json"`
 
 > `--id` identifier of you login configuration
 >

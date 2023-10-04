@@ -5,6 +5,8 @@ import {
   providerIssuer,
 } from "src/lib/secrets";
 
+export const PROVIDER_ATTRIBUTES_KEY = "custom";
+
 export const provider: Provider = {
   id: "affinidi",
   name: "Affinidi",

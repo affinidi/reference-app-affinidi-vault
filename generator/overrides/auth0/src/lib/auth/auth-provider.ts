@@ -6,6 +6,8 @@ import {
 } from "src/lib/secrets";
 import { socialConnectorName } from "src/lib/variables";
 
+export const PROVIDER_ATTRIBUTES_KEY = "profile";
+
 export const provider = Auth0Provider({
   clientId: providerClientId,
   clientSecret: providerClientSecret,

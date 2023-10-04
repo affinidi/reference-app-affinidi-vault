@@ -1,5 +1,6 @@
 import { NextAuthOptions } from "next-auth";
-import { provider } from "src/lib/auth/auth-provider";
+import { PROVIDER_ATTRIBUTES_KEY, provider } from "src/lib/auth/auth-provider";
+import { UserInfo } from "src/types/types";
 
 export const authOptions: NextAuthOptions = {
   debug: true,
@@ -14,30 +15,38 @@ export const authOptions: NextAuthOptions = {
           account.id_token
       );
     },
-    // "account" is only passed the first time this callback is called on a new session, after the user signs in
+    // "account" and "profile" are only passed the first time this callback is called on a new session, after the user signs in
     // this defines how JWT is generated and is then used in session() callback as "token"
     async jwt({ token, account, profile }) {
-      const custom = (profile as any)?.["profile"];
+      const profileItems = (profile as any)?.[PROVIDER_ATTRIBUTES_KEY];
+      if (profile && profileItems) {
+        let userDID: string;
+        let user: UserInfo = {};
+        userDID = profileItems.find(
+          (item: any) => typeof item.did === "string"
+        )?.did;
+        user.email = profileItems.find(
+          (item: any) => typeof item.email === "string"
+        )?.email;
+        user.country = profileItems.find(
+          (item: any) => typeof item.address === "object"
+        )?.address?.country;
+        token = {
+          ...token,
+          user,
+          ...(userDID && { userId: userDID }),
+        };
+      }
 
-      const email = custom?.find(
-        (i: any) => typeof i.email === "string"
-      )?.email;
-      const address = custom?.find(
-        (i: any) => typeof i.address === "object"
-      )?.address;
+      if (account) {
+        token = {
+          ...token,
+          ...(account?.access_token && { accessToken: account.access_token }),
+          ...(account?.id_token && { idToken: account.id_token }),
+        };
+      }
 
-      return {
-        ...token,
-        ...(email && {
-          user: {
-            email,
-            ...(address && { ...address }),
-          },
-        }),
-        ...(account?.access_token && { accessToken: account?.access_token }),
-        ...(account?.id_token && { idToken: account?.id_token }),
-        ...(profile?.sub && { userId: profile?.sub }),
-      };
+      return token;
     },
     // session is persisted as an HttpOnly cookie
     async session({ session, token }) {

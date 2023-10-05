@@ -4,7 +4,7 @@ This is a reference app template that showcases how to use Affinidi Vault to per
 
 ## Introduction
 
-![Home page](./docs/home_page.png)
+![Home page](./docs/images/home_page.png)
 
 ## Getting started
 

@@ -1,24 +1,52 @@
-# Reference applications to integrate Affinidi Login and Affinidi Vault
+# reference-app-affinidi-vault
 
-This repository contains multiple sample applications to get you started on integrating Affinidi Login and Affinidi Vault in your tech stack.
+This is a reference app template that showcases how to use Affinidi Vault to perform authentication and to interact with the vault. It accomplishes this through Affinidi Vault Chrome Extension using the [OpenID for Verifiable Presentations specification.](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
 
-## Samples
+## Introduction
 
-### Integrating Affinidi Login directly
+![Home page](./docs/home_page.png)
 
-- [affinidi-nextjs-nextauthjs](./samples/affinidi-nextjs-nextauthjs)
+## Getting started
 
-  Uses [NextJS](https://nextjs.org/docs) and [NextAuthJS](https://next-auth.js.org/getting-started/introduction) with a custom Affinidi provider.
+Setting up the reference app is easy, just follow these steps:
 
-### Integrating Affinidi Login through Auth0
+1. Clone the repo:
+   ```
+   $ git clone git@github.com:affinidi/reference-app-affinidi-vault.git
+   $ cd reference-app-affinidi-vault
+   $ cd samples/{sample}
+   ```
+2. Install the dependencies:
+   ```
+   $ npm install
+   ```
+3. Create a `.env` file:
 
-- [auth0-nextjs-nextauthjs](./samples/auth0-nextjs-nextauthjs)
+   ```
+   $ cp .env.example .env
+   ```
 
-  Uses [NextJS](https://nextjs.org/docs) and [NextAuthJS](https://next-auth.js.org/getting-started/introduction) with the [Auth0 provider](https://next-auth.js.org/providers/auth0).
+4. Set up environment variables. Please read the [configuration guide](./docs/configuration.md).
+
+5. Launch the app:
+
+   ```
+   $ npm run dev
+   ```
+
+   App will be available locally on http://localhost:3000.
 
 ## Read More
 
-Explore our [documentation](https://docs.affinidi.com/docs/) and [labs](https://docs.affinidi.com/labs/) to learn more about integrating Affinidi Login and Affinidi Vault.
+Explore our [documentation](https://docs.affinidi.com/docs/) and [labs](https://docs.affinidi.com/labs/) to learn more about integrating Affinidi Login with Affinidi Vault.
+
+## Tools & frameworks
+
+This project is built with **NextJS** framework, which allows you to quickly build apps using **TypeScript** and **React**. NextJS has built-in router, server-side rendering and backend support.
+Read [NextJS docs](https://nextjs.org/docs/getting-started), [React docs](https://reactjs.org/docs/getting-started.html).
+
+We also use **Styled Components** and **Tailwind CSS** to build the UI.  
+Read [Styled Components docs](https://styled-components.com/docs), [Tailwind CSS docs](https://tailwindcss.com/docs/installation).
 
 ## Telemetry
 

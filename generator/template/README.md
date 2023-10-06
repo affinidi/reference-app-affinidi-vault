@@ -4,7 +4,7 @@ This is a reference app template that showcases how to use Affinidi Vault to per
 
 ## Introduction
 
-![Home page](./docs/home_page.png)
+![Home page](./docs/images/home_page.png)
 
 ## Getting started
 
@@ -14,7 +14,7 @@ Setting up the reference app is easy, just follow these steps:
    ```
    $ git clone git@github.com:affinidi/reference-app-affinidi-vault.git
    $ cd reference-app-affinidi-vault
-   $ cd use-cases/affinidi
+   $ cd samples/{sample}
    ```
 2. Install the dependencies:
    ```
@@ -26,7 +26,7 @@ Setting up the reference app is easy, just follow these steps:
    $ cp .env.example .env
    ```
 
-4. Set up environment variables. Please read the [provider guide](./docs/affinidi.md).
+4. Set up environment variables. Please read the [configuration guide](./docs/configuration.md).
 
 5. Launch the app:
 

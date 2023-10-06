@@ -4,9 +4,9 @@ const { confirmed } = await inquirer.prompt([
   {
     default: true,
     name: 'confirmed',
-    message: 'This will overwrite any changes made to the use-cases/ directory. Are you sure?',
+    message: 'This will overwrite any changes made to the samples directory. Are you sure?',
     type: 'confirm',
-  }
+  },
 ])
 
 if (confirmed) {

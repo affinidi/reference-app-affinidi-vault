@@ -10,14 +10,17 @@
     "install:template": "npm i --prefix generator/template",
     "install:affinidi-nextjs-nextauthjs": "npm i --prefix samples/affinidi-nextjs-nextauthjs",
     "install:auth0-nextjs-nextauthjs": "npm i --prefix samples/auth0-nextjs-nextauthjs",
+    "install:firebase-nextjs-nextauthjs": "npm i --prefix samples/firebase-nextjs-nextauthjs",
     "start": "concurrently -n w: \"npm:start:*(!template)\"",
     "start:template": "npm run --prefix generator/template dev -- -p 3000",
     "start:affinidi-nextjs-nextauthjs": "npm run --prefix samples/affinidi-nextjs-nextauthjs dev -- -p 3001",
     "start:auth0-nextjs-nextauthjs": "npm run --prefix samples/auth0-nextjs-nextauthjs dev -- -p 3002",
+    "start:firebase-nextjs-nextauthjs": "npm run --prefix samples/firebase-nextjs-nextauthjs dev -- -p 3003",
     "build": "concurrently -n w: \"npm:build:*(!template)\"",
     "build:template": "npm run --prefix generator/template build",
     "build:affinidi-nextjs-nextauthjs": "npm run --prefix samples/affinidi-nextjs-nextauthjs build",
     "build:auth0-nextjs-nextauthjs": "npm run --prefix samples/auth0-nextjs-nextauthjs build",
+    "build:firebase-nextjs-nextauthjs": "npm run --prefix samples/firebase-nextjs-nextauthjs build",
     "postinstall": "npm run install-all"
   },
   "repository": {

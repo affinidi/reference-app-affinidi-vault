@@ -16,6 +16,11 @@ This repository contains multiple sample applications to get you started on inte
 
   Uses [NextJS](https://nextjs.org/docs) and [NextAuthJS](https://next-auth.js.org/getting-started/introduction) with the [Auth0 provider](https://next-auth.js.org/providers/auth0).
 
+### Integrating Affinidi Login through Firebase
+
+- [firebase-nextjs-nextauthjs](./samples/firebase-nextjs-nextauthjs)
+
+  Uses [NextJS](https://nextjs.org/docs) and [NextAuthJS](https://next-auth.js.org/getting-started/introduction) with the [Firebase provider](https://firebase.google.com/docs/auth/web/custom-auth).
 ## Read More
 
 Explore our [documentation](https://docs.affinidi.com/docs/) and [labs](https://docs.affinidi.com/labs/) to learn more about integrating Affinidi Login and Affinidi Vault.

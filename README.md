@@ -10,11 +10,19 @@ This repository contains multiple sample applications to get you started on inte
 
   Uses [NextJS](https://nextjs.org/docs) and [NextAuthJS](https://next-auth.js.org/getting-started/introduction) with a custom Affinidi provider.
 
+- [affinidi-django-authlib](./samples/affinidi-django-authlib)
+
+  Uses [Django](https://www.djangoproject.com/) and [Authlib](https://docs.authlib.org/en/latest/client/django.html#django-client) with a custom Affinidi provider.
+
 ### Integrating Affinidi Login through Auth0
 
 - [auth0-nextjs-nextauthjs](./samples/auth0-nextjs-nextauthjs)
 
   Uses [NextJS](https://nextjs.org/docs) and [NextAuthJS](https://next-auth.js.org/getting-started/introduction) with the [Auth0 provider](https://next-auth.js.org/providers/auth0).
+
+- [auth0-django-authlib](./samples/auth0-django-authlib)
+
+  Uses [Django](https://www.djangoproject.com/) and [Authlib](https://docs.authlib.org/en/latest/client/django.html#django-client) with the [Auth0 provider](https://next-auth.js.org/providers/auth0).
 
 ## Read More
 

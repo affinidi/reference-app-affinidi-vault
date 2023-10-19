@@ -6,7 +6,7 @@
 2. Run `npm install` in the root directory (it will automatically install dependencies in the template and generated samples)
 3. Run `npm run dev` to automatically re-generate samples and run them
 
-Now make some changes to `generator/template` or `generator/overrides/{sample}` and apps will be re-generated & restarted automatically.
+Now make some changes to `generator/{framework}/template` or `generator/{framework}/overrides/{sample}` and apps will be re-generated & restarted automatically.
 
 > Note: `npm run dev` does not reload the page automatically when source code changes.
 
@@ -26,18 +26,19 @@ Now make some changes to `generator/template` or `generator/overrides/{sample}` 
   /sample-2
   ...
 /generator
-  /template     – fully functional generic app that's used as a base for all samples
-  /overrides
-    /sample-1 – sample-specific overrides (themes, components, assets, etc.)
-    /sample-2
-    ...
-  generate.mjs  – script that's responsible for generating sample-specific apps
+  /framework
+    /template     – fully functional generic app that's used as a base for all samples
+    /overrides
+      /sample-1 – sample-specific overrides (themes, components, assets, etc.)
+      /sample-2
+      ...
+    generate.mjs  – script that's responsible for generating sample-specific apps
 ```
 
 How it works:
 
-- It copies `/generator/template/` to the `/samples/{sample}` folder
-- It then merges files from `/generator/overrides/{sample}` with `/samples/{sample}`
+- It copies `/generator/{framework}/template/` to the `/samples/{sample}` folder
+- It then merges files from `/generator/{framework}/overrides/{sample}` with `/samples/{sample}`
   > Some paths are completely overridden instead of being merged – this can be customized in the `generate.mjs` script.
 - `package.json` and `package-lock.json` are slightly updated to use proper `name` value
 - `README.md` file is copied from the root directory to the `samples/{sample}` folder

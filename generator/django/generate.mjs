@@ -4,17 +4,18 @@ import url from 'url'
 import mkdirp from 'mkdirp'
 import rimraf from 'rimraf'
 
-const filesToIgnore = ['node_modules', '.next', '.env', 'generator-config.json', '.gitkeep', 'keys']
+const filesToIgnore = ['.next', '.env', 'generator-config.json', '.gitkeep', 'keys']
 const pathsToOverwrite = []
 
 const __dirname = dirname(url.fileURLToPath(import.meta.url))
 
 async function generate() {
-  const rootPath = join(__dirname, '..')
+  const rootPath = join(__dirname, '../..')
   const samplesPath = join(rootPath, 'samples')
   const generatorPath = join(rootPath, 'generator')
-  const overridesPath = join(generatorPath, 'overrides')
-  const templatePath = join(generatorPath, 'template')
+  const djangoPath = join(generatorPath, 'django')
+  const overridesPath = join(djangoPath, 'overrides')
+  const templatePath = join(djangoPath, 'template')
 
   const overrides = (await fs.readdir(overridesPath, { withFileTypes: true }))
     .filter((i) => i.isDirectory())
@@ -66,26 +67,10 @@ async function generate() {
       filter: (path) => !filesToIgnore.includes(basename(path)),
     })
 
-    console.log('Transforming package.json and package-lock.json files')
-    const packageName = `reference-app-${sample}`
-    await transformJson(join(samplePath, 'package.json'), (packageJson) => {
-      packageJson.name = packageName
-    })
-    await transformJson(join(samplePath, 'package-lock.json'), (packageLockJson) => {
-      packageLockJson.name = packageName
-      packageLockJson.packages[''].name = packageName
-    })
-
-    console.log(`Updating the README file`)
-    const readmePath = join(samplePath, 'README.md')
-    await replace(readmePath, { '{sample}': sample, ...readmeReplacements })
-
     const envPath = join(samplePath, '.env')
     if (!(await exists(envPath))) {
       await fs.cp(join(samplePath, '.env.example'), envPath)
     }
-
-    await replace(envPath, { 'localhost:3000': `localhost:${port}` })
   }
 }
 

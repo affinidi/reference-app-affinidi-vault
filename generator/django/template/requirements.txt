@@ -1,0 +1,4 @@
+Django
+Authlib
+requests
+python-dotenv

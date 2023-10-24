@@ -1,4 +1,4 @@
-Django
-Authlib
-requests
-python-dotenv
+Django==4.2.6
+Authlib==1.2.1
+requests==2.31.0
+python-dotenv==1.0.0

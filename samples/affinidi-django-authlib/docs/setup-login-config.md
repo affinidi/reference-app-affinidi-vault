@@ -33,7 +33,7 @@ Follow the guide below if you haven’t installed yet
 `--redirect-uris` will be the URL where the user will be redirected after successful authorization.
 
 - If you are using Affinidi directly without an identity provider, it should be a URL to your app
-  - In Django it would be `http://localhost:{port_number}/auth/`
+  - In Django it would be `http://localhost:8000/callback`
 - If you are using Auth0 as an identity provider it would be `https://{auth0_domain}/login/callback`
 
 Sample response:

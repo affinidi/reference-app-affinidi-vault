@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Django Affinidi Integration Example</title>
+    <title>Affinidi Login Integration Example</title>
     <style>
         .container {
             width: 400px;
@@ -16,32 +16,6 @@
 
         .form-container h1 {
             text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            margin-right: 10px;
-        }
-
-        .form-group label {
-            display: block;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .form-group button {
-            width: 100%;
-            padding: 10px;
-            background: #007bff;
-            border: none;
-            color: #fff;
-            border-radius: 5px;
-            cursor: pointer;
         }
         
         .affinidi-login-div {
@@ -73,19 +47,7 @@
 <body>
     <div class="container">
         <div class="form-container">
-            <h1>Insurance Login</h1>
-            <form method="post" action="/login">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name "password" placeholder="Enter your password" required>
-                </div>
-                <button type="submit">Log In</button>
-            </form>
+            <h1>Login with Affinidi Login</h1>
             <form method="post" action="/login">
               {% csrf_token %} <!-- Include the CSRF token in the form -->
               <div class="affinidi-login-div">

@@ -16,11 +16,12 @@ Install the required dependencies:
 pip install -r requirements.txt
 ```
 
-## Create Login Configuration and Update .env
+## Create Login Configuration and update .env
 
-Create your Affinidi OAuth Client at [Affinidi Portal](https://portal.affinidi.com/), make sure to add `https://{tenant-name}.us.auth0.com/login/callback` into Authorized redirect URIs.
+Create your Affinidi Login Configuration with the [Affinidi CLI](https://github.com/affinidi/affinidi-cli#set-up-affinidi-login-for-your-applications) or at [Affinidi Portal](https://portal.affinidi.com/), make sure to add `https://{tenant-name}.us.auth0.com/login/callback` into authorized redirect URIs.
 
 Please read the [setup login config guide](./docs/setup-login-config.md) to understand more about setting up login configuration in affinidi for Auth0.
+
 Also please refer the [configuration guide](./docs/configuration.md) to understand more about setting up login configuration in Auth0.
 
 Fill the client ID, secret and issuer URL in `.env` file
@@ -28,7 +29,7 @@ Fill the client ID, secret and issuer URL in `.env` file
 then run:
 
 ```
-python3 manage.py migrate
+python manage.py migrate
 ```
 
 ## Run
@@ -36,10 +37,10 @@ python3 manage.py migrate
 Start server with:
 
 ```
-python3 manage.py runserver
+python manage.py runserver
 ```
 
-Then visit: http://localhost:8000/
+Then visit: http://localhost:8000
 
 ## Read More
 

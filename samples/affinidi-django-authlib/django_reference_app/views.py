@@ -3,7 +3,6 @@ from authlib.integrations.django_client import OAuth
 from django.conf import settings
 from django.shortcuts import redirect, render, redirect
 from django.urls import reverse
-from urllib.parse import quote_plus, urlencode
 
 oauth = OAuth()
 
@@ -19,10 +18,10 @@ oauth.register(
 )
 
 def login(request):
-    redirect_uri = request.build_absolute_uri(reverse('auth'))
+    redirect_uri = request.build_absolute_uri(reverse('callback'))
     return oauth.affinidi.authorize_redirect(request, redirect_uri)
 
-def auth(request):
+def callback(request):
     token = oauth.affinidi.authorize_access_token(request)
     request.session["user"] = token['userinfo']
     return redirect(request.build_absolute_uri(reverse("index")))

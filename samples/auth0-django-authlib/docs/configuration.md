@@ -66,9 +66,9 @@ PROVIDER_ISSUER="https://my-fancy-project.eu.auth0.com"
 
 1.6. Scroll down and set:
 
-- **Allowed Callback URLs** to `http://localhost:{port_number}/callback`
-- **Allowed Logout URLs** to `http://localhost:{port_number}`
-- **Allowed Web Origins** to `http://localhost:{port_number}`
+- **Allowed Callback URLs** to `http://localhost:8000/callback`
+- **Allowed Logout URLs** to `http://localhost:8000`
+- **Allowed Web Origins** to `http://localhost:8000`
 
 ![Callback configuration](./images/auth0_callback_configuration.png)
 
@@ -118,11 +118,3 @@ function fetchUserProfile(accessToken, context, callback) {
 3.4. Click **"Create"** and enable the connection for your application.
 
 ![Enable connection](./images/auth0_enable_connection.png)
-
-3.5. (Optional) Set the connection name in the reference application
-
-Setting this environment variable will allow you to bypass Auth0's window for selecting the social connector. Set this variable to the name you assigned to your social connector on the step 3.1.
-
-```ini
-NEXT_PUBLIC_SOCIAL_CONNECTOR_NAME="Affinidi"
-```

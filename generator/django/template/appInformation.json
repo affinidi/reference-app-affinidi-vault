@@ -1,0 +1,14 @@
+{
+    "affinidi-django-authlib" : {
+        "redirectUris" : {
+            "callbackUrl" : "http://localhost:8000/callback"
+        }
+    },
+    "auth0-django-authlib" : {
+        "redirectUris" : {
+            "callbackUrl": "http://localhost:8000/callback",
+            "logOutUrl": "http://localhost:8000",
+            "webOriginUrl": "http://localhost:8000"
+        }
+    }
+}

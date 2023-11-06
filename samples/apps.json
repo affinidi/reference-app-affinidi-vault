@@ -1,0 +1,26 @@
+{
+    "affinidi-django-authlib" : {
+        "redirectUris" : {
+            "callbackUrl" : "http://localhost:8000/callback"
+        }
+    },
+    "affinidi-nextjs-nextauthjs" : {
+        "redirectUris" : {
+            "callbackUrl": "http://localhost:3000/api/auth/callback/affinidi"
+        }
+    },
+    "auth0-django-authlib" : {
+        "redirectUris" : {
+            "callbackUrl": "http://localhost:8000/callback",
+            "logOutUrl": "http://localhost:8000",
+            "webOriginUrl": "http://localhost:8000"
+        }
+    },
+    "auth0-nextjs-nextauthjs" : {
+        "redirectUris" : {
+            "callbackUrl": "http://localhost:3000/api/auth/callback/auth0",
+            "logOutUrl": "http://localhost:3000",
+            "webOriginUrl": "http://localhost:3000"
+        }
+    }
+}

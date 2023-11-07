@@ -3,13 +3,15 @@ import { dirname, join, basename } from 'path'
 import url from 'url'
 import mkdirp from 'mkdirp'
 import rimraf from 'rimraf'
+import { generateAppInformation } from '../generateAppInformation.mjs'
 
-const filesToIgnore = ['.next', '.env', 'generator-config.json', '.gitkeep', 'keys']
+const filesToIgnore = ['.next', '.env', 'generator-config.json', '.gitkeep', 'keys', 'appInformation.json']
 const pathsToOverwrite = []
 
 const __dirname = dirname(url.fileURLToPath(import.meta.url))
 
 async function generate() {
+  await generateAppInformation()
   const rootPath = join(__dirname, '../..')
   const samplesPath = join(rootPath, 'samples')
   const generatorPath = join(rootPath, 'generator')

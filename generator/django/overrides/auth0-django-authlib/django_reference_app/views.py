@@ -25,7 +25,8 @@ def login(request):
 def callback(request):
     token = oauth.auth0.authorize_access_token(request)
     request.session["user"] = token
-    return redirect(request.build_absolute_uri(reverse("index")))
+    index_url = reverse("index")
+    return redirect(index_url)
 
 def logout(request):
     request.session.clear()

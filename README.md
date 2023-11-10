@@ -14,6 +14,10 @@ This repository contains multiple sample applications to get you started on inte
 
   Uses [Django](https://www.djangoproject.com/) and [Authlib](https://docs.authlib.org/en/latest/client/django.html#django-client) with a custom Affinidi provider.
 
+- [affinidi-laravel-socialite](./samples/affinidi-laravel-socialite)
+
+  Uses [PHP Laravel](https://laravel.com/) and [Socialite](https://laravel.com/docs/10.x/socialite) with a custom Affinidi provider.
+
 ### Integrating Affinidi Login through Auth0
 
 - [auth0-nextjs-nextauthjs](./samples/auth0-nextjs-nextauthjs)

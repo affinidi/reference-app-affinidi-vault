@@ -11,6 +11,11 @@
             "webOriginUrl": "http://localhost:8000"
         }
     },
+    "affinidi-laravel-socialite": {
+        "redirectUris": {
+            "callbackUrl": "http://localhost:8000/login/affinidi/callback"
+        }
+    },
     "affinidi-nextjs-nextauthjs": {
         "redirectUris": {
             "callbackUrl": "http://localhost:3000/api/auth/callback/affinidi"

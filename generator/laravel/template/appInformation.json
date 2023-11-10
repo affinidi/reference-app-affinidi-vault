@@ -1,0 +1,7 @@
+{
+    "affinidi-laravel-socialite" : {
+        "redirectUris" : {
+            "callbackUrl": "http://localhost:8000/login/affinidi/callback"
+        }
+    }
+}

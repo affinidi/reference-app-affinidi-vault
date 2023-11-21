@@ -32,5 +32,10 @@
             "logOutUrl": "http://localhost:3000",
             "webOriginUrl": "http://localhost:3000"
         }
+    },
+    "affinidi-starlette-authlib": {
+        "redirectUris": {
+            "callbackUrl": "http://127.0.0.1:8000/auth"
+        }
     }
 }

@@ -18,7 +18,7 @@ pip install -r requirements.txt
 
 ## Create Login Configuration and update .env
 
-Create your Affinidi Login Configuration with the [Affinidi CLI](https://github.com/affinidi/affinidi-cli#set-up-affinidi-login-for-your-applications) or at [Affinidi Portal](https://portal.affinidi.com/), make sure to add `http://localhost:5000/auth` into authorized redirect URIs.
+Create your Affinidi Login Configuration with the [Affinidi CLI](https://github.com/affinidi/affinidi-cli#set-up-affinidi-login-for-your-applications) or at [Affinidi Portal](https://portal.affinidi.com/), make sure to add `http://127.0.0.1:5000/auth` into authorized redirect URIs.
 
 Please read the [setup login config guide](./docs/setup-login-config.md) to understand more about setting up login configuration.
 
@@ -32,7 +32,7 @@ Start server with:
 python3 -m flask run
 ```
 
-Then visit: http://localhost:8000
+Then visit: http://127.0.0.1:5000
 
 ## Read More
 

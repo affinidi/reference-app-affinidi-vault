@@ -30,7 +30,6 @@ def homepage():
 
 @app.route('/login')
 def login():
-    print(CONF_URL)
     redirect_uri = url_for('auth', _external=True)
     return oauth.affinidi.authorize_redirect(redirect_uri)
 

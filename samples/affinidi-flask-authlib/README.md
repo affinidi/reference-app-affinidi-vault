@@ -24,18 +24,12 @@ Please read the [setup login config guide](./docs/setup-login-config.md) to unde
 
 Fill the client ID, secret and issuer URL in `.env` file
 
-then run:
-
-```
-python manage.py migrate
-```
-
 ## Run
 
 Start server with:
 
 ```
-python manage.py runserver
+python3 -m flask run
 ```
 
 Then visit: http://localhost:8000

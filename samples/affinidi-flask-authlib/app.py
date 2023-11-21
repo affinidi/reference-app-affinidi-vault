@@ -6,7 +6,7 @@ from authlib.integrations.flask_client import OAuth
 app = Flask(__name__)
 app.secret_key = '!secret'
 app.config.from_object('config')
-CONF_URL = app.config['PROVIDER_ISSUER_URL'] + '/.well-known/openid-configuration'
+CONF_URL = app.config['PROVIDER_ISSUER'] + '/.well-known/openid-configuration'
 
 oauth = OAuth(app)
 oauth.register(

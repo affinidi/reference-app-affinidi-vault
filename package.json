@@ -26,7 +26,7 @@
     "start:auth0-nextjs-nextauthjs": "npm run --prefix samples/auth0-nextjs-nextauthjs dev -- -p 3002",
     "start:affinidi-django-authlib": "python3 samples/affinidi-django-authlib/manage.py migrate && python3 samples/affinidi-django-authlib/manage.py runserver 8000",
     "start:auth0-django-authlib": "python3 samples/auth0-django-authlib/manage.py migrate && python3 samples/auth0-django-authlib/manage.py runserver 8001",
-    "start:affinidi-flask-authlib": "cd samples/affinidi-flask-authlib && python3 -m flask run",
+    "start:affinidi-flask-authlib": "cd samples/affinidi-flask-authlib && python3 -m flask run -p 8100",
     "start:affinidi-fastapi-authlib": "cd samples/affinidi-fastapi-authlib && python3 app.py",
     "start:affinidi-starlette-authlib": "cd samples/affinidi-starlette-authlib && python3 app.py",
     "build": "concurrently -n w: \"npm:build:*(!template)\"",

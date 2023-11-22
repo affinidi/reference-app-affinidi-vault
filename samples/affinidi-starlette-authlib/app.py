@@ -8,10 +8,10 @@ from authlib.integrations.starlette_client import OAuth
 
 config = Config('.env')
 CONF_URL = config('PROVIDER_ISSUER',default='') + '/.well-known/openid-configuration'
-
+SECRET=config('STARLETTE_SECRET',default='')
 
 app = Starlette(debug=True)
-app.add_middleware(SessionMiddleware, secret_key="!secret")
+app.add_middleware(SessionMiddleware, secret_key=SECRET)
 
 oauth = OAuth(config)
 oauth.register(
@@ -58,4 +58,4 @@ async def logout(request):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host='127.0.0.1', port=8000)
+    uvicorn.run(app, host='127.0.0.1', port=8300)

@@ -9,14 +9,15 @@ from authlib.integrations.starlette_client import OAuth, OAuthError
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
-app.add_middleware(SessionMiddleware, secret_key="!secret")
-
 config = Config('.env')
 oauth = OAuth(config)
 
 config_env = {
     **dotenv_values(".env"),  # load local file development variables
 }
+SECRET=config_env['FASTAPI_SECRET']
+
+app.add_middleware(SessionMiddleware, secret_key=SECRET)
 
 CONF_URL = config_env['PROVIDER_ISSUER'] + '/.well-known/openid-configuration'
 
@@ -68,4 +69,4 @@ async def logout(request: Request):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host='127.0.0.1', port=8000)
+    uvicorn.run(app, host='127.0.0.1', port=8200)

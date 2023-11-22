@@ -4,9 +4,10 @@ from flask import render_template, redirect
 from authlib.integrations.flask_client import OAuth
 
 app = Flask(__name__)
-app.secret_key = '!secret'
+
 app.config.from_object('config')
 CONF_URL = app.config['PROVIDER_ISSUER'] + '/.well-known/openid-configuration'
+app.secret_key = app.config['FLASK_SECRET']
 
 oauth = OAuth(app)
 oauth.register(

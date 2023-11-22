@@ -18,7 +18,7 @@ pip install -r requirements.txt
 
 ## Create Login Configuration and update .env
 
-Create your Affinidi Login Configuration with the [Affinidi CLI](https://github.com/affinidi/affinidi-cli#set-up-affinidi-login-for-your-applications) or at [Affinidi Portal](https://portal.affinidi.com/), make sure to add `http://127.0.0.1:5000/auth` into authorized redirect URIs.
+Create your Affinidi Login Configuration with the [Affinidi CLI](https://github.com/affinidi/affinidi-cli#set-up-affinidi-login-for-your-applications) or at [Affinidi Portal](https://portal.affinidi.com/), make sure to add `http://127.0.0.1:8100/auth` into authorized redirect URIs.
 
 Please read the [setup login config guide](./docs/setup-login-config.md) to understand more about setting up login configuration.
 
@@ -29,10 +29,10 @@ Fill the client ID, secret and issuer URL in `.env` file
 Start server with:
 
 ```
-python3 -m flask run
+python3 -m flask run -p 8100
 ```
 
-Then visit: http://127.0.0.1:5000
+Then visit: http://127.0.0.1:8100
 
 ## Read More
 
@@ -44,7 +44,7 @@ Affinidi collects usage data to improve our products and services. For informati
 
 ## Feedback, Support, and Community
 
-[Click here](https://github.com/affinidi/reference-app-affinidi-vault/issues) to create a ticket and we will get on it right away. If you are facing technical or other issues, you can reach out to us on [Discord](https://discord.com/invite/jx2hGBk5xE).
+[Click here](https://github.com/affinidi/reference-app-affinidi-vault/issues) to create a ticket and we will get on it right away. If you are facing technical or other issues, you can [Contact Support](https://share.hsforms.com/1i-4HKZRXSsmENzXtPdIG4g8oa2v).
 
 ## FAQ
 

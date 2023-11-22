@@ -33,7 +33,7 @@ Follow the guide below if you haven’t installed yet
 `--redirect-uris` will be the URL where the user will be redirected after successful authorization.
 
 - If you are using Affinidi directly without an identity provider, it should be a URL to your app
-  - In fastapi it would be `http://127.0.0.1:8000/auth`
+  - In fastapi it would be `http://127.0.0.1:8200/auth`
 
 Sample response:
 

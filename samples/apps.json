@@ -13,7 +13,7 @@
     },
     "affinidi-laravel-socialite": {
         "redirectUris": {
-            "callbackUrl": "http://localhost:8000/login/affinidi/callback"
+            "callbackUrl": "http://localhost:8010/login/affinidi/callback"
         }
     },
     "affinidi-nextjs-nextauthjs": {

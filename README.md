@@ -38,17 +38,13 @@ Affinidi collects usage data to improve our products and services. For informati
 
 ## Feedback, Support, and Community
 
-[Click here](https://github.com/affinidi/reference-app-affinidi-vault/issues) to create a ticket and we will get on it right away. If you are facing technical or other issues, you can reach out to us on [Discord](https://discord.com/invite/jx2hGBk5xE).
+[Click here](https://github.com/affinidi/reference-app-affinidi-vault/issues) to create a ticket and we will get on it right away. If you are facing technical or other issues, you can [Contact Support](https://share.hsforms.com/1i-4HKZRXSsmENzXtPdIG4g8oa2v).
 
 ## FAQ
 
-### A note from Affinidi
-
-Affinidi Developer Tools are currently in the open beta phase and we are refining our product every day. The Affinidi Developer Tools may be incomplete and may contain errors – they may be unstable and may cause a loss of functionality and data. Use of the Affinidi Developer Tools will be at your own risk. As our engineers seek to improve our platform, we would not have the resources to provide any maintenance or tech support at this time. Please bear with us as we continue to improve the platform.
-
 ### What can I develop?
 
-You are only limited by your imagination! Affinidi Developer Tools is a toolbox with which you can build software apps for personal or commercial use.
+You are only limited by your imagination! Affinidi Reference Applications are a toolbox with which you can build software apps for personal or commercial use.
 
 ### Is there anything I should not develop?
 
@@ -64,13 +60,9 @@ If you are processing personal data, please protect the privacy and other legal 
 
 Some of our components would also require you to incorporate our end-user notices into your terms and conditions.
 
-### Are Affinidi Developer Tools free for use?
+### Are Affinidi Reference Applications free for use?
 
-Affinidi Developer Tools are free during the open beta phase, so come onboard and experiment with our tools and see what you can build! We may bill for certain components in the future, but we will inform you beforehand.
-
-### Is there any limit or cap to my usage of the Affinidi Developer Tools?
-
-We may from time to time impose limits on your use of the Affinidi Developer Tools, such as limiting the number of API requests that you may make in a given duration. This is to ensure the smooth operation of the Affinidi Developer Tools so that you and all our other users can have a pleasant experience as we continue to scale and improve the Affinidi Developer Tools.
+Affinidi Reference Applications are free, so come onboard and experiment with our tools and see what you can build! We may bill for certain components in the future, but we will inform you beforehand.
 
 ### Do I need to provide you with anything?
 
@@ -82,4 +74,4 @@ When you create a developer’s account with us, we will issue you your private 
 
 ## _Disclaimer_
 
-_Please note that this FAQ is provided for informational purposes only and is not to be considered a legal document. For the legal terms and conditions governing your use of the Affinidi Developer Tools, please refer to our [Terms and Conditions](https://www.affinidi.com/terms-conditions)._
+_Please note that this FAQ is provided for informational purposes only and is not to be considered a legal document. For the legal terms and conditions governing your use of the Affinidi Reference Applications, please refer to our [Terms and Conditions](https://www.affinidi.com/terms-conditions)._

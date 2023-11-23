@@ -15,9 +15,9 @@ async function generate() {
   const rootPath = join(__dirname, '../..')
   const samplesPath = join(rootPath, 'samples')
   const generatorPath = join(rootPath, 'generator')
-  const djangoPath = join(generatorPath, 'django')
-  const overridesPath = join(djangoPath, 'overrides')
-  const templatePath = join(djangoPath, 'template')
+  const starlettePath = join(generatorPath, 'starlette')
+  const overridesPath = join(starlettePath, 'overrides')
+  const templatePath = join(starlettePath, 'template')
 
   const overrides = (await fs.readdir(overridesPath, { withFileTypes: true }))
     .filter((i) => i.isDirectory())
@@ -28,6 +28,7 @@ async function generate() {
 
   for (const [i, sample] of overrides.entries()) {
     console.log(`\nGenerating "${sample}" sample`)
+ 
 
     const overridePath = join(overridesPath, sample)
     const samplePath = join(samplesPath, sample)

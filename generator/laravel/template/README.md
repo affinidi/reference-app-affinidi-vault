@@ -1,71 +1,84 @@
-## Seamless Affinidi Login Integration in Laravel
+# Affinidi login demo with Laravel using Socailite
 
-Building a Laravel Web Application with Affinidi Login Integration using Socialite.
+This is a template that showcases how to use Affinidi Vault to perform authentication and to interact with the vault. It accomplishes this through Affinidi Vault Chrome Extension using the [OpenID for Verifiable Presentations specification.](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
 
-## Prerequisites
-Your local machine should have 
-1. [PHP 8.1](https://www.php.net/downloads) 
-2. [Composer](https://getcomposer.org/download/) installed.
+First, copy `.env.example` to `.env`:
 
-## Learning 
+```
+cp .env.example .env
+```
 
-**Laravel**
-Laravel is a web application framework with expressive, elegant syntax. Laravel is accessible, powerful, and provides tools required for large, robust applications.
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs).
+## Install
 
-**Socialite**
-Laravel provides a simple, convenient way to authenticate with OAuth providers, more details [here](https://laravel.com/docs/10.x/socialites).
+Install the required dependencies:
 
-<br>
+```
+composer install
+```
 
-## Setup & Run application
+## Create Login Configuration and update .env
 
-Open this directory in VS code or your favorite editor
+Create your Affinidi Login Configuration with the [Affinidi CLI](https://github.com/affinidi/affinidi-cli#set-up-affinidi-login-for-your-applications) or at [Affinidi Portal](https://portal.affinidi.com/), make sure to add `http://localhost:8010/login/affinidi/callback` into authorized redirect URIs.
 
- 1. Install the dependencies by executing the below command in terminal
-    ```
-    composer install
-    ```
- 2. If Affinidi Login configuration is already set in your `.env` file, then jump to step 7
- 3. Create the `.env` file in the sample application by running the following command
-    ```
-    cp .env.example .env
-    ```
- 4. Create [Affinidi Login Configuration](https://docs.affinidi.com/docs/affinidi-login/login-configuration/#create-login-configuration) by giving name as `Laravel App` and `Redirect URIs` as `http://localhost:8010/login/affinidi/callback`. Sample response is given below
-    ```
-    {
-        ...
-        "auth": {
-            "clientId": "<AUTH.CLIENT_ID>",
-            "clientSecret": "<AUTH.CLIENT_SECRET>",
-            "issuer": "https://<PROJECT_ID>.apse1.login.affinidi.io"
-        }
-        ...
-    }
-    ```
-    **Important**: Safeguard the Client ID and Client Secret and Issuer; you'll need them for setting up your environment variables. Remember, the Client Secret will be provided only once.
+Please read the [setup login config guide](./docs/setup-login-config.md) to understand more about setting up login configuration.
 
-    **Note**: By default Login Configuration will requests only `Email VC`, if you want to request email and profile VC, you can refer PEX query under `docs\loginConfig.json` and execute the below affinidi CLI command to update PEX
-    ```
-    affinidi login update-config --id <CONFIGURATION_ID> -f docs\loginConfig.json
-    ```
- 
- 5. Update below environment variables in `.env` based on the auth credentials received from the Login Configuration created earlier:
-    ```
-    PROVIDER_CLIENT_ID="<AUTH.CLIENT_ID>"
-    PROVIDER_CLIENT_SECRET="<AUTH.CLIENT_SECRET>"
-    PROVIDER_ISSUER="<AUTH.CLIENT_ISSUER>"
-    ```
-    Sample values looks like below
-    ```
-    PROVIDER_CLIENT_ID="xxxxx-xxxxx-xxxxx-xxxxx-xxxxx"
-    PROVIDER_CLIENT_SECRET="xxxxxxxxxxxxxxx"
-    PROVIDER_ISSUER="https://yyyy-yyy-yyy-yyyy.apse1.login.affinidi.io"
-    ```
-6. Run the application
-    ```
-    php artisan serve
-    ```
-7. Open the [http://localhost:8010/](http://localhost:8010/), which displays login page 
-    **Important**: You might error on redirect URL mismatch if you are using `http://127.0.0.1:8010/` instead of `http://localhost:8010/`. 
-8. Click on `Affinidi Login` button to initiate OAuth2 login flow with Affinidi Vault
+Fill the client ID, secret and issuer URL in `.env` file
+
+## Run
+
+Start server with:
+
+```
+php artisan serve
+```
+
+Then visit: http://localhost:8010/
+
+## Read More
+
+Explore our [documentation](https://docs.affinidi.com/docs/) and [labs](https://docs.affinidi.com/labs/) to learn more about integrating Affinidi Login with Affinidi Vault.
+
+## Telemetry
+
+Affinidi collects usage data to improve our products and services. For information on what data we collect and how we use your data, please refer to our [Privacy Notice](https://www.affinidi.com/privacy-notice).
+
+## Feedback, Support, and Community
+
+[Click here](https://github.com/affinidi/reference-app-affinidi-vault/issues) to create a ticket and we will get on it right away. If you are facing technical or other issues, you can [Contact Support](https://share.hsforms.com/1i-4HKZRXSsmENzXtPdIG4g8oa2v).
+
+
+## FAQ
+
+### What can I develop?
+
+You are only limited by your imagination! Affinidi Reference Applications are a toolbox with which you can build software apps for personal or commercial use.
+
+### Is there anything I should not develop?
+
+We only provide the tools - how you use them is largely up to you. We have no control over what you develop with our tools - but please use our tools responsibly!
+
+We hope that you would not develop anything that contravenes any applicable laws or regulations. Your projects should also not infringe on Affinidi’s or any third party’s intellectual property (for instance, misusing other parties’ data, code, logos, etc).
+
+### What responsibilities do I have to my end-users?
+
+Please ensure that you have in place your own terms and conditions, privacy policies, and other safeguards to ensure that the projects you build are secure for your end users.
+
+If you are processing personal data, please protect the privacy and other legal rights of your end-users and store their personal or sensitive information securely.
+
+Some of our components would also require you to incorporate our end-user notices into your terms and conditions.
+
+### Are Affinidi Reference Applications free for use?
+
+Affinidi Reference Applications are free, so come onboard and experiment with our tools and see what you can build! We may bill for certain components in the future, but we will inform you beforehand.
+
+### Do I need to provide you with anything?
+
+From time to time, we may request certain information from you to ensure that you are complying with the [Terms and Conditions](https://www.affinidi.com/terms-conditions).
+
+### Can I share my developer’s account with others?
+
+When you create a developer’s account with us, we will issue you your private login credentials. Please do not share this with anyone else, as you would be responsible for activities that happen under your account. If you have friends who are interested, ask them to sign up – let's build together!
+
+## _Disclaimer_
+
+_Please note that this FAQ is provided for informational purposes only and is not to be considered a legal document. For the legal terms and conditions governing your use of the Affinidi Reference Applications, please refer to our [Terms and Conditions](https://www.affinidi.com/terms-conditions)._

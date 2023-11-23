@@ -71,7 +71,7 @@ To update first create JSON configuration file with such content:
 
 ```json
 {
-  "presentationDefinition": {
+    "presentationDefinition": {
     "id": "vp_combined_email_user_profile_combined",
     "submission_requirements": [
       {
@@ -84,15 +84,40 @@ To update first create JSON configuration file with such content:
       {
         "id": "email_vc",
         "name": "Email VC",
-        "purpose": "Check if VC type is correct",
+        "purpose": "Check if data contains necessary fields",
         "group": ["A"],
         "constraints": {
           "fields": [
             {
-              "path": ["$.credentialSchema.id"],
+              "path": [
+                "$.type"
+              ],
+              "purpose": "Check if VC type is correct",
+              "filter": {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "Email"
+                }
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.email"
+              ],
+              "purpose": "Check if VC contains email field",
+              "filter": {
+                "type": "string"
+              }
+            },
+            {
+              "path": [
+                "$.issuer"
+              ],
+              "purpose": "Check if VC Issuer is Trusted",
               "filter": {
                 "type": "string",
-                "pattern": "^https://schema.affinidi.com/EmailV1-0.json$"
+                "pattern": "^did:key:zQ3shtMGCU89kb2RMknNZcYGUcHW8P6Cq3CoQyvoDs7Qqh33N"
               }
             }
           ]
@@ -100,74 +125,43 @@ To update first create JSON configuration file with such content:
       },
       {
         "id": "profile_vc",
-        "name": "profile VC type",
-        "purpose": "Check if VC type is correct",
+        "name": "Country VC",
+        "purpose": "Check if data contains necessary fields",
         "group": ["A"],
         "constraints": {
           "fields": [
             {
-              "path": ["$.credentialSchema.id"],
+              "path": ["$.type"],
+              "purpose": "Check if VC type is correct",
               "filter": {
-                "type": "string",
-                "pattern": "^https://schema.affinidi.com/UserProfileV2-0.json$"
+                "type": "array",
+                "pattern": "HITCountry"
               }
-            }
-          ]
-        }
-      },
-      {
-        "id": "address",
-        "name": "Address",
-        "purpose": "To get address for ID Mapping",
-        "constraints": {
-          "fields": [
+            },
             {
-              "path": ["$.credentialSubject.address"]
-            }
-          ]
-        }
-      },
-      {
-        "id": "email",
-        "name": "Email",
-        "purpose": "To get email for ID Mapping",
-        "constraints": {
-          "fields": [
-            {
-              "path": ["$.credentialSubject.email"]
-            }
-          ]
-        }
-      },
-      {
-        "id": "type",
-        "name": "Type",
-        "purpose": "To get type for ID Mapping",
-        "constraints": {
-          "fields": [
-            {
-              "path": ["$.type"]
+              "path": ["$.credentialSubject.address.country"],
+              "purpose": "Check if VC contains address field",
+              "filter": {
+                "type": "string"
+              }
             }
           ]
         }
       }
     ]
-  },
+},
   "idTokenMapping": [
-    {
-      "sourceField": "$.type",
-      "idTokenClaim": "type"
-    },
     {
       "sourceField": "$.credentialSubject.email",
       "idTokenClaim": "email"
     },
     {
-      "sourceField": "$.credentialSubject.address",
-      "idTokenClaim": "address"
+      "sourceField": "$.credentialSubject.address.country",
+      "idTokenClaim": "country"
     }
   ]
 }
+
 ```
 
 After saving file run command:

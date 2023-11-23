@@ -28,7 +28,6 @@ async function generate() {
 
   for (const [i, sample] of overrides.entries()) {
     console.log(`\nGenerating "${sample}" sample`)
-    const port = 3000 + i + 1
 
     const overridePath = join(overridesPath, sample)
     const samplePath = join(samplesPath, sample)
@@ -45,8 +44,6 @@ async function generate() {
         throw error
       }
     }
-
-    const { readmeReplacements } = generatorConfig
 
     console.log('Copying the template')
     const pathsToDelete = (await fs.readdir(samplePath).catch(() => []))
@@ -74,24 +71,6 @@ async function generate() {
       await fs.cp(join(samplePath, '.env.example'), envPath)
     }
   }
-}
-
-async function transformJson(path, transformFn) {
-  const json = JSON.parse(await fs.readFile(path, { encoding: 'utf-8' }))
-  transformFn(json)
-  await fs.writeFile(path, JSON.stringify(json, null, 2), {
-    encoding: 'utf-8',
-  })
-}
-
-async function replace(path, replacements) {
-  let text = await fs.readFile(path, { encoding: 'utf-8' })
-
-  for (const [key, value] of Object.entries(replacements)) {
-    text = text.replaceAll(key, Array.isArray(value) ? value.join('\n') : value)
-  }
-
-  await fs.writeFile(path, text, { encoding: 'utf-8' })
 }
 
 async function merge(from, to, options) {

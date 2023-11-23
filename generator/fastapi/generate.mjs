@@ -28,7 +28,6 @@ async function generate() {
 
   for (const [i, sample] of overrides.entries()) {
     console.log(`\nGenerating "${sample}" sample`)
-    const port = 3000 + i + 1
 
     const overridePath = join(overridesPath, sample)
     const samplePath = join(samplesPath, sample)

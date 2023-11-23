@@ -136,7 +136,7 @@ To update first create JSON configuration file with such content:
               "purpose": "Check if VC type is correct",
               "filter": {
                 "type": "array",
-                "pattern": "HITCountry"
+                "pattern": "UserProfile"
               }
             },
             {

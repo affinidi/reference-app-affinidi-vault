@@ -33,8 +33,7 @@ Follow the guide below if you haven’t installed yet
 `--redirect-uris` will be the URL where the user will be redirected after successful authorization.
 
 - If you are using Affinidi directly without an identity provider, it should be a URL to your app
-  - In Django it would be `http://localhost:8000/callback`
-- If you are using Auth0 as an identity provider it would be `https://{auth0_domain}/login/callback`
+  - In starlette it would be `http://127.0.0.1:8300/auth`
 
 Sample response:
 
@@ -47,7 +46,7 @@ Sample response:
   "auth": {
     "clientId": "<CLIENT_ID>",
     "clientSecret": "<CLIENT_SECRET>",
-    "issuer": "https://apse1.api.affinidi.io/vpa/v1/login/project/<PROJECT-ID>",
+    "issuer": "https://<PROJECT-ID>.apse1.login.affinidi.io",
     "tokenEndpointAuthMethod": "client_secret_post"
   },
   "redirectUris": ["https://example.com/authCallback"],

@@ -15,9 +15,9 @@ async function generate() {
   const rootPath = join(__dirname, '../..')
   const samplesPath = join(rootPath, 'samples')
   const generatorPath = join(rootPath, 'generator')
-  const djangoPath = join(generatorPath, 'django')
-  const overridesPath = join(djangoPath, 'overrides')
-  const templatePath = join(djangoPath, 'template')
+  const fastapiPath = join(generatorPath, 'fastapi')
+  const overridesPath = join(fastapiPath, 'overrides')
+  const templatePath = join(fastapiPath, 'template')
 
   const overrides = (await fs.readdir(overridesPath, { withFileTypes: true }))
     .filter((i) => i.isDirectory())

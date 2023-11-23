@@ -1,45 +1,42 @@
-# Reference applications to integrate Affinidi Login and Affinidi Vault
+# Affinidi login demo with Flask
 
-This repository contains multiple sample applications to get you started on integrating Affinidi Login and Affinidi Vault in your tech stack.
+This is a template that showcases how to use Affinidi Vault to perform authentication and to interact with the vault. It accomplishes this through Affinidi Vault Chrome Extension using the [OpenID for Verifiable Presentations specification.](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
 
-## Samples
+First, copy `.env.example` to `.env`:
 
-### Integrating Affinidi Login directly
+```
+cp .env.example .env
+```
 
-- [affinidi-nextjs-nextauthjs](./samples/affinidi-nextjs-nextauthjs)
+## Install
 
-  Uses [NextJS](https://nextjs.org/docs) and [NextAuthJS](https://next-auth.js.org/getting-started/introduction) with a custom Affinidi provider.
+Install the required dependencies:
 
-- [affinidi-django-authlib](./samples/affinidi-django-authlib)
+```
+pip install -r requirements.txt
+```
 
-  Uses [Django](https://www.djangoproject.com/) and [Authlib](https://docs.authlib.org/en/latest/client/django.html#django-client) with a custom Affinidi provider.
+## Create Login Configuration and update .env
 
-- [affinidi-flask-authlib](./samples/affinidi-flask-authlib)
+Create your Affinidi Login Configuration with the [Affinidi CLI](https://github.com/affinidi/affinidi-cli#set-up-affinidi-login-for-your-applications) or at [Affinidi Portal](https://portal.affinidi.com/), make sure to add `http://127.0.0.1:8100/auth` into authorized redirect URIs.
 
-  Uses [Flask](https://flask.palletsprojects.com/) and [Authlib](https://docs.authlib.org/en/latest/client/flask.html) with a custom Affinidi provider.
+Please read the [setup login config guide](./docs/setup-login-config.md) to understand more about setting up login configuration.
 
-- [affinidi-fastapi-authlib](./samples/affinidi-fastapi-authlib)
+Fill the client ID, secret and issuer URL in `.env` file
 
-  Uses [FastApi](https://fastapi.tiangolo.com/) and [Authlib](https://docs.authlib.org/en/latest/client/fastapi.html) with a custom Affinidi provider.
+## Run
 
-- [affinidi-starlette-authlib](./samples/affinidi-starlette-authlib)
+Start server with:
 
-  Uses [starlette](https://www.starlette.io/) and [Authlib](https://docs.authlib.org/en/latest/client/starlette.html) with a custom Affinidi provider.
+```
+python3 -m flask run -p 8100
+```
 
-
-### Integrating Affinidi Login through Auth0
-
-- [auth0-nextjs-nextauthjs](./samples/auth0-nextjs-nextauthjs)
-
-  Uses [NextJS](https://nextjs.org/docs) and [NextAuthJS](https://next-auth.js.org/getting-started/introduction) with the [Auth0 provider](https://next-auth.js.org/providers/auth0).
-
-- [auth0-django-authlib](./samples/auth0-django-authlib)
-
-  Uses [Django](https://www.djangoproject.com/) and [Authlib](https://docs.authlib.org/en/latest/client/django.html#django-client) with the [Auth0 provider](https://next-auth.js.org/providers/auth0).
+Then visit: http://127.0.0.1:8100
 
 ## Read More
 
-Explore our [documentation](https://docs.affinidi.com/docs/) and [labs](https://docs.affinidi.com/labs/) to learn more about integrating Affinidi Login and Affinidi Vault.
+Explore our [documentation](https://docs.affinidi.com/docs/) and [labs](https://docs.affinidi.com/labs/) to learn more about integrating Affinidi Login with Affinidi Vault.
 
 ## Telemetry
 
@@ -48,6 +45,7 @@ Affinidi collects usage data to improve our products and services. For informati
 ## Feedback, Support, and Community
 
 [Click here](https://github.com/affinidi/reference-app-affinidi-vault/issues) to create a ticket and we will get on it right away. If you are facing technical or other issues, you can [Contact Support](https://share.hsforms.com/1i-4HKZRXSsmENzXtPdIG4g8oa2v).
+
 
 ## FAQ
 

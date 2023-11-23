@@ -5,7 +5,7 @@ import mkdirp from 'mkdirp'
 import rimraf from 'rimraf'
 import { generateAppInformation } from '../generateAppInformation.mjs'
 
-const filesToIgnore = ['.next', '.env', 'generator-config.json', '.gitkeep', 'keys', 'appInformation.json']
+const filesToIgnore = ['.next', '.env', 'generator-config.json', '.gitkeep', 'keys', 'appInformation.json', '__pycache__']
 const pathsToOverwrite = []
 
 const __dirname = dirname(url.fileURLToPath(import.meta.url))
@@ -15,9 +15,9 @@ async function generate() {
   const rootPath = join(__dirname, '../..')
   const samplesPath = join(rootPath, 'samples')
   const generatorPath = join(rootPath, 'generator')
-  const djangoPath = join(generatorPath, 'django')
-  const overridesPath = join(djangoPath, 'overrides')
-  const templatePath = join(djangoPath, 'template')
+  const flaskPath = join(generatorPath, 'flask')
+  const overridesPath = join(flaskPath, 'overrides')
+  const templatePath = join(flaskPath, 'template')
 
   const overrides = (await fs.readdir(overridesPath, { withFileTypes: true }))
     .filter((i) => i.isDirectory())

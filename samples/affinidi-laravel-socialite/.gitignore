@@ -20,3 +20,4 @@ yarn-error.log
 /storage/logs/sessions/*
 /storage/framework/sessions/*
 /storage/framework/views/*.php
+/bootstrap/cache/*

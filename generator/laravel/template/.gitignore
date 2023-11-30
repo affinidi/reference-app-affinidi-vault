@@ -17,7 +17,9 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/storage/logs/sessions/*
-/storage/framework/sessions/*
-/storage/framework/views/*.php
-/bootstrap/cache/*
+
+/storage/logs/*
+!/storage/framework/sessions/.gitkeep
+!/storage/framework/views/
+!/bootstrap/cache/.gitkeep
+/bootstrap/cache/*.php

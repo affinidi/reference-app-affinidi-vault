@@ -17,3 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/storage/logs/sessions/*
+/storage/framework/sessions/*
+/storage/framework/views/*.php

@@ -18,8 +18,22 @@ yarn-error.log
 /.idea
 /.vscode
 
+
+/bootstrap/cache/*
+!/bootstrap/cache/temp.txt
+
+/storage/app/public/*
+!/storage/app/public/temp.txt
+
+/storage/framework/cache/data/*
+!/storage/framework/cache/data/temp.txt
+
+/storage/framework/sessions/*
+!/storage/framework/sessions/temp.txt
+
+/storage/framework/testing/*
+!/storage/framework/testing/temp.txt
+
+/storage/framework/views/*
+!/storage/framework/views/temp.txt
 /storage/logs/*
-!/storage/framework/sessions/.gitkeep
-!/storage/framework/views/
-!/bootstrap/cache/.gitkeep
-/bootstrap/cache/*.php

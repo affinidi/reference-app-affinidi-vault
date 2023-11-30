@@ -6,7 +6,7 @@ import rimraf from 'rimraf'
 import { generateAppInformation } from '../generateAppInformation.mjs'
 
 const frameworkFolderName = 'laravel';
-const filesToIgnore = ['vendor', '.env', 'generator-config.json', '/.gitkeep', 'appInformation.json']
+const filesToIgnore = ['vendor', '.env', 'generator-config.json', '.gitkeep', 'appInformation.json']
 const pathsToOverwrite = []
 
 const __dirname = dirname(url.fileURLToPath(import.meta.url))

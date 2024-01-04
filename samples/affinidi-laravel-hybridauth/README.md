@@ -39,7 +39,7 @@ Open the downloaded directory `affinidi-laravel-hybridauth-app` in VS code or yo
     ```
     cp .env.example .env
     ```
- 3. Create [Affinidi Login Configuration](https://docs.affinidi.com/docs/affinidi-login/login-configuration/#create-login-configuration) by giving name as `Laravel App` and `Redirect URIs` as `http://localhost:8000/login/affinidi/callback`. Sample response is given below
+ 3. Create [Affinidi Login Configuration](https://docs.affinidi.com/docs/affinidi-login/login-configuration/#create-login-configuration) by giving name as `Laravel App` and `Redirect URIs` as `http://localhost:8020/login/affinidi/callback`. Sample response is given below
     ```
     {
         ...
@@ -74,8 +74,8 @@ Open the downloaded directory `affinidi-laravel-hybridauth-app` in VS code or yo
     ```
     php artisan serve
     ```
-6. Open the [http://localhost:8000/](http://localhost:8000/), which displays login page 
-    **Important**: You might error on redirect URL mismatch if you are using `http://127.0.0.1:8000/` instead of `http://localhost:8000/`. 
+6. Open the [http://localhost:8020/](http://localhost:8020/), which displays login page 
+    **Important**: You might error on redirect URL mismatch if you are using `http://127.0.0.1:8020/` instead of `http://localhost:8020/`. 
 7. Click on `Affinidi Login` button to initiate OAuth2 login flow with Affinidi Vault
 
 

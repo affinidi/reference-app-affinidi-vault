@@ -3,5 +3,10 @@
         "redirectUris" : {
             "callbackUrl": "http://localhost:8010/login/affinidi/callback"
         }
+    },
+    "affinidi-laravel-hybridauth" : {
+        "redirectUris" : {
+            "callbackUrl": "http://localhost:8020/login/affinidi/callback"
+        }
     }
 }

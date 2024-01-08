@@ -19,17 +19,9 @@ https://hybridauth.github.io/
 
 <br>
 
-## Download Base Reference Application
-
-Clone this repo using below command or download zip file [here](https://github.com/kamarthiparamesh/affinidi-laravel-hybridauth-app/archive/refs/heads/main.zip)
-
-```
-git clone https://github.com/kamarthiparamesh/affinidi-laravel-hybridauth-app.git
-```
-
 ## Setup & Run application
 
-Open the downloaded directory `affinidi-laravel-hybridauth-app` in VS code or your favourite editor
+Open the generated app in VS code or your favourite editor
 
  1. Install the dependencies by executing the below command in terminal
     ```
@@ -84,6 +76,4 @@ Open the downloaded directory `affinidi-laravel-hybridauth-app` in VS code or yo
 
 1. Config file for Affinidi provider settings, check here [hybridauth.php](config/hybridauth.php)
 
-2. Added custom provider for Hybrid Auth, check here [AffinidiProvider.php](/app/Providers/AffinidiProvider.php)
-
-3. Check [LoginRegisterController.php](app/Http/Controllers/LoginRegisterController.php) class for Initiate login, Callback and Logout.
+2. Check [LoginRegisterController.php](app/Http/Controllers/LoginRegisterController.php) class for Initiate login, Callback and Logout.

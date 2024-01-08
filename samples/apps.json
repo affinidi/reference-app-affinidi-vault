@@ -11,6 +11,11 @@
             "webOriginUrl": "http://localhost:8000"
         }
     },
+    "affinidi-dotnet-openidconnect": {
+        "redirectUris": {
+            "callbackUrl": "http://localhost:5068/signin-oidc"
+        }
+    },
     "affinidi-fastapi-authlib": {
         "redirectUris": {
             "callbackUrl": "http://127.0.0.1:8200/auth"

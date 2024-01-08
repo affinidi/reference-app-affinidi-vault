@@ -18,8 +18,9 @@
     string? name= !string.IsNullOrEmpty(Model.Username)? Model.Username : Model.Email;
 }
     <p><b>Welcome: </b>@name</p>
+    <p><b>Email: </b>@Model.Email</p>
      <p><b>Your DID: </b>@Model.DID
-    <p><b>Current Access Token:</b> @Model.AccessToken
+   
    
 
 

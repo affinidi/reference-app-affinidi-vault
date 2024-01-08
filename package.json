@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm run generate && npm run start",
-    "generate": "npm run generate:nextjs && npm run generate:django && npm run generate:flask && npm run generate:fastapi && npm run generate:starlette",
+    "generate": "npm run generate:nextjs && npm run generate:django && npm run generate:flask && npm run generate:fastapi && npm run generate:starlette && npm run generate:dotnet",
     "generate:nextjs": "node generator/nextjs/confirm.mjs && node generator/nextjs/generate.mjs",
     "generate:django": "node generator/django/confirm.mjs && node generator/django/generate.mjs",
     "generate:flask": "node generator/flask/confirm.mjs && node generator/flask/generate.mjs",
     "generate:fastapi": "node generator/fastapi/confirm.mjs && node generator/fastapi/generate.mjs",
     "generate:starlette": "node generator/starlette/confirm.mjs && node generator/starlette/generate.mjs",
+    "generate:dotnet": "node generator/dotnet/confirm.mjs && node generator/dotnet/generate.mjs",
     "install-all": "concurrently -n w: npm:install:*",
     "install:nextjs:template": "npm i --prefix generator/nextjs/template",
     "install:affinidi-nextjs-nextauthjs": "npm i --prefix samples/affinidi-nextjs-nextauthjs",
@@ -20,6 +21,8 @@
     "install:affinidi-flask-authlib": "pip install -r samples/affinidi-flask-authlib/requirements.txt",
     "install:affinidi-fastapi-authlib": "pip install -r samples/affinidi-fastapi-authlib/requirements.txt",
     "install:affinidi-starlette-authlib": "pip install -r samples/affinidi-starlette-authlib/requirements.txt",
+    "install:affinidi-dotnet-openidconnect": "cd samples/affinidi-dotnet-openidconnect && dotnet restore",
+
     "start": "concurrently -n w: \"npm:start:*(!template)\"",
     "start:template": "npm run --prefix generator/template dev -- -p 3000",
     "start:affinidi-nextjs-nextauthjs": "npm run --prefix samples/affinidi-nextjs-nextauthjs dev -- -p 3001",
@@ -29,10 +32,12 @@
     "start:affinidi-flask-authlib": "cd samples/affinidi-flask-authlib && python3 -m flask run -p 8100",
     "start:affinidi-fastapi-authlib": "cd samples/affinidi-fastapi-authlib && python3 app.py",
     "start:affinidi-starlette-authlib": "cd samples/affinidi-starlette-authlib && python3 app.py",
+    "start:affinidi-dotnet-openidconnect": "cd samples/affinidi-dotnet-openidconnect && dotnet run",
     "build": "concurrently -n w: \"npm:build:*(!template)\"",
     "build:nextjs:template": "npm run --prefix generator/nextjs/template build",
     "build:affinidi-nextjs-nextauthjs": "npm run --prefix samples/affinidi-nextjs-nextauthjs build",
     "build:auth0-nextjs-nextauthjs": "npm run --prefix samples/auth0-nextjs-nextauthjs build",
+    "build:affinidi-dotnet-openidconnect": "cd samples/affinidi-dotnet-openidconnect && dotnet build",
     "postinstall": "npm run install-all"
   },
   "repository": {

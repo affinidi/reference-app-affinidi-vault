@@ -12,7 +12,7 @@ class LoginRegisterController extends Controller
 
     public function __construct() {
         $config = \Config::get('hybridauth');
-        self::$adapter = new \App\Providers\AffinidiProvider($config);
+        self::$adapter = new \Affinidi\HybridauthProvider\AffinidiProvider($config);
     }
 
     public function login()

@@ -1,10 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-// using System.Net;
-// using System.Net.Http;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+
 
 namespace Affinidi_Login_Demo_App;
 
@@ -17,6 +16,7 @@ public class Startup
         public Startup(IWebHostEnvironment environment, IConfiguration config) {
             Environment = environment;
             Configuration = config;
+            DotNetEnv.Env.Load();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,12 +55,12 @@ public class Startup
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 
                 // Set the main OpenID Connect settings
-                options.Authority = Configuration.GetValue<string>("OpenIdConnect:Issuer");
-                options.ClientId = Configuration.GetValue<string>("OpenIdConnect:ClientId");
-                options.ClientSecret = Configuration.GetValue<string>("OpenIdConnect:ClientSecret");
+                options.Authority = System.Environment.GetEnvironmentVariable("PROVIDER_ISSUER");
+                options.ClientId = System.Environment.GetEnvironmentVariable("PROVIDER_CLIENT_ID");
+                options.ClientSecret = System.Environment.GetEnvironmentVariable("PROVIDER_CLIENT_SECRET");
+                string scopeString = System.Environment.GetEnvironmentVariable("SCOPE");
                 options.ResponseType = OpenIdConnectResponseType.Code;
                 options.ResponseMode = OpenIdConnectResponseMode.Query;
-                string scopeString = Configuration.GetValue<string>("OpenIDConnect:Scope");
                 options.Scope.Clear();
                 scopeString?.Split(" ", StringSplitOptions.TrimEntries).ToList().ForEach(scope => {
                     options.Scope.Add(scope);

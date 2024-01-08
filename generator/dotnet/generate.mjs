@@ -5,7 +5,7 @@ import mkdirp from 'mkdirp'
 import rimraf from 'rimraf'
 import { generateAppInformation } from '../generateAppInformation.mjs'
 
-const filesToIgnore = ['bin', 'obj', 'generator-config.json', '.gitkeep', 'keys', 'appInformation.json']
+const filesToIgnore = ['appsettings.Development.json','bin', 'obj', 'generator-config.json', '.gitkeep', 'keys', 'appInformation.json']
 const pathsToOverwrite = []
 
 const __dirname = dirname(url.fileURLToPath(import.meta.url))
@@ -66,9 +66,9 @@ async function generate() {
       filter: (path) => !filesToIgnore.includes(basename(path)),
     })
 
-    const envPath = join(samplePath, 'appsettings.json')
+    const envPath = join(samplePath, '.env')
     if (!(await exists(envPath))) {
-      await fs.cp(join(samplePath, 'appsettings.Development.json'), envPath)
+      await fs.cp(join(samplePath, '.env.example'), envPath)
     }
   }
 }

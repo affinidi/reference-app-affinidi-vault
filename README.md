@@ -30,6 +30,11 @@ This repository contains multiple sample applications to get you started on inte
 
   Uses [PHP Laravel](https://laravel.com/) and [Socialite](https://laravel.com/docs/10.x/socialite) with a custom Affinidi provider.
 
+- [affinidi-laravel-hybridauth](./samples/affinidi-laravel-hybridauth)
+
+  Uses [PHP Laravel](https://laravel.com/) and [Hybridauth](https://hybridauth.github.io/) with a custom Affinidi provider.
+
+
 ### Integrating Affinidi Login through Auth0
 
 - [auth0-nextjs-nextauthjs](./samples/auth0-nextjs-nextauthjs)

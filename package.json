@@ -16,7 +16,7 @@
     "install:nextjs:template": "npm i --prefix generator/nextjs/template",
     "install:affinidi-nextjs-nextauthjs": "npm i --prefix samples/affinidi-nextjs-nextauthjs",
     "install:auth0-nextjs-nextauthjs": "npm i --prefix samples/auth0-nextjs-nextauthjs",
-    "install:affinidi-django-authlib": "pip install -r samples/affinidi-django-authlib/requirements.txt",   
+    "install:affinidi-django-authlib": "pip install -r samples/affinidi-django-authlib/requirements.txt",
     "install:auth0-django-authlib": "pip install -r samples/auth0-django-authlib/requirements.txt",
     "install:affinidi-flask-authlib": "pip install -r samples/affinidi-flask-authlib/requirements.txt",
     "install:affinidi-fastapi-authlib": "pip install -r samples/affinidi-fastapi-authlib/requirements.txt",
@@ -73,5 +73,8 @@
     ],
     "delay": 500,
     "ext": "js,mjs,ts,tsx,json,css,scss,.env,md"
+  },
+  "dependencies": {
+    "path-sanitizer": "^2.0.0"
   }
 }

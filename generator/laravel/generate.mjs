@@ -1,5 +1,6 @@
 import fs from 'fs/promises'
 import { dirname, join, basename } from 'path'
+import sanitize from 'path-sanitizer'
 import url from 'url'
 import mkdirp from 'mkdirp'
 import rimraf from 'rimraf'
@@ -49,8 +50,7 @@ async function generate() {
     console.log('Copying the template')
     const pathsToDelete = (await fs.readdir(samplePath).catch(() => []))
       .filter((file) => !filesToIgnore.includes(file))
-      .map((file) => join(samplePath, file))
-      console.log(pathsToDelete);
+      .map((file) => join(sanitize(samplePath), sanitize(file)))
     await deletePath(pathsToDelete)
     await merge(templatePath, samplePath, {
       filter: (path) => !filesToIgnore.includes(basename(path)),
@@ -76,7 +76,7 @@ async function generate() {
 }
 
 async function merge(from, to, options) {
-  await mkdirp(join(to, '..'))
+  await mkdirp(join(sanitize(to), '..'))
 
   try {
     await fs.cp(from, to, { recursive: true, ...options })

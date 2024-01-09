@@ -42,6 +42,13 @@ Fill the client ID, secret and issuer URL in `.env` file
 
 ### Update .env file:
 
+if .env file is not present
+create an .env file 
+
+```sh
+cp .env.example .env
+```
+
 Update the following fields in .env from data generated from previous step for `OpenIDConnect`.
 
 `PROVIDER_CLIENT_ID:` Client ID generated during create login configuration

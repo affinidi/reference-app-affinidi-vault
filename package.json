@@ -5,24 +5,26 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm run generate && npm run start",
-    "generate": "npm run generate:nextjs && npm run generate:django && npm run generate:flask && npm run generate:fastapi && npm run generate:starlette && npm run generate:dotnet",
+    "generate": "npm run generate:nextjs && npm run generate:django && npm run generate:flask && npm run generate:fastapi && npm run generate:starlette && npm run generate:laravel && npm run generate:dotnet",
     "generate:nextjs": "node generator/nextjs/confirm.mjs && node generator/nextjs/generate.mjs",
     "generate:django": "node generator/django/confirm.mjs && node generator/django/generate.mjs",
     "generate:flask": "node generator/flask/confirm.mjs && node generator/flask/generate.mjs",
     "generate:fastapi": "node generator/fastapi/confirm.mjs && node generator/fastapi/generate.mjs",
     "generate:starlette": "node generator/starlette/confirm.mjs && node generator/starlette/generate.mjs",
+    "generate:laravel": "node generator/laravel/confirm.mjs && node generator/laravel/generate.mjs",
     "generate:dotnet": "node generator/dotnet/confirm.mjs && node generator/dotnet/generate.mjs",
     "install-all": "concurrently -n w: npm:install:*",
     "install:nextjs:template": "npm i --prefix generator/nextjs/template",
     "install:affinidi-nextjs-nextauthjs": "npm i --prefix samples/affinidi-nextjs-nextauthjs",
     "install:auth0-nextjs-nextauthjs": "npm i --prefix samples/auth0-nextjs-nextauthjs",
-    "install:affinidi-django-authlib": "pip install -r samples/affinidi-django-authlib/requirements.txt",   
+    "install:affinidi-django-authlib": "pip install -r samples/affinidi-django-authlib/requirements.txt",
     "install:auth0-django-authlib": "pip install -r samples/auth0-django-authlib/requirements.txt",
     "install:affinidi-flask-authlib": "pip install -r samples/affinidi-flask-authlib/requirements.txt",
     "install:affinidi-fastapi-authlib": "pip install -r samples/affinidi-fastapi-authlib/requirements.txt",
     "install:affinidi-starlette-authlib": "pip install -r samples/affinidi-starlette-authlib/requirements.txt",
+    "install:affinidi-laravel-socialite": "composer install -d samples/affinidi-laravel-socialite",
+    "install:affinidi-laravel-hybridauth": "composer install -d samples/affinidi-laravel-hybridauth",
     "install:affinidi-dotnet-openidconnect": "cd samples/affinidi-dotnet-openidconnect && dotnet restore",
-
     "start": "concurrently -n w: \"npm:start:*(!template)\"",
     "start:template": "npm run --prefix generator/template dev -- -p 3000",
     "start:affinidi-nextjs-nextauthjs": "npm run --prefix samples/affinidi-nextjs-nextauthjs dev -- -p 3001",
@@ -32,6 +34,8 @@
     "start:affinidi-flask-authlib": "cd samples/affinidi-flask-authlib && python3 -m flask run -p 8100",
     "start:affinidi-fastapi-authlib": "cd samples/affinidi-fastapi-authlib && python3 app.py",
     "start:affinidi-starlette-authlib": "cd samples/affinidi-starlette-authlib && python3 app.py",
+    "start:affinidi-laravel-socialite": "php samples/affinidi-laravel-socialite/artisan serve",
+    "start:affinidi-laravel-hybridauth": "php samples/affinidi-laravel-hybridauth/artisan serve",
     "start:affinidi-dotnet-openidconnect": "cd samples/affinidi-dotnet-openidconnect && dotnet run",
     "build": "concurrently -n w: \"npm:build:*(!template)\"",
     "build:nextjs:template": "npm run --prefix generator/nextjs/template build",
@@ -73,5 +77,8 @@
     ],
     "delay": 500,
     "ext": "js,mjs,ts,tsx,json,css,scss,.env,md"
+  },
+  "dependencies": {
+    "path-sanitizer": "^2.0.0"
   }
 }

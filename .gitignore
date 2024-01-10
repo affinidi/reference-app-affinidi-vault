@@ -37,6 +37,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+.vscode
+
 .env
 db.json
 keys

@@ -26,10 +26,17 @@ This repository contains multiple sample applications to get you started on inte
 
   Uses [starlette](https://www.starlette.io/) and [Authlib](https://docs.authlib.org/en/latest/client/starlette.html) with a custom Affinidi provider.
 
+- [affinidi-laravel-socialite](./samples/affinidi-laravel-socialite)
+
+  Uses [PHP Laravel](https://laravel.com/) and [Socialite](https://laravel.com/docs/10.x/socialite) with a custom Affinidi provider.
+
+- [affinidi-laravel-hybridauth](./samples/affinidi-laravel-hybridauth)
+
+  Uses [PHP Laravel](https://laravel.com/) and [Hybridauth](https://hybridauth.github.io/) with a custom Affinidi provider.
+
 - [affinidi-dotnet-openidconnect](./samples/affinidi-dotnet-openidconnect)
 
   Uses [Dotnet](https://dotnet.microsoft.com/en-us/download/) and [OpenIdConnect](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.openidconnect?view=aspnetcore-8.0) with a custom Affinidi provider.
-
 
 ### Integrating Affinidi Login through Auth0
 

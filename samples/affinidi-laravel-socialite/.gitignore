@@ -17,7 +17,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-
+composer.lock
 
 /bootstrap/cache/*
 !/bootstrap/cache/temp.txt

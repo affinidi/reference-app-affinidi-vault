@@ -76,7 +76,7 @@ async function generate() {
 }
 
 async function merge(from, to, options) {
-  await mkdirp(join(sanitize(to), '..'))
+  await mkdirp(join(to, '..'))
 
   try {
     await fs.cp(from, to, { recursive: true, ...options })

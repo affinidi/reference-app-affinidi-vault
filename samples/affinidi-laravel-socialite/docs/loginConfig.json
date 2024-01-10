@@ -1,0 +1,192 @@
+{
+    "name": "Laravel App",
+    "redirectUris": [
+      "http://localhost:8000/login/affinidi/callback",
+      "http://127.0.0.1:8000/login/affinidi/callback"
+    ],
+    "presentationDefinition": {
+      "id": "vp_combined_email_user_profile_combined",
+      "submission_requirements": [{ "rule": "pick", "min": 1, "from": "A" }],
+      "input_descriptors": [
+        {
+          "id": "email_vc",
+          "name": "Email VC",
+          "purpose": "we can get vc of email schema",
+          "group": ["A"],
+          "constraints": {
+            "fields": [
+              {
+                "path": ["$.credentialSchema.id"],
+                "filter": {
+                  "type": "string",
+                  "pattern": "^https://schema.affinidi.com/EmailV1-0.json$"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "profile_vc",
+          "name": "profile VC type",
+          "purpose": "Check if VC type is correct",
+          "group": ["A"],
+          "constraints": {
+            "fields": [
+              {
+                "path": ["$.credentialSchema.id"],
+                "filter": {
+                  "type": "string",
+                  "pattern": "^https://schema.affinidi.com/UserProfileV2-0.json$"
+                }
+              },
+              {
+                "path": ["$.credentialSubject.updatedAt"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "type",
+          "name": "Type",
+          "purpose": "To get type for ID Mapping",
+          "constraints": { "fields": [{ "path": ["$.type"] }] }
+        },
+        {
+          "id": "email",
+          "name": "Email",
+          "purpose": "To get email for ID Mapping",
+          "constraints": { "fields": [{ "path": ["$.credentialSubject.email"] }] }
+        },
+        {
+          "id": "family_name",
+          "name": "Family name",
+          "purpose": "To get family name for ID Mapping",
+          "constraints": {
+            "fields": [{ "path": ["$.credentialSubject.familyName"] }]
+          }
+        },
+        {
+          "id": "given_name",
+          "name": "Given name",
+          "purpose": "To get given name for ID Mapping",
+          "constraints": {
+            "fields": [{ "path": ["$.credentialSubject.givenName"] }]
+          }
+        },
+        {
+          "id": "middle_name",
+          "name": "Middle name",
+          "purpose": "To get middle name for ID Mapping",
+          "constraints": {
+            "fields": [{ "path": ["$.credentialSubject.middleName"] }]
+          }
+        },
+        {
+          "id": "nickname",
+          "name": "Nickname",
+          "purpose": "To get nickname for ID Mapping",
+          "constraints": {
+            "fields": [{ "path": ["$.credentialSubject.nickname"] }]
+          }
+        },
+        {
+          "id": "picture",
+          "name": "Picture",
+          "purpose": "To get picture for ID Mapping",
+          "constraints": {
+            "fields": [{ "path": ["$.credentialSubject.picture"] }]
+          }
+        },
+        {
+          "id": "updated_at",
+          "name": "UpdatedAt",
+          "purpose": "To get updatedAt for ID Mapping",
+          "constraints": {
+            "fields": [{ "path": ["$.credentialSubject.updatedAt"] }]
+          }
+        },
+        {
+          "id": "gender",
+          "name": "gender",
+          "purpose": "To get gender for ID Mapping",
+          "constraints": {
+            "fields": [{ "path": ["$.credentialSubject.gender"] }]
+          }
+        },
+        {
+          "id": "birthdate",
+          "name": "birthdate",
+          "purpose": "To get birthdate for ID Mapping",
+          "constraints": {
+            "fields": [{ "path": ["$.credentialSubject.birthdate"] }]
+          }
+        },
+        {
+          "id": "phoneNumber",
+          "name": "phoneNumber",
+          "purpose": "To get phoneNumber for ID Mapping",
+          "constraints": {
+            "fields": [{ "path": ["$.credentialSubject.phoneNumber"] }]
+          }
+        },
+        {
+          "id": "address",
+          "name": "address",
+          "purpose": "To get address for ID Mapping",
+          "constraints": {
+            "fields": [{ "path": ["$.credentialSubject.address"] }]
+          }
+        }
+      ]
+    },
+    "idTokenMapping": [
+      {
+        "sourceField": "$.type",
+        "idTokenClaim": "type"
+      },
+      {
+        "sourceField": "$.credentialSubject.email",
+        "idTokenClaim": "email"
+      },
+      {
+        "sourceField": "$.credentialSubject.familyName",
+        "idTokenClaim": "familyName"
+      },
+      {
+        "sourceField": "$.credentialSubject.givenName",
+        "idTokenClaim": "givenName"
+      },
+      {
+        "sourceField": "$.credentialSubject.middleName",
+        "idTokenClaim": "middleName"
+      },
+      {
+        "sourceField": "$.credentialSubject.nickname",
+        "idTokenClaim": "nickname"
+      },
+      {
+        "sourceField": "$.credentialSubject.picture",
+        "idTokenClaim": "picture"
+      },
+      {
+        "sourceField": "$.credentialSubject.updatedAt",
+        "idTokenClaim": "updatedAt"
+      },
+      {
+        "sourceField": "$.credentialSubject.gender",
+        "idTokenClaim": "gender"
+      },
+      {
+        "sourceField": "$.credentialSubject.birthdate",
+        "idTokenClaim": "birthdate"
+      },
+      {
+        "sourceField": "$.credentialSubject.phoneNumber",
+        "idTokenClaim": "phoneNumber"
+      },
+      {
+        "sourceField": "$.credentialSubject.address",
+        "idTokenClaim": "address"
+      }
+    ]
+  }

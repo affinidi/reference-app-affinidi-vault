@@ -4,7 +4,7 @@ This project is a .NET 8.0 Razor web app, utilizing the power of Razor Pages for
 
 ## Getting Started
 
-These instructions will help you to make this project up and running on your local machine for development and testing purposes.
+These instructions will help you to get this project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -20,7 +20,7 @@ Make sure you have the following tools installed on your machine:
     dotnet --version 
     ```
 
-    You should get Output as, please reinstal if dotet version is not 8.0.xxx
+    You should get the output as below, please reinstall dotnet if the version is not 8.0.xxx
     ```sh
     8.0.100
     ```
@@ -36,20 +36,19 @@ Create your Affinidi Login Configuration with the [Affinidi CLI](https://github.
 
 Make sure to add `http://localhost:5068/signin-oidc` into authorized redirect URIs.
 
-Please read the [setup login config guide](./docs/setup-login-config.md) to understand more about setting up login configuration.
+Please read the [setup login-config guide](./docs/setup-login-config.md) to understand more about setting up login configuration.
 
-Fill the client ID, secret and issuer URL in `.env` file
+Fill in the client ID, secret and issuer URL in the `.env` file
 
 ### Update .env file:
 
-if .env file is not present
-create an .env file 
+if the `.env` file is not present create a .env file 
 
 ```sh
 cp .env.example .env
 ```
 
-Update the following fields in .env from data generated from previous step for `OpenIDConnect`.
+Update the following fields in .env from data generated from the previous step for `OpenIDConnect`.
 
 `PROVIDER_CLIENT_ID:` Client ID generated during create login configuration
 
@@ -67,7 +66,7 @@ dotnet run
 ```
 
 
-Then visit: http://localhost:5068/ to browse reference app
+Then visit: http://localhost:5068/ to browse the reference app
 
 ## Read More
 
@@ -86,13 +85,13 @@ Affinidi collects usage data to improve our products and services. For informati
 
 ### What can I develop?
 
-You are only limited by your imagination! Affinidi Reference Applications are a toolbox with which you can build software apps for personal or commercial use.
+You are only limited by your imagination! Affinidi Reference Applications is a toolbox with which you can build software apps for personal or commercial use.
 
 ### Is there anything I should not develop?
 
 We only provide the tools - how you use them is largely up to you. We have no control over what you develop with our tools - but please use our tools responsibly!
 
-We hope that you would not develop anything that contravenes any applicable laws or regulations. Your projects should also not infringe on Affinidi’s or any third party’s intellectual property (for instance, misusing other parties’ data, code, logos, etc).
+We hope that you will not develop anything that contravenes any applicable laws or regulations. Your projects should also not infringe on Affinidi’s or any third party’s intellectual property (for instance, misusing other parties’ data, code, logos, etc).
 
 ### What responsibilities do I have to my end-users?
 

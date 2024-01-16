@@ -1,0 +1,7 @@
+{
+    "affinidi-dotnet-openidconnect" : {
+        "redirectUris" : {
+            "callbackUrl" : "http://localhost:5068/signin-oidc"
+        }
+    }
+}

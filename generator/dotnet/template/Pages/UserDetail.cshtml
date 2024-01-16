@@ -1,0 +1,36 @@
+﻿@page
+@model Affinidi_Login_Demo_App.UserDetailModel
+@{
+}
+<!-- Needed so that POSTs send an anti-forgery token -->
+@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<style type="text/css">
+    button {
+        width: 200px;
+    }
+</style>
+
+<h1>User Logged-in Details</h1>
+<div style="padding: 4rem;">
+
+@{
+    string? name= !string.IsNullOrEmpty(Model.Username)? Model.Username : Model.Email;
+}
+    <p><b>Welcome: </b>@name</p>
+    <p><b>Email: </b>@Model.Email</p>
+     <p><b>Your DID: </b>@Model.DID
+   
+   
+
+
+</div>
+<div style="padding: 2rem; padding-left: 4rem;">
+<form method="post">
+    @* <p><button value="RefreshToken" asp-page-handler="RefreshToken">Refresh Token</button></p> *@
+    @if (!string.IsNullOrEmpty(Model.AccessToken))
+    {
+        <p><button value="Logout" asp-page-handler="Logout">Clear cookies</button></p>
+    }
+</form>
+</div>

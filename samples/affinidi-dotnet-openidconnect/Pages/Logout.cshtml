@@ -1,0 +1,37 @@
+﻿@page
+@model Affinidi_Login_Demo_App.LogoutModel
+@{
+}
+
+<div style="padding: 4rem;">
+    @if (Model.loggedOut)
+    {
+        <h3> You have been loged out from application</h3>
+    }
+</div>
+<div style="padding: 4rem;">
+    <h4>
+        <p> Redirecting you to <a href="/Index"> Home page </a> in <span id="countdown">5</span> seconds.</p>
+    </h4>
+</div>
+<script>
+    // Set the initial countdown value
+    var seconds = 5;
+
+    // Function to update the countdown and redirect after reaching zero
+    function updateCountdown() {
+        document.getElementById("countdown").innerText = seconds;
+        if (seconds === 0) {
+            // Redirect to the home page
+            window.location.href = "/Index";
+        } else {
+            // Decrement the countdown value
+            seconds--;
+            // Call the function recursively after 1 second
+            setTimeout(updateCountdown, 1000);
+        }
+    }
+
+    // Initial call to start the countdown
+    updateCountdown();
+</script>

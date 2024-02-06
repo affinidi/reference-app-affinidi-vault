@@ -1,7 +1,48 @@
 {
-    "affinidi-starlette-authlib" : {
-        "redirectUris" : {
-            "callbackUrl" : "http://127.0.0.1:8300/auth"
+    "affinidi-starlette-authlib": {
+        "redirectUris": {
+            "callbackUrl": "http://127.0.0.1:8300/auth"
+        },
+        "metadata": {
+            "name": "Affinidi Login integration using Starlette and Authlib",
+            "description": "A reference app created using Starlette framework and uses AuthLib ibrary to enable passwordless login using Affinidi IDP ",
+            "idp": "Affinidi",
+            "framework": {
+                "name": "Starlette",
+                "iconUrl": "https://"
+            },
+            "language": {
+                "name": "Python",
+                "iconUrl": "https://"
+            },
+            "library": {
+                "name": "authlib",
+                "iconUrl": "https://"
+            }
+        }
+    },
+    "auth0-starlette-authlib": {
+        "redirectUris": {
+            "callbackUrl": "http://127.0.0.1:8301/auth",
+            "logOutUrl": "http://127.0.0.1:8301",
+            "webOriginUrl": "http://127.0.0.1:8301"
+        },
+        "metadata": {
+            "name": "Affinidi Login integration using Auth0, Starlette and Authlib",
+            "description": "A reference app created using Starlette framework and uses AuthLib ibrary to enable passwordless login using Auth0 IDP ",
+            "idp": "Affinidi",
+            "framework": {
+                "name": "Starlette",
+                "iconUrl": "https://"
+            },
+            "language": {
+                "name": "Python",
+                "iconUrl": "https://"
+            },
+            "library": {
+                "name": "authlib",
+                "iconUrl": "https://"
+            }
         }
     }
 }

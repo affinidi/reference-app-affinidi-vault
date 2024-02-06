@@ -1,7 +1,48 @@
 {
-    "affinidi-fastapi-authlib" : {
-        "redirectUris" : {
-            "callbackUrl" : "http://127.0.0.1:8200/auth"
+    "affinidi-fastapi-authlib": {
+        "redirectUris": {
+            "callbackUrl": "http://127.0.0.1:8200/auth"
+        },
+        "metadata": {
+            "name": "Affinidi Login integration using FastApi and Authlib",
+            "description": "A reference app created using fastapi framework and uses AuthLib ibrary to enable passwordless login using Affinidi IDP ",
+            "idp": "Affinidi",
+            "framework": {
+                "name": "FastApi",
+                "iconUrl": "https://"
+            },
+            "language": {
+                "name": "Python",
+                "iconUrl": "https://"
+            },
+            "library": {
+                "name": "authlib",
+                "iconUrl": "https://"
+            }
+        }
+    },
+    "auth0-fastapi-authlib": {
+        "redirectUris": {
+            "callbackUrl": "http://127.0.0.1:8201/auth",
+            "logOutUrl": "http://127.0.0.1:8201",
+            "webOriginUrl": "http://127.0.0.1:8201"
+        },
+        "metadata": {
+            "name": "Affinidi Login integration using Auth0, FastApi and Authlib",
+            "description": "A reference app created using fastapi framework and uses AuthLib ibrary to enable passwordless login using Auth0 IDP ",
+            "idp": "Auth0",
+            "framework": {
+                "name": "FastApi",
+                "iconUrl": "https://"
+            },
+            "language": {
+                "name": "Python",
+                "iconUrl": "https://"
+            },
+            "library": {
+                "name": "authlib",
+                "iconUrl": "https://"
+            }
         }
     }
 }

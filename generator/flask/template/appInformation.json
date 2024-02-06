@@ -1,7 +1,48 @@
 {
-    "affinidi-flask-authlib" : {
-        "redirectUris" : {
-            "callbackUrl" : "http://127.0.0.1:8100/auth"
+    "affinidi-flask-authlib": {
+        "redirectUris": {
+            "callbackUrl": "http://127.0.0.1:8100/auth"
+        },
+        "metadata": {
+            "name": "Affinidi Login integration using Flask and Authlib",
+            "description": "A reference app created using Flask framework and uses AuthLib ibrary to enable passwordless login using Affinidi IDP ",
+            "idp": "Affinidi",
+            "framework": {
+                "name": "Flask",
+                "iconUrl": "https://"
+            },
+            "language": {
+                "name": "Python",
+                "iconUrl": "https://"
+            },
+            "library": {
+                "name": "authlib",
+                "iconUrl": "https://"
+            }
+        }
+    },
+    "auth0-flask-authlib": {
+        "redirectUris": {
+            "callbackUrl": "http://127.0.0.1:8101/auth",
+            "logOutUrl": "http://127.0.0.1:8101",
+            "webOriginUrl": "http://127.0.0.1:8101"
+        },
+        "metadata": {
+            "name": "Affinidi Login integration using Auth0, Flask and Authlib",
+            "description": "A reference app created using flask framework and uses AuthLib ibrary to enable passwordless login using Auth0 IDP ",
+            "idp": "Auth0",
+            "framework": {
+                "name": "Flask",
+                "iconUrl": "https://"
+            },
+            "language": {
+                "name": "Python",
+                "iconUrl": "https://"
+            },
+            "library": {
+                "name": "authlib",
+                "iconUrl": "https://"
+            }
         }
     }
 }

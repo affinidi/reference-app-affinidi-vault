@@ -123,15 +123,15 @@
             "idp": "Affinidi",
             "framework": {
                 "name": "Flask",
-                "iconUrl": "https://"
+                "iconUrl": "https://flask.palletsprojects.com/en/3.0.x/_images/flask-horizontal.png"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
             }
         }
     },
@@ -147,15 +147,15 @@
             "idp": "Auth0",
             "framework": {
                 "name": "Flask",
-                "iconUrl": "https://"
+                "iconUrl": "https://flask.palletsprojects.com/en/3.0.x/_images/flask-horizontal.png"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
             }
         }
     },

@@ -9,15 +9,15 @@
             "idp": "Affinidi",
             "framework": {
                 "name": "FastApi",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/tiangolo/fastapi/blob/master/docs/en/docs/img/logo-margin/logo-teal.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://"
+                "iconUrl": "https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
             }
         }
     },

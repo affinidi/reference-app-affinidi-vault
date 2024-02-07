@@ -9,15 +9,15 @@
             "idp": "Affinidi",
             "framework": {
                 "name": "Django",
-                "iconUrl": "https://"
+                "iconUrl": "https://static.djangoproject.com/img/logos/django-logo-negative.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://"
+                "iconUrl": "https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
             }
         }
     },
@@ -33,15 +33,15 @@
             "idp": "Auth0",
             "framework": {
                 "name": "Django",
-                "iconUrl": "https://"
+                "iconUrl": "https://static.djangoproject.com/img/logos/django-logo-negative.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://"
+                "iconUrl": "https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
             }
         }
     },

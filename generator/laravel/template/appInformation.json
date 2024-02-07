@@ -9,15 +9,15 @@
             "idp": "Affinidi",
             "framework": {
                 "name": "Laravel",
-                "iconUrl": "https://"
+                "iconUrl": "https://laravel.com/img/logomark.min.svg"
             },
             "language": {
                 "name": "PHP",
-                "iconUrl": "https://"
+                "iconUrl": "https://www.php.net/images/logos/new-php-logo.svg"
             },
             "library": {
                 "name": "Socialite",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/laravel/socialite/blob/5.x/art/logo.svg"
             }
         }
     },
@@ -31,15 +31,15 @@
             "idp": "Affinidi",
             "framework": {
                 "name": "Laravel",
-                "iconUrl": "https://"
+                "iconUrl": "https://laravel.com/img/logomark.min.svg"
             },
             "language": {
                 "name": "PHP",
-                "iconUrl": "https://"
+                "iconUrl": "https://www.php.net/images/logos/new-php-logo.svg"
             },
             "library": {
                 "name": "HybridAuth",
-                "iconUrl": "https://"
+                "iconUrl": "https://avatars.githubusercontent.com/u/1198018"
             }
         }
     }

@@ -9,15 +9,15 @@
             "idp": "Affinidi",
             "framework": {
                 "name": "Starlette",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/koddr/starlette-logo/blob/master/src/dark/png/starlette__full_logo__with_text__dark.png"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
             }
         }
     },
@@ -33,15 +33,15 @@
             "idp": "Affinidi",
             "framework": {
                 "name": "Starlette",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/koddr/starlette-logo/blob/master/src/dark/png/starlette__full_logo__with_text__dark.png"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://"
+                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
             }
         }
     }

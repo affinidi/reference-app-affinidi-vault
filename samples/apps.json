@@ -212,16 +212,16 @@
             "description": "A reference app created using Nextjs framework and uses nextauthjs ibrary to enable passwordless login using Affinidi IDP ",
             "idp": "Affinidi",
             "framework": {
-                "name": "NextAuth",
-                "iconUrl": "https://"
+                "name": "Next.js",
+                "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg"
             },
             "language": {
-                "name": "Nextjs",
-                "iconUrl": "https://"
+                "name": "TypeScript",
+                "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Typescript.svg"
             },
             "library": {
                 "name": "NextAuthjs",
-                "iconUrl": "https://"
+                "iconUrl": "https://next-auth.js.org/img/logo/logo-sm.png"
             }
         }
     },
@@ -236,16 +236,16 @@
             "description": "A reference app created using Nextjs framework and uses nextauthjs ibrary to enable passwordless login using Auth0 IDP ",
             "idp": "Auth0",
             "framework": {
-                "name": "NextAuth",
-                "iconUrl": "https://"
+                "name": "Next.js",
+                "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg"
             },
             "language": {
-                "name": "Nextjs",
-                "iconUrl": "https://"
+                "name": "TypeScript",
+                "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Typescript.svg"
             },
             "library": {
                 "name": "NextAuthjs",
-                "iconUrl": "https://"
+                "iconUrl": "https://next-auth.js.org/img/logo/logo-sm.png"
             }
         }
     },

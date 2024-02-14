@@ -1,7 +1,24 @@
 {
-    "affinidi-dotnet-openidconnect" : {
-        "redirectUris" : {
-            "callbackUrl" : "http://localhost:5068/signin-oidc"
+    "affinidi-dotnet-openidconnect": {
+        "redirectUris": {
+            "callbackUrl": "http://localhost:5068/signin-oidc"
+        },
+        "metadata": {
+            "name": "Affinidi Login integration using dotnet and openidconnect",
+            "description": "A reference app created using dontnet framework which uses openidconnect ibrary to enable passwordless login using Affinidi IDP ",
+            "idp": "Affinidi",
+            "framework": {
+                "name": "Microsoft Dotnet",
+                "iconUrl": "https://github.com/dotnet/brand/blob/main/logo/dotnet-logo.png"
+            },
+            "language": {
+                "name": "C#",
+                "iconUrl": "https://github.com/dotnet/vscode-csharp/blob/main/images/csharpIcon.png"
+            },
+            "library": {
+                "name": "openidconnect",
+                "iconUrl": "https://www.nuget.org/profiles/Microsoft/avatar"
+            }
         }
     }
 }

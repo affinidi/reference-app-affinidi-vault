@@ -2,11 +2,45 @@
     "affinidi-laravel-socialite" : {
         "redirectUris" : {
             "callbackUrl": "http://localhost:8010/login/affinidi/callback"
+        },
+        "metadata": {
+            "name": "Affinidi Login integration using Laravel and Socialite",
+            "description": "A reference app created using Laravel framework and uses Socialite ibrary to enable passwordless login using Affinidi IDP ",
+            "idp": "Affinidi",
+            "framework": {
+                "name": "Laravel",
+                "iconUrl": "https://laravel.com/img/logomark.min.svg"
+            },
+            "language": {
+                "name": "PHP",
+                "iconUrl": "https://www.php.net/images/logos/new-php-logo.svg"
+            },
+            "library": {
+                "name": "Socialite",
+                "iconUrl": "https://github.com/laravel/socialite/blob/5.x/art/logo.svg"
+            }
         }
     },
     "affinidi-laravel-hybridauth" : {
         "redirectUris" : {
             "callbackUrl": "http://localhost:8020/login/affinidi/callback"
+        },
+        "metadata": {
+            "name": "Affinidi Login integration using Laravel and Hybridauth",
+            "description": "A reference app created using Laravel framework and uses hybridauth ibrary to enable passwordless login using Affinidi IDP ",
+            "idp": "Affinidi",
+            "framework": {
+                "name": "Laravel",
+                "iconUrl": "https://laravel.com/img/logomark.min.svg"
+            },
+            "language": {
+                "name": "PHP",
+                "iconUrl": "https://www.php.net/images/logos/new-php-logo.svg"
+            },
+            "library": {
+                "name": "HybridAuth",
+                "iconUrl": "https://avatars.githubusercontent.com/u/1198018"
+            }
         }
     }
 }

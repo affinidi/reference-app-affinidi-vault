@@ -82,3 +82,17 @@ samples/affinidi-dotnet-openidconnect/obj/Debug/net8.0/staticwebassets/msbuild.A
 samples/affinidi-dotnet-openidconnect/obj/Debug/net8.0/staticwebassets/msbuild.build.Affinidi-Login-Demo-App.props
 samples/affinidi-dotnet-openidconnect/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.Affinidi-Login-Demo-App.props
 samples/affinidi-dotnet-openidconnect/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.Affinidi-Login-Demo-App.props
+generator/dotnet/template/obj/Affinidi-Login-Demo-App.csproj.nuget.g.props
+generator/dotnet/template/obj/Affinidi-Login-Demo-App.csproj.nuget.g.targets
+generator/dotnet/template/obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+generator/dotnet/template/obj/Debug/net8.0/Affinidi-Login-Demo-App.AssemblyInfo.cs
+generator/dotnet/template/obj/Debug/net8.0/Affinidi-Login-Demo-App.AssemblyInfoInputs.cache
+generator/dotnet/template/obj/Debug/net8.0/Affinidi-Login-Demo-App.assets.cache
+generator/dotnet/template/obj/Debug/net8.0/Affinidi-Login-Demo-App.csproj.AssemblyReference.cache
+generator/dotnet/template/obj/Debug/net8.0/Affinidi-Login-Demo-App.GeneratedMSBuildEditorConfig.editorconfig
+generator/dotnet/template/obj/Debug/net8.0/Affinidi-Login-Demo-App.GlobalUsings.g.cs
+generator/dotnet/template/obj/Debug/net8.0/Affinidi-Login-Demo-App.RazorAssemblyInfo.cache
+generator/dotnet/template/obj/Debug/net8.0/Affinidi-Login-Demo-App.RazorAssemblyInfo.cs
+generator/dotnet/template/obj/Debug/net8.0/project.razor.vscode.bin
+samples/affinidi-dotnet-openidconnect/obj/Debug/net8.0/project.razor.vscode.bin
+reference-app-affinidi-vault.sln

@@ -4,20 +4,20 @@
             "callbackUrl": "http://127.0.0.1:8200/auth"
         },
         "metadata": {
-            "name": "Affinidi Login integration using FastApi and Authlib",
-            "description": "A reference app created using fastapi framework and uses AuthLib ibrary to enable passwordless login using Affinidi IDP ",
+            "name": "Affinidi Login Integration using FastAPI and Authlib",
+            "description": "A reference codes created using FastAPI framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
             "idp": "Affinidi",
             "framework": {
-                "name": "FastApi",
-                "iconUrl": "https://github.com/tiangolo/fastapi/blob/master/docs/en/docs/img/logo-margin/logo-teal.svg"
+                "name": "FastAPI",
+                "iconUrl": "fastapi-logo.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png"
+                "iconUrl": "python-logo.svg"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "iconUrl": ""
             }
         }
     },
@@ -28,20 +28,20 @@
             "webOriginUrl": "http://127.0.0.1:8201"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Auth0, FastApi and Authlib",
-            "description": "A reference app created using fastapi framework and uses AuthLib ibrary to enable passwordless login using Auth0 IDP ",
+            "name": "Affinidi Login Integration using FastAPI, Authlib and Auth0",
+            "description": "A reference codes created using FastAPI framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
             "idp": "Auth0",
             "framework": {
-                "name": "FastApi",
-                "iconUrl": "https://"
+                "name": "FastAPI",
+                "iconUrl": "fastapi-logo.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://"
+                "iconUrl": "python-logo.svg"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://"
+                "iconUrl": ""
             }
         }
     }

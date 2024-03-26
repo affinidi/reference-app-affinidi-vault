@@ -4,20 +4,20 @@
             "callbackUrl": "http://127.0.0.1:8300/auth"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Starlette and Authlib",
-            "description": "A reference app created using Starlette framework and uses AuthLib ibrary to enable passwordless login using Affinidi IDP ",
+            "name": "Affinidi Login Integration using Starlette and Authlib",
+            "description": "A reference codes created using Starlette framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
             "idp": "Affinidi",
             "framework": {
                 "name": "Starlette",
-                "iconUrl": "https://github.com/koddr/starlette-logo/blob/master/src/dark/png/starlette__full_logo__with_text__dark.png"
+                "iconUrl": "starlette-logo.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "iconUrl": "python-logo.svg"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "iconUrl": ""
             }
         }
     },
@@ -28,20 +28,20 @@
             "webOriginUrl": "http://127.0.0.1:8301"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Auth0, Starlette and Authlib",
-            "description": "A reference app created using Starlette framework and uses AuthLib ibrary to enable passwordless login using Auth0 IDP ",
+            "name": "Affinidi Login Integration using Starlette, Authlib and Auth0",
+            "description": "A reference codes created using Starlette framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
             "idp": "Affinidi",
             "framework": {
                 "name": "Starlette",
-                "iconUrl": "https://github.com/koddr/starlette-logo/blob/master/src/dark/png/starlette__full_logo__with_text__dark.png"
+                "iconUrl": "starlette-logo.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "iconUrl": "python-logo.svg"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "iconUrl": ""
             }
         }
     }

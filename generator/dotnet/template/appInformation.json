@@ -4,20 +4,20 @@
             "callbackUrl": "http://localhost:5068/signin-oidc"
         },
         "metadata": {
-            "name": "Affinidi Login integration using dotnet and openidconnect",
-            "description": "A reference app created using dontnet framework which uses openidconnect ibrary to enable passwordless login using Affinidi IDP ",
+            "name": "Affinidi Login Integration using .NET and OpenIDConnect",
+            "description": "A reference codes created using .NET framework and uses openidconnect library to enable passwordless login using Affinidi IDP.",
             "idp": "Affinidi",
             "framework": {
-                "name": "Microsoft Dotnet",
-                "iconUrl": "https://github.com/dotnet/brand/blob/main/logo/dotnet-logo.png"
+                "name": ".NET",
+                "iconUrl": "dotnet-logo.svg"
             },
             "language": {
                 "name": "C#",
-                "iconUrl": "https://github.com/dotnet/vscode-csharp/blob/main/images/csharpIcon.png"
+                "iconUrl": "csharp-logo.svg"
             },
             "library": {
                 "name": "openidconnect",
-                "iconUrl": "https://www.nuget.org/profiles/Microsoft/avatar"
+                "iconUrl": ""
             }
         }
     }

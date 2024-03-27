@@ -5,19 +5,22 @@
         },
         "metadata": {
             "name": "Affinidi Login Integration using Laravel and Socialite",
-            "description": "A reference codes created using Laravel framework and uses Socialite library to enable passwordless login using Affinidi IDP.",
+            "description": "A code sample using Laravel framework and uses Socialite library to enable passwordless login using Affinidi IDP.",
             "idp": "Affinidi",
             "framework": {
                 "name": "Laravel",
-                "iconUrl": "laravel-logo.svg"
+                "iconUrl": "laravel-logo.svg",
+                "link": "https://laravel.com/"
             },
             "language": {
                 "name": "PHP",
-                "iconUrl": "php-logo.svg"
+                "iconUrl": "php-logo.svg",
+                "link": "https://www.php.net/"
             },
             "library": {
                 "name": "Socialite",
-                "iconUrl": ""
+                "iconUrl": "",
+                "link": "https://laravel.com/docs/11.x/socialite"
             }
         }
     },
@@ -27,19 +30,22 @@
         },
         "metadata": {
             "name": "Affinidi Login Integration using Laravel and Hybridauth",
-            "description": "A reference codes created using Laravel framework and uses Hybridauth library to enable passwordless login using Affinidi IDP.",
+            "description": "A code sample using Laravel framework and uses Hybridauth library to enable passwordless login using Affinidi IDP.",
             "idp": "Affinidi",
             "framework": {
                 "name": "Laravel",
-                "iconUrl": "laravel-logo.svg"
+                "iconUrl": "laravel-logo.svg",
+                "link": "https://laravel.com/"
             },
             "language": {
                 "name": "PHP",
-                "iconUrl": "php-logo.svg"
+                "iconUrl": "php-logo.svg",
+                "link": "https://www.php.net/"
             },
             "library": {
                 "name": "Hybridauth",
-                "iconUrl": ""
+                "iconUrl": "",
+                "link": "https://hybridauth.github.io/"
             }
         }
     }

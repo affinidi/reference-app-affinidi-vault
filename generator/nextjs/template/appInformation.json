@@ -5,19 +5,22 @@
         },
         "metadata": {
             "name": "Affinidi Login integration using NextJS and NextAuthJS",
-            "description": "A reference codes created using NextJS framework and uses NextAuthJS library to enable passwordless login using Affinidi IDP.",
+            "description": "A code sample using NextJS framework and uses NextAuthJS library to enable passwordless login using Affinidi IDP.",
             "idp": "Affinidi",
             "framework": {
                 "name": "NextJS",
-                "iconUrl": "nextjs-logo.svg"
+                "iconUrl": "nextjs-logo.svg",
+                "link": "https://nextjs.org/"
             },
             "language": {
                 "name": "TypeScript",
-                "iconUrl": "typescript-logo.svg"
+                "iconUrl": "typescript-logo.svg",
+                "link": "https://www.typescriptlang.org/"
             },
             "library": {
                 "name": "NextAuthJS",
-                "iconUrl": ""
+                "iconUrl": "",
+                "link": "https://next-auth.js.org/"
             }
         }
     },
@@ -29,19 +32,22 @@
         },
         "metadata": {
             "name": "Affinidi Login Integration using NextJS, NextAuthJS and Auth0",
-            "description": "A reference codes created using NextJS framework and uses NextAuthJS library to enable passwordless login using Auth0 IDP.",
+            "description": "A code sample using NextJS framework and uses NextAuthJS library to enable passwordless login using Auth0 IDP.",
             "idp": "Auth0",
             "framework": {
                 "name": "NextJS",
-                "iconUrl": "nextjs-logo.svg"
+                "iconUrl": "nextjs-logo.svg",
+                "link": "https://nextjs.org/"
             },
             "language": {
                 "name": "TypeScript",
-                "iconUrl": "typescript-logo.svg"
+                "iconUrl": "typescript-logo.svg",
+                "link": "https://www.typescriptlang.org/"
             },
             "library": {
                 "name": "NextAuthJS",
-                "iconUrl": ""
+                "iconUrl": "",
+                "link": "https://next-auth.js.org/"
             }
         }
     }

@@ -5,7 +5,7 @@
         },
         "metadata": {
             "name": "Affinidi Login Integration using Flask and Authlib",
-            "description": "A reference codes created using Flask framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
+            "description": "A code sample using Flask framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
             "idp": "Affinidi",
             "framework": {
                 "name": "Flask",
@@ -13,11 +13,13 @@
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg"
+                "iconUrl": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": ""
+                "iconUrl": "",
+                "link": "https://authlib.org/"
             }
         }
     },
@@ -29,7 +31,7 @@
         },
         "metadata": {
             "name": "Affinidi Login Integration using Flask, Authlib and Auth0",
-            "description": "A reference codes created using Flask framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
+            "description": "A code sample using Flask framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
             "idp": "Auth0",
             "framework": {
                 "name": "Flask",
@@ -37,11 +39,13 @@
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg"
+                "iconUrl": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": ""
+                "iconUrl": "",
+                "link": "https://authlib.org/"
             }
         }
     }

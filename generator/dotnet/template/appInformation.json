@@ -5,19 +5,22 @@
         },
         "metadata": {
             "name": "Affinidi Login Integration using .NET and OpenIDConnect",
-            "description": "A reference codes created using .NET framework and uses openidconnect library to enable passwordless login using Affinidi IDP.",
+            "description": "A code sample using .NET framework and uses openidconnect library to enable passwordless login using Affinidi IDP.",
             "idp": "Affinidi",
             "framework": {
                 "name": ".NET",
-                "iconUrl": "dotnet-logo.svg"
+                "iconUrl": "dotnet-logo.svg",
+                "link": "https://dotnet.microsoft.com/en-us/"
             },
             "language": {
                 "name": "C#",
-                "iconUrl": "csharp-logo.svg"
+                "iconUrl": "csharp-logo.svg",
+                "link": "https://learn.microsoft.com/en-us/dotnet/csharp/"
             },
             "library": {
                 "name": "openidconnect",
-                "iconUrl": ""
+                "iconUrl": "",
+                "link": "https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.openidconnect?view=aspnetcore-8.0"
             }
         }
     }

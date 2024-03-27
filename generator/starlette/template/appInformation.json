@@ -5,19 +5,22 @@
         },
         "metadata": {
             "name": "Affinidi Login Integration using Starlette and Authlib",
-            "description": "A reference codes created using Starlette framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
+            "description": "A code sample using Starlette framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
             "idp": "Affinidi",
             "framework": {
                 "name": "Starlette",
-                "iconUrl": "starlette-logo.svg"
+                "iconUrl": "starlette-logo.svg",
+                "link": "https://www.starlette.io/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg"
+                "iconUrl": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": ""
+                "iconUrl": "",
+                "link": "https://authlib.org/"
             }
         }
     },
@@ -29,19 +32,22 @@
         },
         "metadata": {
             "name": "Affinidi Login Integration using Starlette, Authlib and Auth0",
-            "description": "A reference codes created using Starlette framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
+            "description": "A code sample using Starlette framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
             "idp": "Affinidi",
             "framework": {
                 "name": "Starlette",
-                "iconUrl": "starlette-logo.svg"
+                "iconUrl": "starlette-logo.svg",
+                "link": "https://www.starlette.io/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg"
+                "iconUrl": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": ""
+                "iconUrl": "",
+                "link": "https://authlib.org/"
             }
         }
     }

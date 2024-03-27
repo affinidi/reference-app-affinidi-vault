@@ -5,19 +5,22 @@
         },
         "metadata": {
             "name": "Affinidi Login Integration using FastAPI and Authlib",
-            "description": "A reference codes created using FastAPI framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
+            "description": "A code sample using FastAPI framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
             "idp": "Affinidi",
             "framework": {
                 "name": "FastAPI",
-                "iconUrl": "fastapi-logo.svg"
+                "iconUrl": "fastapi-logo.svg",
+                "link": "https://fastapi.tiangolo.com/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg"
+                "iconUrl": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": ""
+                "iconUrl": "",
+                "link": "https://authlib.org/"
             }
         }
     },
@@ -29,19 +32,22 @@
         },
         "metadata": {
             "name": "Affinidi Login Integration using FastAPI, Authlib and Auth0",
-            "description": "A reference codes created using FastAPI framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
+            "description": "A code sample using FastAPI framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
             "idp": "Auth0",
             "framework": {
                 "name": "FastAPI",
-                "iconUrl": "fastapi-logo.svg"
+                "iconUrl": "fastapi-logo.svg",
+                "link": "https://fastapi.tiangolo.com/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg"
+                "iconUrl": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": ""
+                "iconUrl": "",
+                "link": "https://authlib.org/"
             }
         }
     }

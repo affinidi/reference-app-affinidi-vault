@@ -12,16 +12,16 @@
             },
             "framework": {
                 "name": "Flask",
-                "iconUrl": "flask-logo.svg"
+                "icon": "flask-logo.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }
@@ -41,16 +41,16 @@
             },
             "framework": {
                 "name": "Flask",
-                "iconUrl": "flask-logo.svg"
+                "icon": "flask-logo.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }

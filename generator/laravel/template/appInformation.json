@@ -12,17 +12,17 @@
             },
             "framework": {
                 "name": "Laravel",
-                "iconUrl": "laravel-logo.svg",
+                "icon": "laravel-logo.svg",
                 "link": "https://laravel.com/"
             },
             "language": {
                 "name": "PHP",
-                "iconUrl": "php-logo.svg",
+                "icon": "php-logo.svg",
                 "link": "https://www.php.net/"
             },
             "library": {
                 "name": "Socialite",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://laravel.com/docs/11.x/socialite"
             }
         }
@@ -40,17 +40,17 @@
             },
             "framework": {
                 "name": "Laravel",
-                "iconUrl": "laravel-logo.svg",
+                "icon": "laravel-logo.svg",
                 "link": "https://laravel.com/"
             },
             "language": {
                 "name": "PHP",
-                "iconUrl": "php-logo.svg",
+                "icon": "php-logo.svg",
                 "link": "https://www.php.net/"
             },
             "library": {
                 "name": "Hybridauth",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://hybridauth.github.io/"
             }
         }

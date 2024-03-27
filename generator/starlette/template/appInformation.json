@@ -12,17 +12,17 @@
             },
             "framework": {
                 "name": "Starlette",
-                "iconUrl": "starlette-logo.svg",
+                "icon": "starlette-logo.svg",
                 "link": "https://www.starlette.io/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }
@@ -42,17 +42,17 @@
             },
             "framework": {
                 "name": "Starlette",
-                "iconUrl": "starlette-logo.svg",
+                "icon": "starlette-logo.svg",
                 "link": "https://www.starlette.io/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }

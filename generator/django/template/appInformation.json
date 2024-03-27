@@ -12,17 +12,17 @@
             },
             "framework": {
                 "name": "Django",
-                "iconUrl": "django-logo.svg",
+                "icon": "django-logo.svg",
                 "link": "https://www.djangoproject.com/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }
@@ -42,17 +42,17 @@
             },
             "framework": {
                 "name": "Django",
-                "iconUrl": "django-logo.svg",
+                "icon": "django-logo.svg",
                 "link": "https://www.djangoproject.com/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }

@@ -12,17 +12,17 @@
             },
             "framework": {
                 "name": "NextJS",
-                "iconUrl": "nextjs-logo.svg",
+                "icon": "nextjs-logo.svg",
                 "link": "https://nextjs.org/"
             },
             "language": {
                 "name": "TypeScript",
-                "iconUrl": "typescript-logo.svg",
+                "icon": "typescript-logo.svg",
                 "link": "https://www.typescriptlang.org/"
             },
             "library": {
                 "name": "NextAuthJS",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://next-auth.js.org/"
             }
         }
@@ -42,17 +42,17 @@
             },
             "framework": {
                 "name": "NextJS",
-                "iconUrl": "nextjs-logo.svg",
+                "icon": "nextjs-logo.svg",
                 "link": "https://nextjs.org/"
             },
             "language": {
                 "name": "TypeScript",
-                "iconUrl": "typescript-logo.svg",
+                "icon": "typescript-logo.svg",
                 "link": "https://www.typescriptlang.org/"
             },
             "library": {
                 "name": "NextAuthJS",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://next-auth.js.org/"
             }
         }

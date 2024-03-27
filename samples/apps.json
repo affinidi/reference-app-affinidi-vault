@@ -12,17 +12,17 @@
             },
             "framework": {
                 "name": "Django",
-                "iconUrl": "django-logo.svg",
+                "icon": "django-logo.svg",
                 "link": "https://www.djangoproject.com/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }
@@ -42,17 +42,17 @@
             },
             "framework": {
                 "name": "Django",
-                "iconUrl": "django-logo.svg",
+                "icon": "django-logo.svg",
                 "link": "https://www.djangoproject.com/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }
@@ -70,17 +70,17 @@
             },
             "framework": {
                 "name": ".NET",
-                "iconUrl": "dotnet-logo.svg",
+                "icon": "dotnet-logo.svg",
                 "link": "https://dotnet.microsoft.com/en-us/"
             },
             "language": {
                 "name": "C#",
-                "iconUrl": "csharp-logo.svg",
+                "icon": "csharp-logo.svg",
                 "link": "https://learn.microsoft.com/en-us/dotnet/csharp/"
             },
             "library": {
                 "name": "openidconnect",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.openidconnect?view=aspnetcore-8.0"
             }
         }
@@ -98,17 +98,17 @@
             },
             "framework": {
                 "name": "FastAPI",
-                "iconUrl": "fastapi-logo.svg",
+                "icon": "fastapi-logo.svg",
                 "link": "https://fastapi.tiangolo.com/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }
@@ -128,17 +128,17 @@
             },
             "framework": {
                 "name": "FastAPI",
-                "iconUrl": "fastapi-logo.svg",
+                "icon": "fastapi-logo.svg",
                 "link": "https://fastapi.tiangolo.com/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }
@@ -156,16 +156,16 @@
             },
             "framework": {
                 "name": "Flask",
-                "iconUrl": "flask-logo.svg"
+                "icon": "flask-logo.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }
@@ -185,16 +185,16 @@
             },
             "framework": {
                 "name": "Flask",
-                "iconUrl": "flask-logo.svg"
+                "icon": "flask-logo.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }
@@ -212,17 +212,17 @@
             },
             "framework": {
                 "name": "Laravel",
-                "iconUrl": "laravel-logo.svg",
+                "icon": "laravel-logo.svg",
                 "link": "https://laravel.com/"
             },
             "language": {
                 "name": "PHP",
-                "iconUrl": "php-logo.svg",
+                "icon": "php-logo.svg",
                 "link": "https://www.php.net/"
             },
             "library": {
                 "name": "Socialite",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://laravel.com/docs/11.x/socialite"
             }
         }
@@ -240,17 +240,17 @@
             },
             "framework": {
                 "name": "Laravel",
-                "iconUrl": "laravel-logo.svg",
+                "icon": "laravel-logo.svg",
                 "link": "https://laravel.com/"
             },
             "language": {
                 "name": "PHP",
-                "iconUrl": "php-logo.svg",
+                "icon": "php-logo.svg",
                 "link": "https://www.php.net/"
             },
             "library": {
                 "name": "Hybridauth",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://hybridauth.github.io/"
             }
         }
@@ -268,17 +268,17 @@
             },
             "framework": {
                 "name": "NextJS",
-                "iconUrl": "nextjs-logo.svg",
+                "icon": "nextjs-logo.svg",
                 "link": "https://nextjs.org/"
             },
             "language": {
                 "name": "TypeScript",
-                "iconUrl": "typescript-logo.svg",
+                "icon": "typescript-logo.svg",
                 "link": "https://www.typescriptlang.org/"
             },
             "library": {
                 "name": "NextAuthJS",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://next-auth.js.org/"
             }
         }
@@ -298,17 +298,17 @@
             },
             "framework": {
                 "name": "NextJS",
-                "iconUrl": "nextjs-logo.svg",
+                "icon": "nextjs-logo.svg",
                 "link": "https://nextjs.org/"
             },
             "language": {
                 "name": "TypeScript",
-                "iconUrl": "typescript-logo.svg",
+                "icon": "typescript-logo.svg",
                 "link": "https://www.typescriptlang.org/"
             },
             "library": {
                 "name": "NextAuthJS",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://next-auth.js.org/"
             }
         }
@@ -326,17 +326,17 @@
             },
             "framework": {
                 "name": "Starlette",
-                "iconUrl": "starlette-logo.svg",
+                "icon": "starlette-logo.svg",
                 "link": "https://www.starlette.io/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }
@@ -356,17 +356,17 @@
             },
             "framework": {
                 "name": "Starlette",
-                "iconUrl": "starlette-logo.svg",
+                "icon": "starlette-logo.svg",
                 "link": "https://www.starlette.io/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "python-logo.svg",
+                "icon": "python-logo.svg",
                 "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "",
+                "icon": "",
                 "link": "https://authlib.org/"
             }
         }

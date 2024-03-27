@@ -6,7 +6,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using .NET and OpenIDConnect",
             "description": "A code sample using .NET framework and uses openidconnect library to enable passwordless login using Affinidi IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": ".NET",
                 "iconUrl": "dotnet-logo.svg",

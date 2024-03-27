@@ -6,7 +6,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using Laravel and Socialite",
             "description": "A code sample using Laravel framework and uses Socialite library to enable passwordless login using Affinidi IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Laravel",
                 "iconUrl": "laravel-logo.svg",
@@ -31,7 +34,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using Laravel and Hybridauth",
             "description": "A code sample using Laravel framework and uses Hybridauth library to enable passwordless login using Affinidi IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Laravel",
                 "iconUrl": "laravel-logo.svg",

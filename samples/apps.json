@@ -6,7 +6,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using Django and Authlib",
             "description": "A code sample using Django framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Django",
                 "iconUrl": "django-logo.svg",
@@ -33,7 +36,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using Django, Authlib and Auth0",
             "description": "A code sample using Django framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
-            "idp": "Auth0",
+            "idp": {
+                "name": "Auth0",
+                "link": "https://auth0.com/"
+            },
             "framework": {
                 "name": "Django",
                 "iconUrl": "django-logo.svg",
@@ -58,7 +64,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using .NET and OpenIDConnect",
             "description": "A code sample using .NET framework and uses openidconnect library to enable passwordless login using Affinidi IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": ".NET",
                 "iconUrl": "dotnet-logo.svg",
@@ -83,7 +92,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using FastAPI and Authlib",
             "description": "A code sample using FastAPI framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "FastAPI",
                 "iconUrl": "fastapi-logo.svg",
@@ -110,7 +122,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using FastAPI, Authlib and Auth0",
             "description": "A code sample using FastAPI framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
-            "idp": "Auth0",
+            "idp": {
+                "name": "Auth0",
+                "link": "https://auth0.com/"
+            },
             "framework": {
                 "name": "FastAPI",
                 "iconUrl": "fastapi-logo.svg",
@@ -135,7 +150,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using Flask and Authlib",
             "description": "A code sample using Flask framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Flask",
                 "iconUrl": "flask-logo.svg"
@@ -161,7 +179,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using Flask, Authlib and Auth0",
             "description": "A code sample using Flask framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
-            "idp": "Auth0",
+            "idp": {
+                "name": "Auth0",
+                "link": "https://auth0.com/"
+            },
             "framework": {
                 "name": "Flask",
                 "iconUrl": "flask-logo.svg"
@@ -185,7 +206,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using Laravel and Socialite",
             "description": "A code sample using Laravel framework and uses Socialite library to enable passwordless login using Affinidi IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Laravel",
                 "iconUrl": "laravel-logo.svg",
@@ -210,7 +234,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using Laravel and Hybridauth",
             "description": "A code sample using Laravel framework and uses Hybridauth library to enable passwordless login using Affinidi IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Laravel",
                 "iconUrl": "laravel-logo.svg",
@@ -235,7 +262,10 @@
         "metadata": {
             "name": "Affinidi Login integration using NextJS and NextAuthJS",
             "description": "A code sample using NextJS framework and uses NextAuthJS library to enable passwordless login using Affinidi IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "NextJS",
                 "iconUrl": "nextjs-logo.svg",
@@ -262,7 +292,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using NextJS, NextAuthJS and Auth0",
             "description": "A code sample using NextJS framework and uses NextAuthJS library to enable passwordless login using Auth0 IDP.",
-            "idp": "Auth0",
+            "idp": {
+                "name": "Auth0",
+                "link": "https://auth0.com/"
+            },
             "framework": {
                 "name": "NextJS",
                 "iconUrl": "nextjs-logo.svg",
@@ -287,7 +320,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using Starlette and Authlib",
             "description": "A code sample using Starlette framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Starlette",
                 "iconUrl": "starlette-logo.svg",
@@ -314,7 +350,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using Starlette, Authlib and Auth0",
             "description": "A code sample using Starlette framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Auth0",
+                "link": "https://auth0.com/"
+            },
             "framework": {
                 "name": "Starlette",
                 "iconUrl": "starlette-logo.svg",

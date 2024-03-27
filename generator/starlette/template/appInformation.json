@@ -6,7 +6,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using Starlette and Authlib",
             "description": "A code sample using Starlette framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Starlette",
                 "iconUrl": "starlette-logo.svg",
@@ -33,7 +36,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using Starlette, Authlib and Auth0",
             "description": "A code sample using Starlette framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
-            "idp": "Affinidi",
+            "idp": {
+                "name": "Auth0",
+                "link": "https://auth0.com/"
+            },
             "framework": {
                 "name": "Starlette",
                 "iconUrl": "starlette-logo.svg",

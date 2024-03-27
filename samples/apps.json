@@ -4,20 +4,26 @@
             "callbackUrl": "http://localhost:8000/callback"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Django and Authlib",
-            "description": "A reference app created using django framework and uses AuthLib ibrary to enable passwordless login using Affinidi IDP ",
-            "idp": "Affinidi",
+            "name": "Affinidi Login Integration using Django and Authlib",
+            "description": "A code sample using Django framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Django",
-                "iconUrl": "https://static.djangoproject.com/img/logos/django-logo-negative.svg"
+                "icon": "django-logo.svg",
+                "link": "https://www.djangoproject.com/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png"
+                "icon": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "icon": "",
+                "link": "https://authlib.org/"
             }
         }
     },
@@ -28,20 +34,26 @@
             "webOriginUrl": "http://localhost:8000"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Auth0, Django and Authlib",
-            "description": "A reference app created using django framework and uses AuthLib ibrary to enable passwordless login using Auth0 IDP ",
-            "idp": "Auth0",
+            "name": "Affinidi Login Integration using Django, Authlib and Auth0",
+            "description": "A code sample using Django framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
+            "idp": {
+                "name": "Auth0",
+                "link": "https://auth0.com/"
+            },
             "framework": {
                 "name": "Django",
-                "iconUrl": "https://static.djangoproject.com/img/logos/django-logo-negative.svg"
+                "icon": "django-logo.svg",
+                "link": "https://www.djangoproject.com/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png"
+                "icon": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "icon": "",
+                "link": "https://authlib.org/"
             }
         }
     },
@@ -50,20 +62,26 @@
             "callbackUrl": "http://localhost:5068/signin-oidc"
         },
         "metadata": {
-            "name": "Affinidi Login integration using dotnet and openidconnect",
-            "description": "A reference app created using dontnet framework which uses openidconnect ibrary to enable passwordless login using Affinidi IDP ",
-            "idp": "Affinidi",
+            "name": "Affinidi Login Integration using .NET and OpenIDConnect",
+            "description": "A code sample using .NET framework and uses openidconnect library to enable passwordless login using Affinidi IDP.",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
-                "name": "Microsoft Dotnet",
-                "iconUrl": "https://github.com/dotnet/brand/blob/main/logo/dotnet-logo.png"
+                "name": ".NET",
+                "icon": "dotnet-logo.svg",
+                "link": "https://dotnet.microsoft.com/en-us/"
             },
             "language": {
                 "name": "C#",
-                "iconUrl": "https://github.com/dotnet/vscode-csharp/blob/main/images/csharpIcon.png"
+                "icon": "csharp-logo.svg",
+                "link": "https://learn.microsoft.com/en-us/dotnet/csharp/"
             },
             "library": {
                 "name": "openidconnect",
-                "iconUrl": "https://www.nuget.org/profiles/Microsoft/avatar"
+                "icon": "",
+                "link": "https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.openidconnect?view=aspnetcore-8.0"
             }
         }
     },
@@ -72,20 +90,26 @@
             "callbackUrl": "http://127.0.0.1:8200/auth"
         },
         "metadata": {
-            "name": "Affinidi Login integration using FastApi and Authlib",
-            "description": "A reference app created using fastapi framework and uses AuthLib ibrary to enable passwordless login using Affinidi IDP ",
-            "idp": "Affinidi",
+            "name": "Affinidi Login Integration using FastAPI and Authlib",
+            "description": "A code sample using FastAPI framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
-                "name": "FastApi",
-                "iconUrl": "https://github.com/tiangolo/fastapi/blob/master/docs/en/docs/img/logo-margin/logo-teal.svg"
+                "name": "FastAPI",
+                "icon": "fastapi-logo.svg",
+                "link": "https://fastapi.tiangolo.com/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png"
+                "icon": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "icon": "",
+                "link": "https://authlib.org/"
             }
         }
     },
@@ -96,20 +120,26 @@
             "webOriginUrl": "http://127.0.0.1:8201"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Auth0, FastApi and Authlib",
-            "description": "A reference app created using fastapi framework and uses AuthLib ibrary to enable passwordless login using Auth0 IDP ",
-            "idp": "Auth0",
+            "name": "Affinidi Login Integration using FastAPI, Authlib and Auth0",
+            "description": "A code sample using FastAPI framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
+            "idp": {
+                "name": "Auth0",
+                "link": "https://auth0.com/"
+            },
             "framework": {
-                "name": "FastApi",
-                "iconUrl": "https://"
+                "name": "FastAPI",
+                "icon": "fastapi-logo.svg",
+                "link": "https://fastapi.tiangolo.com/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://"
+                "icon": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://"
+                "icon": "",
+                "link": "https://authlib.org/"
             }
         }
     },
@@ -118,20 +148,25 @@
             "callbackUrl": "http://127.0.0.1:8100/auth"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Flask and Authlib",
-            "description": "A reference app created using Flask framework and uses AuthLib ibrary to enable passwordless login using Affinidi IDP ",
-            "idp": "Affinidi",
+            "name": "Affinidi Login Integration using Flask and Authlib",
+            "description": "A code sample using Flask framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Flask",
-                "iconUrl": "https://flask.palletsprojects.com/en/3.0.x/_images/flask-horizontal.png"
+                "icon": "flask-logo.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "icon": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "icon": "",
+                "link": "https://authlib.org/"
             }
         }
     },
@@ -142,20 +177,25 @@
             "webOriginUrl": "http://127.0.0.1:8101"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Auth0, Flask and Authlib",
-            "description": "A reference app created using flask framework and uses AuthLib ibrary to enable passwordless login using Auth0 IDP ",
-            "idp": "Auth0",
+            "name": "Affinidi Login Integration using Flask, Authlib and Auth0",
+            "description": "A code sample using Flask framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
+            "idp": {
+                "name": "Auth0",
+                "link": "https://auth0.com/"
+            },
             "framework": {
                 "name": "Flask",
-                "iconUrl": "https://flask.palletsprojects.com/en/3.0.x/_images/flask-horizontal.png"
+                "icon": "flask-logo.svg"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "icon": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "icon": "",
+                "link": "https://authlib.org/"
             }
         }
     },
@@ -164,20 +204,26 @@
             "callbackUrl": "http://localhost:8010/login/affinidi/callback"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Laravel and Socialite",
-            "description": "A reference app created using Laravel framework and uses Socialite ibrary to enable passwordless login using Affinidi IDP ",
-            "idp": "Affinidi",
+            "name": "Affinidi Login Integration using Laravel and Socialite",
+            "description": "A code sample using Laravel framework and uses Socialite library to enable passwordless login using Affinidi IDP.",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Laravel",
-                "iconUrl": "https://laravel.com/img/logomark.min.svg"
+                "icon": "laravel-logo.svg",
+                "link": "https://laravel.com/"
             },
             "language": {
                 "name": "PHP",
-                "iconUrl": "https://www.php.net/images/logos/new-php-logo.svg"
+                "icon": "php-logo.svg",
+                "link": "https://www.php.net/"
             },
             "library": {
                 "name": "Socialite",
-                "iconUrl": "https://github.com/laravel/socialite/blob/5.x/art/logo.svg"
+                "icon": "",
+                "link": "https://laravel.com/docs/11.x/socialite"
             }
         }
     },
@@ -186,20 +232,26 @@
             "callbackUrl": "http://localhost:8020/login/affinidi/callback"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Laravel and Hybridauth",
-            "description": "A reference app created using Laravel framework and uses hybridauth ibrary to enable passwordless login using Affinidi IDP ",
-            "idp": "Affinidi",
+            "name": "Affinidi Login Integration using Laravel and Hybridauth",
+            "description": "A code sample using Laravel framework and uses Hybridauth library to enable passwordless login using Affinidi IDP.",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Laravel",
-                "iconUrl": "https://laravel.com/img/logomark.min.svg"
+                "icon": "laravel-logo.svg",
+                "link": "https://laravel.com/"
             },
             "language": {
                 "name": "PHP",
-                "iconUrl": "https://www.php.net/images/logos/new-php-logo.svg"
+                "icon": "php-logo.svg",
+                "link": "https://www.php.net/"
             },
             "library": {
-                "name": "HybridAuth",
-                "iconUrl": "https://avatars.githubusercontent.com/u/1198018"
+                "name": "Hybridauth",
+                "icon": "",
+                "link": "https://hybridauth.github.io/"
             }
         }
     },
@@ -208,20 +260,26 @@
             "callbackUrl": "http://localhost:3000/api/auth/callback/affinidi"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Nextjs and NextAuthjs",
-            "description": "A reference app created using Nextjs framework and uses nextauthjs ibrary to enable passwordless login using Affinidi IDP ",
-            "idp": "Affinidi",
+            "name": "Affinidi Login integration using NextJS and NextAuthJS",
+            "description": "A code sample using NextJS framework and uses NextAuthJS library to enable passwordless login using Affinidi IDP.",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
-                "name": "Next.js",
-                "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg"
+                "name": "NextJS",
+                "icon": "nextjs-logo.svg",
+                "link": "https://nextjs.org/"
             },
             "language": {
                 "name": "TypeScript",
-                "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Typescript.svg"
+                "icon": "typescript-logo.svg",
+                "link": "https://www.typescriptlang.org/"
             },
             "library": {
-                "name": "NextAuthjs",
-                "iconUrl": "https://next-auth.js.org/img/logo/logo-sm.png"
+                "name": "NextAuthJS",
+                "icon": "",
+                "link": "https://next-auth.js.org/"
             }
         }
     },
@@ -232,20 +290,26 @@
             "webOriginUrl": "http://localhost:3000"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Auth0, Nextjs and NextAuthjs",
-            "description": "A reference app created using Nextjs framework and uses nextauthjs ibrary to enable passwordless login using Auth0 IDP ",
-            "idp": "Auth0",
+            "name": "Affinidi Login Integration using NextJS, NextAuthJS and Auth0",
+            "description": "A code sample using NextJS framework and uses NextAuthJS library to enable passwordless login using Auth0 IDP.",
+            "idp": {
+                "name": "Auth0",
+                "link": "https://auth0.com/"
+            },
             "framework": {
-                "name": "Next.js",
-                "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg"
+                "name": "NextJS",
+                "icon": "nextjs-logo.svg",
+                "link": "https://nextjs.org/"
             },
             "language": {
                 "name": "TypeScript",
-                "iconUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Typescript.svg"
+                "icon": "typescript-logo.svg",
+                "link": "https://www.typescriptlang.org/"
             },
             "library": {
-                "name": "NextAuthjs",
-                "iconUrl": "https://next-auth.js.org/img/logo/logo-sm.png"
+                "name": "NextAuthJS",
+                "icon": "",
+                "link": "https://next-auth.js.org/"
             }
         }
     },
@@ -254,20 +318,26 @@
             "callbackUrl": "http://127.0.0.1:8300/auth"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Starlette and Authlib",
-            "description": "A reference app created using Starlette framework and uses AuthLib ibrary to enable passwordless login using Affinidi IDP ",
-            "idp": "Affinidi",
+            "name": "Affinidi Login Integration using Starlette and Authlib",
+            "description": "A code sample using Starlette framework and uses AuthLib library to enable passwordless login using Affinidi IDP.",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Starlette",
-                "iconUrl": "https://github.com/koddr/starlette-logo/blob/master/src/dark/png/starlette__full_logo__with_text__dark.png"
+                "icon": "starlette-logo.svg",
+                "link": "https://www.starlette.io/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "icon": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "icon": "",
+                "link": "https://authlib.org/"
             }
         }
     },
@@ -278,20 +348,26 @@
             "webOriginUrl": "http://127.0.0.1:8301"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Auth0, Starlette and Authlib",
-            "description": "A reference app created using Starlette framework and uses AuthLib ibrary to enable passwordless login using Auth0 IDP ",
-            "idp": "Affinidi",
+            "name": "Affinidi Login Integration using Starlette, Authlib and Auth0",
+            "description": "A code sample using Starlette framework and uses AuthLib library to enable passwordless login using Auth0 IDP.",
+            "idp": {
+                "name": "Auth0",
+                "link": "https://auth0.com/"
+            },
             "framework": {
                 "name": "Starlette",
-                "iconUrl": "https://github.com/koddr/starlette-logo/blob/master/src/dark/png/starlette__full_logo__with_text__dark.png"
+                "icon": "starlette-logo.svg",
+                "link": "https://www.starlette.io/"
             },
             "language": {
                 "name": "Python",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "icon": "python-logo.svg",
+                "link": "https://www.python.org/"
             },
             "library": {
                 "name": "authlib",
-                "iconUrl": "https://github.com/oauthlib/oauthlib/blob/master/docs/logo/oauthlib-logo-256x256.png"
+                "icon": "",
+                "link": "https://authlib.org/"
             }
         }
     }

@@ -4,20 +4,26 @@
             "callbackUrl": "http://localhost:8010/login/affinidi/callback"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Laravel and Socialite",
-            "description": "A reference app created using Laravel framework and uses Socialite ibrary to enable passwordless login using Affinidi IDP ",
-            "idp": "Affinidi",
+            "name": "Affinidi Login Integration using Laravel and Socialite",
+            "description": "A code sample using Laravel framework and uses Socialite library to enable passwordless login using Affinidi IDP.",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Laravel",
-                "iconUrl": "https://laravel.com/img/logomark.min.svg"
+                "icon": "laravel-logo.svg",
+                "link": "https://laravel.com/"
             },
             "language": {
                 "name": "PHP",
-                "iconUrl": "https://www.php.net/images/logos/new-php-logo.svg"
+                "icon": "php-logo.svg",
+                "link": "https://www.php.net/"
             },
             "library": {
                 "name": "Socialite",
-                "iconUrl": "https://github.com/laravel/socialite/blob/5.x/art/logo.svg"
+                "icon": "",
+                "link": "https://laravel.com/docs/11.x/socialite"
             }
         }
     },
@@ -26,20 +32,26 @@
             "callbackUrl": "http://localhost:8020/login/affinidi/callback"
         },
         "metadata": {
-            "name": "Affinidi Login integration using Laravel and Hybridauth",
-            "description": "A reference app created using Laravel framework and uses hybridauth ibrary to enable passwordless login using Affinidi IDP ",
-            "idp": "Affinidi",
+            "name": "Affinidi Login Integration using Laravel and Hybridauth",
+            "description": "A code sample using Laravel framework and uses Hybridauth library to enable passwordless login using Affinidi IDP.",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
             "framework": {
                 "name": "Laravel",
-                "iconUrl": "https://laravel.com/img/logomark.min.svg"
+                "icon": "laravel-logo.svg",
+                "link": "https://laravel.com/"
             },
             "language": {
                 "name": "PHP",
-                "iconUrl": "https://www.php.net/images/logos/new-php-logo.svg"
+                "icon": "php-logo.svg",
+                "link": "https://www.php.net/"
             },
             "library": {
-                "name": "HybridAuth",
-                "iconUrl": "https://avatars.githubusercontent.com/u/1198018"
+                "name": "Hybridauth",
+                "icon": "",
+                "link": "https://hybridauth.github.io/"
             }
         }
     }

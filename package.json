@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm run generate && npm run start",
-    "generate": "npm run generate:nextjs && npm run generate:django && npm run generate:flask && npm run generate:fastapi && npm run generate:starlette && npm run generate:laravel && npm run generate:dotnet",
+    "generate": "npm run generate:nextjs && npm run generate:django && npm run generate:flask && npm run generate:fastapi && npm run generate:starlette && npm run generate:laravel && npm run generate:dotnet && npm run generate:java",
     "generate:nextjs": "node generator/nextjs/confirm.mjs && node generator/nextjs/generate.mjs",
     "generate:django": "node generator/django/confirm.mjs && node generator/django/generate.mjs",
     "generate:flask": "node generator/flask/confirm.mjs && node generator/flask/generate.mjs",
@@ -13,6 +13,7 @@
     "generate:starlette": "node generator/starlette/confirm.mjs && node generator/starlette/generate.mjs",
     "generate:laravel": "node generator/laravel/confirm.mjs && node generator/laravel/generate.mjs",
     "generate:dotnet": "node generator/dotnet/confirm.mjs && node generator/dotnet/generate.mjs",
+    "generate:java": "node generator/java/confirm.mjs && node generator/java/generate.mjs",
     "install-all": "concurrently -n w: npm:install:*",
     "install:nextjs:template": "npm i --prefix generator/nextjs/template",
     "install:affinidi-nextjs-nextauthjs": "npm i --prefix samples/affinidi-nextjs-nextauthjs",
@@ -28,6 +29,7 @@
     "install:affinidi-laravel-socialite": "composer install -d samples/affinidi-laravel-socialite",
     "install:affinidi-laravel-hybridauth": "composer install -d samples/affinidi-laravel-hybridauth",
     "install:affinidi-dotnet-openidconnect": "cd samples/affinidi-dotnet-openidconnect && dotnet restore",
+    "install:affinidi-java-springboot": "cd samples/affinidi-java-springboot && sh mvnw install",
     "start": "concurrently -n w: \"npm:start:*(!template)\"",
     "start:template": "npm run --prefix generator/template dev -- -p 3000",
     "start:affinidi-nextjs-nextauthjs": "npm run --prefix samples/affinidi-nextjs-nextauthjs dev -- -p 3001",
@@ -43,11 +45,13 @@
     "start:affinidi-laravel-socialite": "php samples/affinidi-laravel-socialite/artisan serve",
     "start:affinidi-laravel-hybridauth": "php samples/affinidi-laravel-hybridauth/artisan serve",
     "start:affinidi-dotnet-openidconnect": "cd samples/affinidi-dotnet-openidconnect && dotnet run",
+    "start:affinidi-java-springboot": "cd samples/affinidi-java-springboot && sh mvnw spring-boot:run",
     "build": "concurrently -n w: \"npm:build:*(!template)\"",
     "build:nextjs:template": "npm run --prefix generator/nextjs/template build",
     "build:affinidi-nextjs-nextauthjs": "npm run --prefix samples/affinidi-nextjs-nextauthjs build",
     "build:auth0-nextjs-nextauthjs": "npm run --prefix samples/auth0-nextjs-nextauthjs build",
     "build:affinidi-dotnet-openidconnect": "cd samples/affinidi-dotnet-openidconnect && dotnet build",
+    "build:affinidi-java-springboot": "cd samples/affinidi-java-springboot && sh mvnw clean && sh mvnw install",
     "postinstall": "npm run install-all"
   },
   "repository": {

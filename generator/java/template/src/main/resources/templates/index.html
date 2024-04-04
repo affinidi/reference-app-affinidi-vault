@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    .flex-container {
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .flex-container>div {
+      border: 1px;
+    }
+
+    .form-div {
+      display: flex;
+      flex-direction: column;
+      height: 450px;
+      width: 300px;
+      padding: 3px;
+      font-size: medium;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .submitButton {
+      background-color: #4caf50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .affinidiButton {
+      background-color: #1b11d3;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="display: flex; flex-direction: column">
+    <div class="flex-container">
+      <h1 style="font-size: x-large;">Your Insurance Provider</h1>
+    </div>
+
+
+    <div class="flex-container">
+      <div><img th:src="@{images/logo.png}" alt="logo"></div>
+      <div>
+        <form action="#" method="post">
+          <div class="form-div">
+            <h4>Please enter a your email address to sign in</h4>
+            <label for="username" style="font-size: small;">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            <label for="password" style="font-size: small;">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <input type="button" value="Login" class="submitButton">
+            <img th:src="@{images/or.png}" alt="alternate">
+            <input type="button" value="Affinidi Login" class="affinidiButton" onclick="location.href='/user';">
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>

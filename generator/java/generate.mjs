@@ -66,11 +66,10 @@ async function generate() {
     await merge(overridePath, samplePath, {
       filter: (path) => !filesToIgnore.includes(basename(path)),
     })
-    const propertiesPath = join(samplePath, 'src/main/resources')
-    //console.log(`Applying property file changes `+propertiesPath+ " : "+samplePath)
-    const envPath = join(propertiesPath, 'application.properties')
+    
+    const envPath = join(samplePath, '.env')
     if (!(await exists(envPath))) {
-      await fs.cp(join(propertiesPath, 'application.properties.example'), envPath)
+      await fs.cp(join(samplePath, '.env.example'), envPath)
     }
   }
 }

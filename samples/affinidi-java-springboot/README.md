@@ -41,27 +41,26 @@ For current java-springboot application use `http://localhost:8080/login/oauth2/
 
 3. Update application environment variables 
 
-Create an application.properties for your project to hold environment variables
+Create a .env file for your application to hold environment variables
 
 ```sh
-cd src/main/resources
-cp application.properties.example application.properties
+cp .env.example .env
 ```
 
-Update the ClientId, ClientSecret and Issuer received from creating the login configuration into the application.properties.
-* Do not enclose these values with '' while updating. As an example, this is how your application.properties should look like
+Update the ClientId, ClientSecret and Issuer received from creating the login configuration into the .env file.
+* Do not enclose these values with '' while updating. As an example, this is how your .env should look like
 
 ```
-issuerUri=https://084036a6-a775-478a-9a97-a1323738897f.apse1.login.affinidi.io
-clientId=78f3b3c1-d130-42fe-b692-6fba29827686
-clientSecret=7q6Xh1uSltz.fZjgMmvtIFiMpT
+PROVIDER_CLIENT_ID=7eeeeee-cccc-bbbb-aaaa-6fffffff
+PROVIDER_CLIENT_SECRET=7abcdefgh.8ijklmnopqr
+PROVIDER_ISSUER=https://1234567-aaaa-bbbb-cccc-d123456789.apse1.login.affinidi.io
 ```
 
-`clientId:` Client ID generated during create login configuration
+`PROVIDER_CLIENT_ID:` Client ID generated during create login configuration
 
-`clientSecret:` Client Secret generated during create login configuration
+`PROVIDER_CLIENT_SECRET:` Client Secret generated during create login configuration
 
-`issuer:` Issuer Url from Login configuration 
+`PROVIDER_ISSUER:` Issuer Url from Login configuration 
 
 ## Build and run the project:
 
@@ -118,4 +117,3 @@ When you create a developer’s account with us, we will issue you your private 
 ## _Disclaimer_
 
 _Please note that this FAQ is provided for informational purposes only and is not to be considered a legal document. For the legal terms and conditions governing your use of the Affinidi Reference Applications, please refer to our [Terms and Conditions](https://www.affinidi.com/terms-conditions)._
-

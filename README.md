@@ -38,6 +38,11 @@ This repository contains multiple sample applications to get you started on inte
 
   Uses [Dotnet](https://dotnet.microsoft.com/en-us/download/) and [OpenIdConnect](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.openidconnect?view=aspnetcore-8.0) with a custom Affinidi provider.
 
+- [affinidi-java-springboot](./samples/affinidi-java-springboot)
+
+  Uses [Java](https://www.oracle.com/java/technologies/java-se-glance.html) and [Springboot](https://spring.io/) with a custom Affinidi provider.
+
+
 ### Integrating Affinidi Login through Auth0
 
 - [auth0-nextjs-nextauthjs](./samples/auth0-nextjs-nextauthjs)

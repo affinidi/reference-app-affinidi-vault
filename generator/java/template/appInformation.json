@@ -1,0 +1,30 @@
+{
+    "affinidi-java-springboot": {
+        "redirectUris": {
+            "callbackUrl": "http://localhost:8080/login/oauth2/code/javademo"
+        },
+        "metadata": {
+            "name": "Affinidi Login Integration using Java and Spring Boot framework",
+            "description": "A code sample using Java and SpringBoot framework to enable passwordless login using Affinidi IDP.",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
+            "framework": {
+                "name": "Springboot",
+                "icon": "springboot-logo.svg",
+                "link": "https://spring.io/"
+            },
+            "language": {
+                "name": "Java",
+                "icon": "java-logo.svg",
+                "link": "https://www.oracle.com/java/technologies/java-se-glance.html"
+            },
+            "library": {
+                "name": "Spring Security",
+                "icon": "",
+                "link": "https://spring.io/projects/spring-security"
+            }
+        }
+    }
+}

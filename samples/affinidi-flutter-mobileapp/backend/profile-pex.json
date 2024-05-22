@@ -1,0 +1,502 @@
+{
+  "name": "Affinidi Login App",
+  "redirectUris": [
+    "http://localhost:3000/auth/callback"
+  ],
+  "presentationDefinition": {
+    "id": "vp_combined_email_user_profile_combined",
+    "submission_requirements": [
+      {
+        "rule": "pick",
+        "min": 1,
+        "from": "A"
+      }
+    ],
+    "input_descriptors": [
+      {
+        "id": "email_vc",
+        "name": "Email VC",
+        "purpose": "Check if VC data contains necessary fields",
+        "group": [
+          "A"
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.type"
+              ],
+              "purpose": "Check if VC type is correct",
+              "filter": {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "Email"
+                }
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.email"
+              ],
+              "purpose": "Check if VC contains email field",
+              "filter": {
+                "type": "string"
+              }
+            },
+            {
+              "path": [
+                "$.issuer"
+              ],
+              "purpose": "Check if VC Issuer is Trusted",
+              "filter": {
+                "type": "string",
+                "pattern": "^did:key:zQ3shtMGCU89kb2RMknNZcYGUcHW8P6Cq3CoQyvoDs7Qqh33N|^did:elem:EiBb5gyC1mu3t31oYwMsYWg1U2HyNtaVQ0NKn5UkAzB8BQ|^did:key:zQ3shn2JzP83giFHRrjrvF2UZ6LC6LUgy2H3PsJ76BRvnvnD1"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "mobile_vc",
+        "name": "mobile VC",
+        "purpose": "Check if VC data contains necessary fields",
+        "group": [
+          "A"
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.type"
+              ],
+              "purpose": "Check if VC type is correct",
+              "filter": {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "HITPhoneNumber"
+                }
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.phoneNumber"
+              ],
+              "purpose": "phone Number",
+              "filter": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "givenname_vc",
+        "name": "givenname VC",
+        "purpose": "Check if VC data contains necessary fields",
+        "group": [
+          "A"
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.type"
+              ],
+              "purpose": "Check if VC type is correct",
+              "filter": {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "HITGivenName"
+                }
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.givenName"
+              ],
+              "purpose": "given Name",
+              "filter": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "familyName_vc",
+        "name": "familyName VC",
+        "purpose": "Check if VC data contains necessary fields",
+        "group": [
+          "A"
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.type"
+              ],
+              "purpose": "Check if VC type is correct",
+              "filter": {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "HITFamilyName"
+                }
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.familyName"
+              ],
+              "purpose": "family Name",
+              "filter": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "middleName_vc",
+        "name": "middleName VC",
+        "purpose": "Check if VC data contains necessary fields",
+        "group": [
+          "A"
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.type"
+              ],
+              "purpose": "Check if VC type is correct",
+              "filter": {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "HITMiddleName"
+                }
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.middleName"
+              ],
+              "purpose": "middleName",
+              "filter": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "nickname_vc",
+        "name": "nickname",
+        "purpose": "Check if VC data contains necessary fields",
+        "group": [
+          "A"
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.type"
+              ],
+              "purpose": "Check if VC type is correct",
+              "filter": {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "HITNickname"
+                }
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.nickname"
+              ],
+              "purpose": "nickname",
+              "filter": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "birthdate_vc",
+        "name": "birthdate",
+        "purpose": "Check if VC data contains necessary fields",
+        "group": [
+          "A"
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.type"
+              ],
+              "purpose": "Check if VC type is correct",
+              "filter": {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "HITBirthdate"
+                }
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.birthdate"
+              ],
+              "purpose": "birthdate",
+              "filter": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "gender_vc",
+        "name": "gender",
+        "purpose": "Check if VC data contains necessary fields",
+        "group": [
+          "A"
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.type"
+              ],
+              "purpose": "Check if VC type is correct",
+              "filter": {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "HITGender"
+                }
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.gender"
+              ],
+              "purpose": "gender",
+              "filter": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "picture_vc",
+        "name": "picture",
+        "purpose": "Check if VC data contains necessary fields",
+        "group": [
+          "A"
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.type"
+              ],
+              "purpose": "Check if VC type is correct",
+              "filter": {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "HITPicture"
+                }
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.picture"
+              ],
+              "purpose": "picture",
+              "filter": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "address_vc",
+        "name": "address",
+        "purpose": "Check if VC data contains necessary fields",
+        "group": [
+          "A"
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.type"
+              ],
+              "purpose": "Check if VC type is correct",
+              "filter": {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "HITAddress"
+                }
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.formatted"
+              ]
+            },
+            {
+              "path": [
+                "$.credentialSubject.locality"
+              ]
+            },
+            {
+              "path": [
+                "$.credentialSubject.postalCode"
+              ]
+            },
+            {
+              "path": [
+                "$.credentialSubject.country"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "liveness_vc",
+        "name": "livenessCheckPassed",
+        "purpose": "Check if VC data contains necessary fields",
+        "group": [
+          "A"
+        ],
+        "constraints": {
+          "fields": [
+            {
+              "path": [
+                "$.type"
+              ],
+              "purpose": "Check if VC type is correct",
+              "filter": {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "pattern": "HITLivenessCheck"
+                }
+              }
+            },
+            {
+              "path": [
+                "$.credentialSubject.livenessCheckPassed"
+              ]
+            },
+            {
+              "path": [
+                "$.issuer"
+              ],
+              "purpose": "Check if VC Issuer is Trusted",
+              "filter": {
+                "type": "string",
+                "pattern": "^did:key:zQ3shtMGCU89kb2RMknNZcYGUcHW8P6Cq3CoQyvoDs7Qqh33N|^did:elem:EiBb5gyC1mu3t31oYwMsYWg1U2HyNtaVQ0NKn5UkAzB8BQ|^did:key:zQ3shn2JzP83giFHRrjrvF2UZ6LC6LUgy2H3PsJ76BRvnvnD1"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "idTokenMapping": [
+    {
+      "sourceField": "$.credentialSubject.email",
+      "idTokenClaim": "$.email",
+      "inputDescriptorId": "email_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.phoneNumber",
+      "idTokenClaim": "$.phone_number",
+      "inputDescriptorId": "mobile_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.givenName",
+      "idTokenClaim": "$.given_name",
+      "inputDescriptorId": "givenname_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.familyName",
+      "idTokenClaim": "$.family_name",
+      "inputDescriptorId": "familyName_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.nickname",
+      "idTokenClaim": "$.nickname",
+      "inputDescriptorId": "nickname_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.middleName",
+      "idTokenClaim": "$.middle_name",
+      "inputDescriptorId": "middleName_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.birthdate",
+      "idTokenClaim": "$.birthdate",
+      "inputDescriptorId": "birthdate_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.gender",
+      "idTokenClaim": "$.gender",
+      "inputDescriptorId": "gender_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.picture",
+      "idTokenClaim": "$.picture",
+      "inputDescriptorId": "picture_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.formatted",
+      "idTokenClaim": "$.address.formatted",
+      "inputDescriptorId": "address_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.locality",
+      "idTokenClaim": "$.address.locality",
+      "inputDescriptorId": "address_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.postalCode",
+      "idTokenClaim": "$.address.postal_code",
+      "inputDescriptorId": "address_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.country",
+      "idTokenClaim": "$.address.country",
+      "inputDescriptorId": "address_vc"
+    },
+    {
+      "sourceField": "$.issuer",
+      "idTokenClaim": "$.custom[0].issuer",
+      "inputDescriptorId": "email_vc"
+    },
+    {
+      "sourceField": "$.credentialSubject.livenessCheckPassed",
+      "idTokenClaim": "$.custom[1].liveness_check_passed",
+      "inputDescriptorId": "liveness_vc"
+    }
+  ],
+  "clientMetadata": {
+    "name": "Email + Profile + PKCE",
+    "logo": "https://login.affinidi.com/default-client-logo.svg",
+    "origin": "http://localhost:3000"
+  },
+  "tokenEndpointAuthMethod": "none"
+}

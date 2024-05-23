@@ -66,9 +66,9 @@ async function generate() {
       filter: (path) => !filesToIgnore.includes(basename(path)),
     })
 
-    const envPath = join(samplePath, 'frontend/.env')
+    const envPath = join(samplePath, '.env')
     if (!(await exists(envPath))) {
-      await fs.cp(join(samplePath, 'frontend/.env.example'), envPath)
+      await fs.cp(join(samplePath, '.env.example'), envPath)
     }
   }
 }

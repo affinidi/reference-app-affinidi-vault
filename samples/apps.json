@@ -199,6 +199,29 @@
             }
         }
     },
+    "affinidi-flutter-mobileapp": {
+        "redirectUris": {
+            "callbackUrl": "http://localhost:3000/affinidi-callback"
+        },
+        "metadata": {
+            "name": "Affinidi Login Integration using Flutter",
+            "description": "A code sample using Flutter framework to enable passwordless login using Affinidi IDP.",
+            "idp": {
+                "name": "Affinidi",
+                "link": "https://www.affinidi.com/product/affinidi-login"
+            },
+            "framework": {
+                "name": "Flutter",
+                "icon": "flutter-logo.svg",
+                "link": "https://flutter.dev/"
+            },
+            "language": {
+                "name": "Dart",
+                "icon": "dart-logo.svg",
+                "link": "https://dart.dev/"
+            }
+        }
+    },
     "affinidi-java-springboot": {
         "redirectUris": {
             "callbackUrl": "http://localhost:8080/login/oauth2/code/javademo"

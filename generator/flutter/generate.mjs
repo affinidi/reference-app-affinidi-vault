@@ -5,7 +5,7 @@ import mkdirp from 'mkdirp'
 import rimraf from 'rimraf'
 import { generateAppInformation } from '../generateAppInformation.mjs'
 
-const filesToIgnore = ['.env', 'generator-config.json', '.gitkeep', 'appInformation.json']
+const filesToIgnore = [ '.env', 'generator-config.json', '.gitkeep', 'keys', 'appInformation.json']
 const pathsToOverwrite = []
 
 const __dirname = dirname(url.fileURLToPath(import.meta.url))

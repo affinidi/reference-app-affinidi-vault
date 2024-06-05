@@ -62,11 +62,14 @@ const NavBar: FC = () => {
             direction="row"
             $isLocal={country}
           >
+            <a href="/">
             <S.NavTabs>Home</S.NavTabs>
-            <S.NavTabs>Products</S.NavTabs>
-            <S.NavTabs>Service</S.NavTabs>
-            <S.NavTabs>Pricing</S.NavTabs>
-            <S.NavTabs>Contact Us</S.NavTabs>
+            </a>
+            <a href="/registration">
+              <S.NavTabs>Credential Issuance</S.NavTabs>
+            </a>
+            
+
           </S.NavigationContainer>
 
           <Box style={{ minWidth: 200 }} alignItems="end">

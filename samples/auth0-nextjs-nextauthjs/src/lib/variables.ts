@@ -3,6 +3,7 @@
 export const hostUrl = process.env.NEXT_PUBLIC_HOST!;
 export const socialConnectorName =
   process.env.NEXT_PUBLIC_SOCIAL_CONNECTOR_NAME!;
+export const vaultUrl = process.env.NEXT_PUBLIC_VAULT_URL!;
 
 if (!hostUrl)
   throw new Error(

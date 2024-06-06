@@ -27,7 +27,6 @@ namespace Affinidi_Login_Demo_App
         {
             ClaimsPrincipal user = this.User;
             List<string> claims = user.FindAll("Custom").Select(x => x.Value).ToList();
-            Console.WriteLine(String.Join("\n", claims));
             foreach (var claim in claims)
             {
                 try

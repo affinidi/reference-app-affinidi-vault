@@ -18,7 +18,7 @@ For more information, refer to the [Wallets documentation](https://docs.affinidi
     `Issuing Wallet`: Select Wallet Created previous step
     `Lifetime of Credential Offer` as `600`
     
-5. Add two schemas by clicking on "Add new item" under `Supported Schemas`
+5. Add schemas by clicking on "Add new item" under `Supported Schemas`
 
 Schema 1 : 
 - *Schema* as `Manual Input`, 

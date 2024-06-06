@@ -503,10 +503,10 @@ const Registration: FC = () => {
               <InnerLogInContainer style={{ width: '80%' }}>
                 <Title>Registration Credential Offer</Title>
                 <Content>Your Registration Credentials Offer is Ready</Content>
-                <Content style={{ margin: '0.5rem 0' }}><b>{issuanceResponse.credentialOfferUri}</b></Content>
+                <Content style={{ margin: '0.5rem 0' }}><b>{vaultUrl}={issuanceResponse.credentialOfferUri}</b></Content>
                 <Content style={{ margin: '2rem 0' }}>
                   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <QrCodeGenerator qrCodeData={issuanceResponse.credentialOfferUri} />
+                    <QrCodeGenerator qrCodeData={`${vaultUrl}=${issuanceResponse?.credentialOfferUri}`} />
                   </div>
                 </Content>
                 <Content style={{ margin: '0.5rem 0', fontSize: '20px' }}>

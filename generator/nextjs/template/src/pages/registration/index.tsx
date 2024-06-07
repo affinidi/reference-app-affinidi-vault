@@ -1,25 +1,22 @@
-import { pxToRem } from "src/styles/px-to-rem";
-import QrCodeGenerator from 'src/components/QrCode/QrCodeGenerator';
 import {
-  TextField,
+  Alert,
   Grid,
   Snackbar,
-  createTheme,
+  TextField,
   ThemeProvider,
-  Alert,
-} from '@mui/material'
-import { hostUrl, vaultUrl } from 'src/lib/variables'
-import { FC, use } from "react";
-import Image from "next/image";
-import styled from "styled-components";
-import Box from "src/components/Box/Box";
-import signInImage from "public/images/sign-in.png";
-import axios from 'axios'
-import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
-import { ToastProps } from 'src/types/error'
+  createTheme,
+} from "@mui/material";
 import { useSession } from "next-auth/react";
-
+import Image from "next/image";
+import { useRouter } from "next/router";
+import signInImage from "public/images/sign-in.png";
+import { FC, useEffect, useState } from "react";
+import Box from "src/components/Box/Box";
+import QrCodeGenerator from "src/components/QrCode/QrCodeGenerator";
+import { hostUrl, vaultUrl } from "src/lib/variables";
+import { pxToRem } from "src/styles/px-to-rem";
+import { ToastProps } from "src/types/error";
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   min-height: 100%;
@@ -65,35 +62,6 @@ const ButtonContainer = styled(Box)`
   margin-top: ${pxToRem(48)};
 `;
 
-const OrContainer = styled(Box)`
-  color: #dedede;
-
-  span {
-    margin: 0 ${pxToRem(20)};
-  }
-`;
-
-const Line = styled.div`
-  width: 141px;
-  height: 1px;
-  background-color: #d2d2d2;
-`;
-
-const NoAccount = styled.div`
-  margin-top: ${pxToRem(52)};
-  margin-bottom: ${pxToRem(44)};
-  font-family: "lato", sans-serif;
-  font-size: ${pxToRem(14)};
-`;
-
-const Bold = styled.span`
-  margin-left: ${pxToRem(8)};
-  font-size: ${pxToRem(16)};
-  font-family: "lato", sans-serif;
-  font-weight: 700;
-  color: #10375c;
-`;
-
 const Button = styled.button<{ variant: "primary" | "secondary" }>`
   display: flex;
   justify-content: center;
@@ -127,7 +95,7 @@ const Button = styled.button<{ variant: "primary" | "secondary" }>`
       box-shadow: 0 4px 16px 0 rgba(255, 87, 34, 0.32);
       margin-bottom:${pxToRem(44)};
     `}
-    ${({ variant }) =>
+  ${({ variant }) =>
     variant === "secondary"
       ? `
         background: #1d58fc;
@@ -146,87 +114,91 @@ const theme = createTheme({
   typography: {
     fontSize: 28,
   },
-})
+});
 
 type handleResponse = {
-  credentialOfferUri: string
-  expiresIn: number
-  issuanceId: string
-  txCode: string
-}
+  credentialOfferUri: string;
+  expiresIn: number;
+  issuanceId: string;
+  txCode: string;
+};
 
 type RegistrationProps = {
-  email: string | null | undefined
-  name?: string
-  phoneNumber?: string
-  dob?: string
-  gender?: string
-  address?: string
-  postcode?: string
-  city?: string
-  country?: string
-  holderDid: string | null | undefined
-  credentialTypeId?: string
-}
+  email: string | null | undefined;
+  name?: string;
+  phoneNumber?: string;
+  dob?: string;
+  gender?: string;
+  address?: string;
+  postcode?: string;
+  city?: string;
+  country?: string;
+  holderDid: string | null | undefined;
+  credentialTypeId?: string;
+};
 
 const defaults: RegistrationProps = {
-  email: '',
-  name: '',
-  phoneNumber: '',
-  dob: '',
-  gender: '',
-  address: '',
-  postcode: '',
-  city: '',
-  country: '',
-  holderDid: '',
-  credentialTypeId: 'InsuranceRegistration',
-}
-
+  email: "",
+  name: "",
+  phoneNumber: "",
+  dob: "",
+  gender: "",
+  address: "",
+  postcode: "",
+  city: "",
+  country: "",
+  holderDid: "",
+  credentialTypeId: "InsuranceRegistration",
+};
 
 const Registration: FC = () => {
-  const { push } = useRouter()
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false)
-  const [issuanceResponse, setIssuanceResponse] = useState<handleResponse>()
-  const [registration, setRegistration] = useState<RegistrationProps>(defaults)
-  const [toast, setToast] = useState<ToastProps | false>()
+  const { push } = useRouter();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [issuanceResponse, setIssuanceResponse] = useState<handleResponse>();
+  const [registration, setRegistration] = useState<RegistrationProps>(defaults);
+  const [toast, setToast] = useState<ToastProps | false>();
   //Prefill available data from session, if user is logged-in
-  const { data: session } = useSession()
+  const { data: session } = useSession();
   useEffect(() => {
-    console.log('session', session)
-    if (!session || !session.user) return
+    console.log("session", session);
+    if (!session || !session.user) return;
 
     setRegistration((state) => ({
       ...state,
       email: session.user?.email,
       holderDid: session.userId,
-    }))
-  }, [session])
+    }));
+  }, [session]);
 
   const handleClose = () => {
-
-    setIssuanceResponse(undefined)
-    setIsButtonDisabled(false)
+    setIssuanceResponse(undefined);
+    setIsButtonDisabled(false);
     setRegistration((state) => ({
       email: session?.user?.email,
       holderDid: session?.userId,
-    }))
-    push('/registration')
-  }
-  
+    }));
+    push("/registration");
+  };
+
   const handleOpen = () => {
-    window.open(`${vaultUrl}=${issuanceResponse?.credentialOfferUri}`, '_blank')  
-  }
+    window.open(
+      `${vaultUrl}=${issuanceResponse?.credentialOfferUri}`,
+      "_blank"
+    );
+  };
 
   const handleRegistration = async () => {
-
     if (!registration.holderDid || !registration.email) {
-      setToast({ message: 'Enter Mandatory Details or Please login to prefill the Mandatory Details', type: 'error' })
-      return
+      setToast({
+        message:
+          "Enter Mandatory Details or Please login to prefill the Mandatory Details",
+        type: "error",
+      });
+      return;
     }
-    console.log('Start Issuance')
-    console.log('registration Details :', registration)
-    setIsButtonDisabled(true)
+    console.log("Start Issuance");
+    console.log("registration Details :", registration);
+    setIsButtonDisabled(true);
     const apiData = {
       credentialData: {
         email: registration.email,
@@ -241,30 +213,32 @@ const Registration: FC = () => {
       },
       credentialTypeId: registration.credentialTypeId,
       holderDid: registration.holderDid,
-    }
-    console.log('apiData', apiData)
-    const response = await axios<handleResponse>(`${hostUrl}/api/credentials/issuance-start`, {
-      method: 'POST',
-      data: apiData,
+    };
+    console.log("apiData", apiData);
+    const response = await fetch(`${hostUrl}/api/credentials/issuance-start`, {
+      method: "POST",
+      body: JSON.stringify(apiData),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-    })
+    });
 
-    let dataResponse = response.data
-    console.log('dataResponse', dataResponse)
+    let dataResponse = await response.json();
+    console.log("dataResponse", dataResponse);
 
-    if (typeof dataResponse == 'string') {
-      dataResponse = JSON.parse(dataResponse)
+    if (typeof dataResponse == "string") {
+      dataResponse = JSON.parse(dataResponse);
     }
 
     if (dataResponse.credentialOfferUri) {
-      setIssuanceResponse(dataResponse)
+      setIssuanceResponse(dataResponse);
     }
-    setToast({ message: 'Insurance Registration Credentails Issued Successfully', type: 'success' })
-    console.log('issuanceResponse', issuanceResponse)
-
-  }
+    setToast({
+      message: "Insurance Registration Credentails Issued Successfully",
+      type: "success",
+    });
+    console.log("issuanceResponse", issuanceResponse);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -272,17 +246,17 @@ const Registration: FC = () => {
         <Snackbar
           open={!!toast.message}
           autoHideDuration={3000}
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
           onClose={() => setToast(false)}
-          message={'test'}
+          message={"test"}
         >
           <Alert
             onClose={() => setToast(false)}
-            severity={toast?.type || 'info'}
+            severity={toast?.type || "info"}
             variant="filled"
-            sx={{ width: '40%' }}
+            sx={{ width: "40%" }}
           >
-            {toast.message || 'test'}
+            {toast.message || "test"}
           </Alert>
         </Snackbar>
       )}
@@ -297,12 +271,15 @@ const Registration: FC = () => {
               style={{ objectFit: "cover" }}
             />
           </Logo>
-          {!issuanceResponse &&
-            <LogInContainer justifyContent="center" alignItems="center" flex={1}>
-              <InnerLogInContainer style={{ width: '80%' }}>
+          {!issuanceResponse && (
+            <LogInContainer
+              justifyContent="center"
+              alignItems="center"
+              flex={1}
+            >
+              <InnerLogInContainer style={{ width: "80%" }}>
                 <Title>Insurance Registration</Title>
                 <Content>Let's move ahead with your personal details</Content>
-
 
                 <Grid item xs={12}>
                   <TextField
@@ -318,7 +295,6 @@ const Registration: FC = () => {
                       style: { fontSize: "2rem" }, // change the value as needed
                     }}
                     value={registration.holderDid}
-
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -373,7 +349,10 @@ const Registration: FC = () => {
                     }}
                     value={registration.phoneNumber}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setRegistration((p) => ({ ...p, phoneNumber: e.target.value }))
+                      setRegistration((p) => ({
+                        ...p,
+                        phoneNumber: e.target.value,
+                      }))
                     }
                   />
                 </Grid>
@@ -427,7 +406,10 @@ const Registration: FC = () => {
                     }}
                     value={registration.address}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setRegistration((p) => ({ ...p, address: e.target.value }))
+                      setRegistration((p) => ({
+                        ...p,
+                        address: e.target.value,
+                      }))
                     }
                   />
                 </Grid>
@@ -445,7 +427,10 @@ const Registration: FC = () => {
                     }}
                     value={registration.postcode}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setRegistration((p) => ({ ...p, postcode: e.target.value }))
+                      setRegistration((p) => ({
+                        ...p,
+                        postcode: e.target.value,
+                      }))
                     }
                   />
                 </Grid>
@@ -481,56 +466,82 @@ const Registration: FC = () => {
                     }}
                     value={registration.country}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setRegistration((p) => ({ ...p, country: e.target.value }))
+                      setRegistration((p) => ({
+                        ...p,
+                        country: e.target.value,
+                      }))
                     }
                   />
                 </Grid>
 
                 <ButtonContainer direction="column">
-                  <Button variant="secondary"
+                  <Button
+                    variant="secondary"
                     onClick={handleRegistration}
                     disabled={isButtonDisabled}
-                  >Submit</Button>
+                  >
+                    Submit
+                  </Button>
                 </ButtonContainer>
-
-
               </InnerLogInContainer>
             </LogInContainer>
-          }
+          )}
 
-          {issuanceResponse &&
-            <LogInContainer justifyContent="center" alignItems="center" flex={1}>
-              <InnerLogInContainer style={{ width: '80%' }}>
+          {issuanceResponse && (
+            <LogInContainer
+              justifyContent="center"
+              alignItems="center"
+              flex={1}
+            >
+              <InnerLogInContainer style={{ width: "80%" }}>
                 <Title>Registration Credential Offer</Title>
                 <Content>Your Registration Credentials Offer is Ready</Content>
-                <Content style={{ margin: '0.5rem 0' }}><b>${vaultUrl}={issuanceResponse.credentialOfferUri}</b></Content>
-                <Content style={{ margin: '2rem 0' }}>
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <QrCodeGenerator qrCodeData={${vaultUrl}=issuanceResponse.credentialOfferUri} />
+                <Content style={{ margin: "0.5rem 0" }}>
+                  <b>
+                    ${vaultUrl}={issuanceResponse.credentialOfferUri}
+                  </b>
+                </Content>
+                <Content style={{ margin: "2rem 0" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <QrCodeGenerator
+                      qrCodeData={`${vaultUrl}=${issuanceResponse?.credentialOfferUri}`}
+                    />
                   </div>
                 </Content>
-                <Content style={{ margin: '0.5rem 0', fontSize: '20px' }}>
-                 <b> {issuanceResponse.txCode && `Your Transaction Code: ${issuanceResponse.txCode}`}</b>
+                <Content style={{ margin: "0.5rem 0", fontSize: "20px" }}>
+                  <b>
+                    {" "}
+                    {issuanceResponse.txCode &&
+                      `Your Transaction Code: ${issuanceResponse.txCode}`}
+                  </b>
                 </Content>
-                <Content style={{ margin: '0.5rem 0', color: 'red', fontSize: '20px'  }}>
-                <b>Offer Timeout in {issuanceResponse.expiresIn} Second</b></Content>
-                <Grid container justifyContent="center" alignItems="center" spacing={2}>
+                <Content
+                  style={{ margin: "0.5rem 0", color: "red", fontSize: "20px" }}
+                >
+                  <b>Offer Timeout in {issuanceResponse.expiresIn} Second</b>
+                </Content>
+                <Grid
+                  container
+                  justifyContent="center"
+                  alignItems="center"
+                  spacing={2}
+                >
                   <Grid item flex={1}>
                     <ButtonContainer>
-                      <Button
-                        variant="secondary"
-                        onClick= {handleOpen}
-                      >
+                      <Button variant="secondary" onClick={handleOpen}>
                         Accept
                       </Button>
                     </ButtonContainer>
                   </Grid>
                   <Grid item flex={1}>
                     <ButtonContainer>
-                      <Button
-                        variant="primary"
-                        onClick={handleClose}
-                      >
+                      <Button variant="primary" onClick={handleClose}>
                         Deny
                       </Button>
                     </ButtonContainer>
@@ -538,8 +549,7 @@ const Registration: FC = () => {
                 </Grid>
               </InnerLogInContainer>
             </LogInContainer>
-          }
-
+          )}
         </Container>
       </Wrapper>
     </ThemeProvider>

@@ -1,13 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { ErrorResponse } from "src/types/types";
-import { UserInfo } from "src/types/types";
-import { hostUrl } from "src/lib/variables";
+import { ResponseError, UserInfo } from "src/types/types";
 
 export const useFetchUserInfoQuery = () => {
-  return useQuery<any, ErrorResponse, { userId: string; user?: UserInfo }>(
+  return useQuery<{ userId: string; user?: UserInfo }, ResponseError>(
     ["userInfo"],
     async () => {
-      const response = await fetch(`${hostUrl}/api/auth/get-user-info`, {
+      const response = await fetch(`/api/auth/get-user-info`, {
         method: "GET",
       });
       if (!response.ok) {

@@ -1,5 +1,8 @@
 import { NextAuthOptions } from "next-auth";
-import { PROVIDER_ATTRIBUTES_KEY, provider } from "src/lib/auth/auth-provider";
+import {
+  PROVIDER_ATTRIBUTES_KEY,
+  provider,
+} from "src/lib/auth/next-auth-provider";
 import { UserInfo } from "src/types/types";
 
 export const authOptions: NextAuthOptions = {

@@ -4,11 +4,9 @@ import {
   StartIssuanceResponse,
 } from "@affinidi-tdk/credential-issuance-client";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { use } from "next-api-middleware";
+import { startIssuance } from "src/lib/api/credential-issuance";
+import { ResponseError } from "src/types/types";
 import { z } from "zod";
-import { allowedHttpMethods } from "../../../lib/middlewares/allowed-http-methods";
-import { errorHandler } from "../../../lib/middlewares/error-handler";
-import { CredentialsClient } from "../clients/credentials-client";
 
 const issuanceStartSchema = z
   .object({
@@ -18,9 +16,9 @@ const issuanceStartSchema = z
   })
   .strict();
 
-async function handler(
+export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<StartIssuanceResponse>
+  res: NextApiResponse<StartIssuanceResponse | ResponseError>
 ) {
   try {
     const { credentialTypeId, credentialData, holderDid } =
@@ -39,19 +37,13 @@ async function handler(
       ],
     };
 
-    const issuanceResult = await CredentialsClient.IssuanceStart(apiData);
+    const issuanceResult = await startIssuance(apiData);
 
     console.log("issuanceResult post backend call", issuanceResult);
 
     res.status(200).json(issuanceResult);
   } catch (error: any) {
-    {
-      response: error.response?.data ?? error;
-    }
-    ("Issuance failed");
-
+    res.status(500).json({ message: "Unable to start issuance" });
     throw error;
   }
 }
-
-export default use(allowedHttpMethods("POST"), errorHandler)(handler);

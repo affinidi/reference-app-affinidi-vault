@@ -13,7 +13,7 @@ import signInImage from "public/images/sign-in.png";
 import { FC, useEffect, useState } from "react";
 import Box from "src/components/Box/Box";
 import QrCodeGenerator from "src/components/QrCode/QrCodeGenerator";
-import { hostUrl, vaultUrl } from "src/lib/variables";
+import { vaultUrl } from "src/lib/variables";
 import { pxToRem } from "src/styles/px-to-rem";
 import { ToastProps } from "src/types/error";
 import styled from "styled-components";
@@ -215,7 +215,7 @@ const Registration: FC = () => {
       holderDid: registration.holderDid,
     };
     console.log("apiData", apiData);
-    const response = await fetch(`${hostUrl}/api/credentials/issuance-start`, {
+    const response = await fetch(`/api/credentials/issuance-start`, {
       method: "POST",
       body: JSON.stringify(apiData),
       headers: {

@@ -1,17 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: "/extension-callback",
-        destination: "/",
-      },
-    ];
-  },
   reactStrictMode: false,
-  compiler: {
-    styledComponents: true,
-  },
   async headers() {
     return [
       {

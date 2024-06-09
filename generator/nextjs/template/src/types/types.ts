@@ -1,5 +1,3 @@
-import { AlertColor } from "@mui/material";
-
 export type ResponseError = {
   message: string;
 };
@@ -9,7 +7,14 @@ export type UserInfo = {
   country?: string;
 };
 
-export type ToastProps = {
-  message: string | boolean;
-  type?: AlertColor;
+export type OfferPayload = {
+  credentialOfferUri: string;
+  expiresIn: number;
+  issuanceId: string;
+  txCode: string;
+};
+
+export type MessagePayload = {
+  message: string;
+  type: "success" | "error";
 };

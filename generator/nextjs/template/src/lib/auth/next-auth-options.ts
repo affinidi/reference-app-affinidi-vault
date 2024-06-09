@@ -6,7 +6,7 @@ import {
 import { UserInfo } from "src/types/types";
 
 export const authOptions: NextAuthOptions = {
-  debug: true,
+  // debug: true,
   session: { strategy: "jwt" },
   providers: [provider],
   callbacks: {
@@ -18,6 +18,7 @@ export const authOptions: NextAuthOptions = {
           account.id_token
       );
     },
+
     // "account" and "profile" are only passed the first time this callback is called on a new session, after the user signs in
     // this defines how JWT is generated and is then used in session() callback as "token"
     async jwt({ token, account, profile }) {
@@ -41,23 +42,16 @@ export const authOptions: NextAuthOptions = {
         };
       }
 
-      if (account) {
-        token = {
-          ...token,
-          ...(account?.access_token && { accessToken: account.access_token }),
-          ...(account?.id_token && { idToken: account.id_token }),
-        };
-      }
+      // Here you also have access to account.access_token and account.id_token
 
       return token;
     },
+
     // session is persisted as an HttpOnly cookie
     async session({ session, token }) {
       return {
         ...session,
         ...(token.user && { user: { ...session.user, ...token.user } }),
-        ...(token.accessToken && { accessToken: token.accessToken }),
-        ...(token.idToken && { idToken: token.idToken }),
         ...(token.userId && { userId: token.userId }),
       };
     },

@@ -18,6 +18,7 @@ const Offer: FC<{ offer: OfferPayload }> = ({ offer }) => {
         scanning the QR code and pasting the transaction code.
       </p>
       <a
+        id="credentialOfferUri"
         className="text-blue-500"
         href={getVaultLink(vaultUrl, offer.credentialOfferUri)}
         target="_blank"

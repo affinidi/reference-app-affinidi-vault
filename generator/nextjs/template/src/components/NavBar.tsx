@@ -79,6 +79,7 @@ const NavBar: FC = () => {
         )}
         {!session && hostUrl && (
           <button
+            id="affinidiLogin"
             onClick={handleLogin}
             className="affinidi-login affinidi-login-m"
           >

@@ -18,7 +18,7 @@ const Message: React.FC<{ payload: MessagePayload }> = ({ payload }) => {
 
   return (
     <div className={`p-4 rounded-md ${messageClass}`}>
-      <p>{text}</p>
+      <p id="messageText">{text}</p>
     </div>
   );
 };

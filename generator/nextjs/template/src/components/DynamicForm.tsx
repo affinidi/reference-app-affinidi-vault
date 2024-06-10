@@ -146,7 +146,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form id="dynamicForm" onSubmit={handleSubmit}>
       {renderFields(schema)}
       <Button disabled={disabled} type="submit" className="mt-4">
         Submit

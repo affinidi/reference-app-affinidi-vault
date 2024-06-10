@@ -32,10 +32,18 @@ const Offer: FC<{ offer: OfferPayload }> = ({ offer }) => {
       {offer.txCode && (
         <p className="text-lg pb-4">
           Transaction code:
-          <span className="font-semibold ml-4">{offer.txCode}</span>
+          <span id="txCode" className="font-semibold ml-4">
+            {offer.txCode}
+          </span>
         </p>
       )}
-      <p className="text-lg pb-8">Offer expires in {offer.expiresIn} seconds</p>
+      <p className="text-lg pb-8">
+        Offer expires in{" "}
+        <span id="expiresIn" className="font-semibold">
+          {offer.expiresIn}
+        </span>{" "}
+        seconds
+      </p>
     </div>
   );
 };

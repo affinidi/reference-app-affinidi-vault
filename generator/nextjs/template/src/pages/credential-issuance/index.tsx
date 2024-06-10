@@ -1,4 +1,7 @@
-import { IssuanceConfigDto } from "@affinidi-tdk/credential-issuance-client";
+import {
+  IssuanceConfigDto,
+  StartIssuanceInputClaimModeEnum,
+} from "@affinidi-tdk/credential-issuance-client";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -27,6 +30,15 @@ export const getServerSideProps = (async () => {
   configDetails: IssuanceConfigDto | undefined;
 }>;
 
+const claimModeOptions = [
+  {
+    value: StartIssuanceInputClaimModeEnum.Normal,
+  },
+  {
+    value: StartIssuanceInputClaimModeEnum.TxCode,
+  },
+];
+
 export default function CredentialIssuance({
   configDetails,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -47,6 +59,9 @@ export default function CredentialIssuance({
   const [offer, setOffer] = useState<OfferPayload>();
   const [credentialTypeId, setCredentialTypeId] = useState<string>("");
   const [message, setMessage] = useState<MessagePayload>();
+  const [claimMode, setClaimMode] = useState<string>(
+    StartIssuanceInputClaimModeEnum.TxCode
+  );
 
   //Prefill did from session, if user is logged-in
   const { data: session } = useSession();
@@ -72,17 +87,21 @@ export default function CredentialIssuance({
         credentialData,
         credentialTypeId,
         holderDid,
+        claimMode,
       }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    let dataResponse = await response.json();
-    console.log("dataResponse", dataResponse);
-
-    if (typeof dataResponse == "string") {
-      dataResponse = JSON.parse(dataResponse);
+    if (!response.ok) {
+      clearIssuance();
+      setMessage({
+        message: "Error creating offer",
+        type: "error",
+      });
+      return;
     }
+    let dataResponse = await response.json();
 
     if (dataResponse.credentialOfferUri) {
       setOffer(dataResponse);
@@ -129,6 +148,9 @@ export default function CredentialIssuance({
     setFormProperties(schema.properties.credentialSubject);
     console.log(formProperties);
   }
+  function handleClaimModeChange(value: string) {
+    setClaimMode(value);
+  }
 
   return (
     <>
@@ -142,17 +164,29 @@ export default function CredentialIssuance({
       {!offer && (
         <div>
           <Input
+            id="holderDid"
             label="Holder's DID (From Affinidi Login)"
             value={holderDid}
+            disabled={isFormDisabled}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setHolderDid(() => e.target.value)
             }
           />
           <Select
+            id="credentialTypeId"
             label="Credential Type ID"
             options={credentialTypeOptions}
             value={credentialTypeId}
+            disabled={isFormDisabled}
             onChange={handleCredentialTypeChange}
+          />
+          <Select
+            id="claimMode"
+            label="Claim Mode"
+            options={claimModeOptions}
+            value={claimMode}
+            disabled={isFormDisabled}
+            onChange={handleClaimModeChange}
           />
           {message && (
             <div className="pt-4">
@@ -160,7 +194,7 @@ export default function CredentialIssuance({
             </div>
           )}
 
-          {formProperties && (
+          {formProperties && claimMode && (
             <div>
               <h1 className="text-xl font-semibold pb-6 pt-4">
                 Credential data

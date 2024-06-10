@@ -13,6 +13,7 @@ const issuanceStartSchema = z
     credentialTypeId: z.string(),
     holderDid: z.string(),
     credentialData: z.any(),
+    claimMode: z.nativeEnum(StartIssuanceInputClaimModeEnum),
   })
   .strict();
 
@@ -22,10 +23,10 @@ export default async function handler(
 ) {
   try {
     console.log("body", req.body);
-    const { credentialTypeId, credentialData, holderDid } =
+    const { credentialTypeId, credentialData, holderDid, claimMode } =
       issuanceStartSchema.parse(req.body);
     const apiData: StartIssuanceInput = {
-      claimMode: StartIssuanceInputClaimModeEnum.TxCode,
+      claimMode,
       holderDid,
       data: [
         {

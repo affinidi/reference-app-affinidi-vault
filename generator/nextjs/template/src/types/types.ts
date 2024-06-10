@@ -11,7 +11,7 @@ export type OfferPayload = {
   credentialOfferUri: string;
   expiresIn: number;
   issuanceId: string;
-  txCode: string;
+  txCode?: string;
 };
 
 export type MessagePayload = {

@@ -158,7 +158,9 @@ export default function CredentialIssuance({
       {offer && (
         <div>
           <Offer offer={offer}></Offer>
-          <Button onClick={clearIssuance}>New issuance</Button>
+          <Button id="newIssuance" onClick={clearIssuance}>
+            New issuance
+          </Button>
         </div>
       )}
       {!offer && (

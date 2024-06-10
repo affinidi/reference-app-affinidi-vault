@@ -74,7 +74,9 @@ const NavBar: FC = () => {
               <p>{session.user?.email}</p>
               {session.user?.country && <p>From: {session.user?.country}</p>}
             </div>
-            <Button onClick={handleLogOut}>Logout</Button>
+            <Button id="logout" onClick={handleLogOut}>
+              Logout
+            </Button>
           </div>
         )}
         {!session && hostUrl && (

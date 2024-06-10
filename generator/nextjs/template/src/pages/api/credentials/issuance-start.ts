@@ -21,6 +21,7 @@ export default async function handler(
   res: NextApiResponse<StartIssuanceResponse | ResponseError>
 ) {
   try {
+    console.log("body", req.body);
     const { credentialTypeId, credentialData, holderDid } =
       issuanceStartSchema.parse(req.body);
     const apiData: StartIssuanceInput = {

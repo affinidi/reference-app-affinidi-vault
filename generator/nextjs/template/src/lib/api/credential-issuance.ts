@@ -1,5 +1,6 @@
 import {
   Configuration,
+  ConfigurationApi,
   IssuanceApi,
   StartIssuanceInput,
 } from "@affinidi-tdk/credential-issuance-client";
@@ -13,8 +14,28 @@ export async function startIssuance(apiData: StartIssuanceInput) {
       basePath: `${apiGatewayUrl}/cis`,
     })
   );
-
   const { data } = await api.startIssuance(projectId, apiData);
-  console.log("startIssuance response", data);
+  return data;
+}
+
+export async function getConfigurations() {
+  const api = new ConfigurationApi(
+    new Configuration({
+      apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/cis`,
+    })
+  );
+  const { data } = await api.getIssuanceConfigList();
+  return data;
+}
+
+export async function getConfigurationById(configurationId: string) {
+  const api = new ConfigurationApi(
+    new Configuration({
+      apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/cis`,
+    })
+  );
+  const { data } = await api.getIssuanceConfigById(configurationId);
   return data;
 }

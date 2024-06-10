@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 
 type InputProps = {
+  id?: string;
   label?: string;
-  type?: "text" | "email" | "password";
+  type?: string;
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
   required?: boolean;
+  disabled?: boolean;
 };
 
 const Input: React.FC<InputProps> = ({
+  id,
   label,
   type,
   placeholder,
@@ -18,6 +21,7 @@ const Input: React.FC<InputProps> = ({
   onChange,
   error,
   required = false,
+  disabled,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -41,6 +45,7 @@ const Input: React.FC<InputProps> = ({
         </label>
       )}
       <input
+        id={id}
         type={type}
         placeholder={placeholder}
         value={value}
@@ -49,6 +54,7 @@ const Input: React.FC<InputProps> = ({
         onBlur={handleBlur}
         className={inputClassName}
         required={required}
+        disabled={disabled}
       />
       {error && <p className="text-red-500 mt-1">{error}</p>}
     </div>

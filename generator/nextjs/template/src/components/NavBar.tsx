@@ -20,7 +20,6 @@ const NavBar: FC = () => {
 
     fetchSession();
   }, []);
-  useEffect(() => {}, []);
 
   async function handleLogin() {
     await signIn("affinidi", { callbackUrl: hostUrl });

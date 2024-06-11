@@ -5,8 +5,8 @@ import {
 } from "@affinidi-tdk/credential-issuance-client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import { startIssuance } from "src/lib/api/credential-issuance";
 import { authOptions } from "src/lib/auth/next-auth-options";
+import { startIssuance } from "src/lib/clients/credential-issuance";
 import { ResponseError } from "src/types/types";
 import { z } from "zod";
 

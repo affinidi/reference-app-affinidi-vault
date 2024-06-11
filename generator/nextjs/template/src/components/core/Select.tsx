@@ -2,14 +2,14 @@ import React from "react";
 
 export type SelectOption = {
   label?: string;
-  value: string;
+  value: string | number;
 };
 
 type SelectProps = {
   id?: string;
   options: SelectOption[];
-  value: string;
-  onChange: (value: string) => void;
+  value: string | number;
+  onChange: (value: string | number) => void;
   label?: string;
   error?: string;
   disabled?: boolean;

@@ -18,3 +18,8 @@ export type MessagePayload = {
   message: string;
   type: "success" | "error";
 };
+
+export type IotaConfigurationProp = {
+  name: string;
+  configurationId: string;
+};

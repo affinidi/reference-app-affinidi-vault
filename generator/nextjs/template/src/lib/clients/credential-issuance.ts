@@ -18,7 +18,7 @@ export async function startIssuance(apiData: StartIssuanceInput) {
   return data;
 }
 
-export async function getConfigurations() {
+export async function listIssuanceConfigurations() {
   const api = new ConfigurationApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
@@ -29,7 +29,7 @@ export async function getConfigurations() {
   return data;
 }
 
-export async function getConfigurationById(configurationId: string) {
+export async function getIssuanceConfigurationById(configurationId: string) {
   const api = new ConfigurationApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),

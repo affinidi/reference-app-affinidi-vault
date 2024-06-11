@@ -1,5 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import dynamic from "next/dynamic";
+import { SelectOption } from "src/components/core/Select";
+import { listIotaConfigurations } from "src/lib/clients/iota";
 
 const IotaClientPage = dynamic(
   () => import("../components/iota/IotaClientPage"),
@@ -7,13 +9,17 @@ const IotaClientPage = dynamic(
 );
 
 export const getServerSideProps = (async () => {
-  return { props: { did: "" } };
-}) satisfies GetServerSideProps<{
-  did: string | undefined;
-}>;
+  const iotaConfigurations = await listIotaConfigurations();
+  const configOptions = iotaConfigurations.map((config) => ({
+    label: config.name,
+    value: config.configurationId,
+  }));
+  return { props: { configOptions } };
+}) satisfies GetServerSideProps<{ configOptions: SelectOption[] }>;
 
 export default function Page({
-  did,
+  configOptions,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  return <IotaClientPage />;
+  console.log(configOptions);
+  return <IotaClientPage configOptions={configOptions} />;
 }

@@ -11,17 +11,17 @@ import Select, { SelectOption } from "src/components/core/Select";
 import DynamicForm, { FormSchema } from "src/components/issuance/DynamicForm";
 import Offer from "src/components/issuance/Offer";
 import {
-  getConfigurationById,
-  getConfigurations,
-} from "src/lib/api/credential-issuance";
+  getIssuanceConfigurationById,
+  listIssuanceConfigurations,
+} from "src/lib/clients/credential-issuance";
 import { MessagePayload, OfferPayload } from "src/types/types";
 
 export const getServerSideProps = (async () => {
-  const configs = await getConfigurations();
+  const configs = await listIssuanceConfigurations();
   if (!configs.configurations.length) {
     return { props: { configDetails: undefined } };
   }
-  const configDetails = await getConfigurationById(
+  const configDetails = await getIssuanceConfigurationById(
     configs.configurations[0].id
   );
   return { props: { configDetails } };
@@ -80,7 +80,7 @@ export default function CredentialIssuance({
     }
     console.log("credentialData:", credentialData);
     setIsFormDisabled(true);
-    const response = await fetch("/api/issuance-start", {
+    const response = await fetch("/api/issuance/start", {
       method: "POST",
       body: JSON.stringify({
         credentialData,
@@ -116,9 +116,9 @@ export default function CredentialIssuance({
     setCredentialTypeId("");
   }
 
-  async function handleCredentialTypeChange(value: string) {
+  async function handleCredentialTypeChange(value: string | number) {
     clearIssuance();
-    setCredentialTypeId(value);
+    setCredentialTypeId(value as string);
     if (!value) {
       return;
     }
@@ -147,8 +147,8 @@ export default function CredentialIssuance({
     setFormProperties(schema.properties.credentialSubject);
     console.log(formProperties);
   }
-  function handleClaimModeChange(value: string) {
-    setClaimMode(value);
+  function handleClaimModeChange(value: string | number) {
+    setClaimMode(value as string);
   }
 
   return (

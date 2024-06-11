@@ -93,16 +93,13 @@ export default function IotaSessionMultipleRequestsPage({
       audience: "this field should not be used",
     });
 
-    console.log("request", request);
     setIotaRequests((prevArray) => [...prevArray, request]);
-    console.log("openMode", openMode);
     request.openVault({ mode: openMode });
     const response = await request.getResponse();
     setIotaResponses((prevArray) => [...prevArray, response]);
   }
 
   async function handleOpenModeChange(value: string | number) {
-    console.log("handleOpenModeChange", value);
     setOpenMode(value as number);
   }
 
@@ -128,7 +125,7 @@ export default function IotaSessionMultipleRequestsPage({
         <div>
           <div className="pb-4">
             <p className="font-semibold">
-              Verified holder's did (From Affinidi Login)
+              Verified holder did (From Affinidi Login)
             </p>
             <p>{holderDid}</p>
           </div>

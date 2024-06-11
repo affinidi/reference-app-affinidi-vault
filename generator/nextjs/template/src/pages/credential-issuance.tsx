@@ -171,7 +171,7 @@ export default function CredentialIssuance({
         <div>
           <div className="pb-4">
             <p className="font-semibold">
-              Verified holder's did (From Affinidi Login)
+              Verified holder did (From Affinidi Login)
             </p>
             <p>{holderDid}</p>
           </div>

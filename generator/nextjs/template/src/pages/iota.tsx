@@ -20,6 +20,5 @@ export const getServerSideProps = (async () => {
 export default function Page({
   configOptions,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(configOptions);
   return <IotaClientPage configOptions={configOptions} />;
 }

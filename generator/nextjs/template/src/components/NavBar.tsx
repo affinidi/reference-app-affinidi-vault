@@ -3,7 +3,7 @@ import { getSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { hostUrl } from "src/lib/variables";
-import Button from "./Button";
+import Button from "./core/Button";
 
 const NavBar: FC = () => {
   const [session, setSession] = useState<Session>();
@@ -60,7 +60,7 @@ const NavBar: FC = () => {
             Issue Credentials
           </Link>
           <Link
-            href="/"
+            href="/iota"
             className="py-4 font-medium transition-colors hover:text-blue-500"
             prefetch={false}
           >

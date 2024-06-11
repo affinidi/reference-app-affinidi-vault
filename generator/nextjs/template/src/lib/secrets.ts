@@ -28,3 +28,5 @@ export const privateKey = process.env.PRIVATE_KEY!;
 export const publicKey = process.env.PUBLIC_KEY!;
 export const passphrase = process.env.PASSPHRASE!;
 export const tokenId = process.env.TOKEN_ID!;
+
+export const iotaConfigurationId = process.env.IOTA_CONFIGURATION_ID!;

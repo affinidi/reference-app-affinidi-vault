@@ -5,12 +5,11 @@ import {
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import Button from "src/components/Button";
-import DynamicForm, { FormSchema } from "src/components/DynamicForm";
-import Input from "src/components/Input";
 import Message from "src/components/Message";
-import Offer from "src/components/Offer";
-import Select, { SelectOption } from "src/components/Select";
+import Button from "src/components/core/Button";
+import Select, { SelectOption } from "src/components/core/Select";
+import DynamicForm, { FormSchema } from "src/components/issuance/DynamicForm";
+import Offer from "src/components/issuance/Offer";
 import {
   getConfigurationById,
   getConfigurations,
@@ -53,8 +52,8 @@ export default function CredentialIssuance({
     );
   }
 
-  const [formProperties, setFormProperties] = useState<FormSchema>();
   const [holderDid, setHolderDid] = useState<string>("");
+  const [formProperties, setFormProperties] = useState<FormSchema>();
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [offer, setOffer] = useState<OfferPayload>();
   const [credentialTypeId, setCredentialTypeId] = useState<string>("");
@@ -63,7 +62,7 @@ export default function CredentialIssuance({
     StartIssuanceInputClaimModeEnum.TxCode
   );
 
-  //Prefill did from session, if user is logged-in
+  // Prefill did from session
   const { data: session } = useSession();
   useEffect(() => {
     if (!session || !session.user) return;
@@ -72,7 +71,7 @@ export default function CredentialIssuance({
 
   const handleSubmit = async (credentialData: any) => {
     console.log(credentialData);
-    if (!holderDid || !credentialTypeId) {
+    if (!credentialTypeId) {
       setMessage({
         message: "Holder's DID and Credential Type ID are required",
         type: "error",
@@ -81,7 +80,7 @@ export default function CredentialIssuance({
     }
     console.log("credentialData:", credentialData);
     setIsFormDisabled(true);
-    const response = await fetch("/api/credentials/issuance-start", {
+    const response = await fetch("/api/issuance-start", {
       method: "POST",
       body: JSON.stringify({
         credentialData,
@@ -155,7 +154,12 @@ export default function CredentialIssuance({
   return (
     <>
       <h1 className="text-2xl font-semibold pb-6">Issue Credentials</h1>
-      {offer && (
+      {!holderDid && (
+        <div>
+          You must be logged in to issue credentials to your Affinidi Vault
+        </div>
+      )}
+      {holderDid && offer && (
         <div>
           <Offer offer={offer}></Offer>
           <Button id="newIssuance" onClick={clearIssuance}>
@@ -163,17 +167,14 @@ export default function CredentialIssuance({
           </Button>
         </div>
       )}
-      {!offer && (
+      {holderDid && !offer && (
         <div>
-          <Input
-            id="holderDid"
-            label="Holder's DID (From Affinidi Login)"
-            value={holderDid}
-            disabled={isFormDisabled}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setHolderDid(() => e.target.value)
-            }
-          />
+          <div className="pb-4">
+            <p className="font-semibold">
+              Verified holder's did (From Affinidi Login)
+            </p>
+            <p>{holderDid}</p>
+          </div>
           <Select
             id="credentialTypeId"
             label="Credential Type ID"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Button from "./Button";
-import Input from "./Input";
+import Button from "../core/Button";
+import Input from "../core/Input";
 
 interface SchemaProperty {
   title: string;

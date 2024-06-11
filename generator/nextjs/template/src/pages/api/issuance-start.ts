@@ -4,7 +4,9 @@ import {
   StartIssuanceResponse,
 } from "@affinidi-tdk/credential-issuance-client";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth";
 import { startIssuance } from "src/lib/api/credential-issuance";
+import { authOptions } from "src/lib/auth/next-auth-options";
 import { ResponseError } from "src/types/types";
 import { z } from "zod";
 
@@ -22,12 +24,17 @@ export default async function handler(
   res: NextApiResponse<StartIssuanceResponse | ResponseError>
 ) {
   try {
-    console.log("body", req.body);
-    const { credentialTypeId, credentialData, holderDid, claimMode } =
+    const session = await getServerSession(req, res, authOptions);
+    if (!session) {
+      res.status(401).json({ message: "You must be logged in." });
+      return;
+    }
+    const { credentialTypeId, credentialData, claimMode } =
       issuanceStartSchema.parse(req.body);
+
     const apiData: StartIssuanceInput = {
       claimMode,
-      holderDid,
+      holderDid: session.userId,
       data: [
         {
           credentialTypeId,

@@ -22,7 +22,7 @@ const Offer: FC<{ offer: OfferPayload }> = ({ offer }) => {
         className="text-blue-500"
         href={getVaultLink(vaultUrl, offer.credentialOfferUri)}
         target="_blank"
-      >{`${vaultUrl}=${offer.credentialOfferUri}`}</a>
+      >{`${getVaultLink(vaultUrl, offer.credentialOfferUri)}`}</a>
       <div className="flex justify-center">
         <QRCode
           className="my-6"

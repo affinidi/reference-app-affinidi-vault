@@ -15,18 +15,16 @@ if (missingEnvs.length !== 0) {
   );
 }
 
-export const logLevel = process.env.LOG_LEVEL || "info";
 export const providerClientId = process.env.PROVIDER_CLIENT_ID!;
 export const providerClientSecret = process.env.PROVIDER_CLIENT_SECRET!;
 export const providerIssuer = process.env.PROVIDER_ISSUER!;
 
 // Optional environment secrets
-export const apiGatewayUrl = process.env.API_GATEWAY_URL!
-export const projectId = process.env.PROJECT_ID!
-export const tokenEndpoint = process.env.TOKEN_ENDPOINT!
-export const keyId = process.env.KEY_ID!
-export const privateKey = process.env.PRIVATE_KEY!
-export const publicKey = process.env.PUBLIC_KEY!
-export const passphrase = process.env.PASSPHRASE!
-export const tokenId = process.env.TOKEN_ID!
-
+export const apiGatewayUrl = process.env.API_GATEWAY_URL!;
+export const projectId = process.env.PROJECT_ID!;
+export const tokenEndpoint = process.env.TOKEN_ENDPOINT!;
+export const keyId = process.env.KEY_ID!;
+export const privateKey = process.env.PRIVATE_KEY!;
+export const publicKey = process.env.PUBLIC_KEY!;
+export const passphrase = process.env.PASSPHRASE!;
+export const tokenId = process.env.TOKEN_ID!;

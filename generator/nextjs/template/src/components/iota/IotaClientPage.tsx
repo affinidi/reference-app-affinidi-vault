@@ -52,9 +52,9 @@ export default function IotaSessionMultipleRequestsPage({
       fetchQueries(configId);
       const response = await fetch(
         "/api/iota/start?" +
-          new URLSearchParams({
-            iotaConfigurationId: configId,
-          }),
+        new URLSearchParams({
+          iotaConfigurationId: configId,
+        }),
         {
           method: "GET",
         }
@@ -73,9 +73,9 @@ export default function IotaSessionMultipleRequestsPage({
   async function fetchQueries(configurationId: string) {
     const response = await fetch(
       "/api/iota/query-options?" +
-        new URLSearchParams({
-          iotaConfigurationId: configurationId,
-        }),
+      new URLSearchParams({
+        iotaConfigurationId: configurationId,
+      }),
       {
         method: "GET",
       }
@@ -88,15 +88,18 @@ export default function IotaSessionMultipleRequestsPage({
     if (!iotaSession) {
       throw new Error("IotaSession not initialized");
     }
-    const request = await iotaSession.prepareRequest({
-      queryId,
-      audience: "this field should not be used",
-    });
-
-    setIotaRequests((prevArray) => [...prevArray, request]);
-    request.openVault({ mode: openMode });
-    const response = await request.getResponse();
-    setIotaResponses((prevArray) => [...prevArray, response]);
+    try {
+      const request = await iotaSession.prepareRequest({
+        queryId,
+        audience: "this field should not be used",
+      });
+      setIotaRequests((prevArray) => [...prevArray, request]);
+      request.openVault({ mode: openMode });
+      const response = await request.getResponse();
+      setIotaResponses((prevArray) => [...prevArray, response]);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async function handleOpenModeChange(value: string | number) {

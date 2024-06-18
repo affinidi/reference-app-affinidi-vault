@@ -12,7 +12,7 @@ export async function startIssuance(apiData: StartIssuanceInput) {
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
       basePath: `${apiGatewayUrl}/cis`,
-    })
+    }),
   );
   const { data } = await api.startIssuance(projectId, apiData);
   return data;
@@ -23,10 +23,10 @@ export async function listIssuanceConfigurations() {
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
       basePath: `${apiGatewayUrl}/cis`,
-    })
+    }),
   );
   const { data } = await api.getIssuanceConfigList();
-  return data;
+  return data.configurations;
 }
 
 export async function getIssuanceConfigurationById(configurationId: string) {
@@ -34,7 +34,7 @@ export async function getIssuanceConfigurationById(configurationId: string) {
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
       basePath: `${apiGatewayUrl}/cis`,
-    })
+    }),
   );
   const { data } = await api.getIssuanceConfigById(configurationId);
   return data;

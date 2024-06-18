@@ -52,12 +52,12 @@ export default function IotaSessionMultipleRequestsPage({
       fetchQueries(configId);
       const response = await fetch(
         "/api/iota/start?" +
-        new URLSearchParams({
-          iotaConfigurationId: configId,
-        }),
+          new URLSearchParams({
+            iotaConfigurationId: configId,
+          }),
         {
           method: "GET",
-        }
+        },
       );
       const credentials = (await response.json()) as IotaCredentials;
       const iotaSession = new Session({ credentials });
@@ -73,12 +73,12 @@ export default function IotaSessionMultipleRequestsPage({
   async function fetchQueries(configurationId: string) {
     const response = await fetch(
       "/api/iota/query-options?" +
-      new URLSearchParams({
-        iotaConfigurationId: configurationId,
-      }),
+        new URLSearchParams({
+          iotaConfigurationId: configurationId,
+        }),
       {
         method: "GET",
-      }
+      },
     );
     const options = (await response.json()) as SelectOption[];
     setQueryOptions(options);
@@ -89,10 +89,9 @@ export default function IotaSessionMultipleRequestsPage({
       throw new Error("IotaSession not initialized");
     }
     try {
-      const request = await iotaSession.prepareRequest({
-        queryId,
-        audience: "this field should not be used",
-      });
+      console.log(queryId);
+      const request = await iotaSession.prepareRequest({ queryId });
+      console.log(request);
       setIotaRequests((prevArray) => [...prevArray, request]);
       request.openVault({ mode: openMode });
       const response = await request.getResponse();
@@ -184,7 +183,7 @@ export default function IotaSessionMultipleRequestsPage({
                 <p key={response.correlationId}>
                   {response.correlationId}:{" "}
                   {JSON.stringify(
-                    response.vpToken.verifiableCredential[0].credentialSubject
+                    response.vpToken.verifiableCredential[0].credentialSubject,
                   )}
                 </p>
               ))}

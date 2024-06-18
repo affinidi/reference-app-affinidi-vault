@@ -53,60 +53,15 @@ export default function CredentialIssuance() {
         const configurations = await response.json();
         console.log(configurations);
         setConfigOptions(configurations);
-        handleConfigurationChange(configurations[0].value);
+        if (configurations.length > 0) {
+          handleConfigurationChange(configurations[0].value);
+        }
       } catch (error) {
         console.error("Error getting issuance configurations:", error);
       }
     };
     initConfigurations();
   }, []);
-
-  const handleSubmit = async (credentialData: any) => {
-    console.log(credentialData);
-    if (!selectedType) {
-      setMessage({
-        message: "Holder's DID and Credential Type ID are required",
-        type: "error",
-      });
-      return;
-    }
-    console.log("credentialData:", credentialData);
-    setIsFormDisabled(true);
-    const response = await fetch("/api/issuance/start", {
-      method: "POST",
-      body: JSON.stringify({
-        credentialData,
-        credentialTypeId: selectedType,
-        holderDid,
-        claimMode,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      clearIssuance();
-      setMessage({
-        message: "Error creating offer",
-        type: "error",
-      });
-      return;
-    }
-    let dataResponse = await response.json();
-
-    if (dataResponse.credentialOfferUri) {
-      setOffer(dataResponse);
-    }
-    console.log("Offer", offer);
-  };
-
-  function clearIssuance() {
-    setOffer(undefined);
-    setIsFormDisabled(false);
-    setMessage(undefined);
-    setFormProperties(undefined);
-    setSelectedType("");
-  }
 
   async function handleConfigurationChange(value: string | number) {
     const configId = value as string;
@@ -172,6 +127,53 @@ export default function CredentialIssuance() {
     setClaimMode(value as string);
   }
 
+  const handleSubmit = async (credentialData: any) => {
+    console.log(credentialData);
+    if (!selectedType) {
+      setMessage({
+        message: "Holder's DID and Credential Type ID are required",
+        type: "error",
+      });
+      return;
+    }
+    console.log("credentialData:", credentialData);
+    setIsFormDisabled(true);
+    const response = await fetch("/api/issuance/start", {
+      method: "POST",
+      body: JSON.stringify({
+        credentialData,
+        credentialTypeId: selectedType,
+        holderDid,
+        claimMode,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      clearIssuance();
+      setMessage({
+        message: "Error creating offer",
+        type: "error",
+      });
+      return;
+    }
+    let dataResponse = await response.json();
+
+    if (dataResponse.credentialOfferUri) {
+      setOffer(dataResponse);
+    }
+    console.log("Offer", offer);
+  };
+
+  function clearIssuance() {
+    setOffer(undefined);
+    setIsFormDisabled(false);
+    setMessage(undefined);
+    setFormProperties(undefined);
+    setSelectedType("");
+  }
+
   return (
     <>
       <h1 className="text-2xl font-semibold pb-6">Issue Credentials</h1>
@@ -180,6 +182,7 @@ export default function CredentialIssuance() {
           You must be logged in to issue credentials to your Affinidi Vault
         </div>
       )}
+
       {holderDid && (
         <div className="pb-4">
           <p className="font-semibold">
@@ -199,7 +202,7 @@ export default function CredentialIssuance() {
       )}
 
       {holderDid && configOptions.length === 0 && (
-        <div>Loading configurations...</div>
+        <div className="py-3">Loading configurations...</div>
       )}
 
       {holderDid && configOptions.length > 0 && (
@@ -222,7 +225,9 @@ export default function CredentialIssuance() {
             disabled={isFormDisabled}
             onChange={handleClaimModeChange}
           />
-          {typeOptions.length === 0 && <div>Loading credential types...</div>}
+          {typeOptions.length === 0 && (
+            <div className="py-3">Loading credential types...</div>
+          )}
           {typeOptions.length > 0 && (
             <Select
               id="credentialTypeId"

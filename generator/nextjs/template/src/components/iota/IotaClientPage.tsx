@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Button from "../core/Button";
 import Select, { SelectOption } from "../core/Select";
+import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
 
 const openModeOptions = [
   {
@@ -21,17 +22,14 @@ const openModeOptions = [
   },
 ];
 
-export default function IotaSessionMultipleRequestsPage({
-  configOptions,
-}: {
-  configOptions: SelectOption[];
-}) {
+export default function IotaSessionMultipleRequestsPage() {
   const [holderDid, setHolderDid] = useState<string>("");
+  const [configOptions, setConfigOptions] = useState<SelectOption[]>([]);
+  const [selectedConfig, setSelectedConfig] = useState<string>("");
   const [iotaResponses, setIotaResponses] = useState<IotaResponse[]>([]);
   const [iotaSession, setIotaSession] = useState<Session>();
   const [iotaIsInitializing, setIotaIsInitializing] = useState(false);
   const [iotaRequests, setIotaRequests] = useState<IotaRequest[]>([]);
-  const [iotaConfiguration, setIotaConfiguration] = useState<string>("");
   const [queryOptions, setQueryOptions] = useState<SelectOption[]>([]);
   const [selectedQuery, setSelectedQuery] = useState<string>("");
   const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.Popup);
@@ -43,23 +41,36 @@ export default function IotaSessionMultipleRequestsPage({
     setHolderDid(session.userId);
   }, [session]);
 
+  useEffect(() => {
+    const initConfigurations = async () => {
+      try {
+        const response = await fetch("/api/iota/configuration-options", {
+          method: "GET",
+        });
+        const configurations = await response.json();
+        setConfigOptions(configurations);
+        console.log(configurations);
+        if (configurations.length > 0) {
+          handleConfigurationChange(configurations[0].value);
+        }
+      } catch (error) {
+        console.error("Error getting Iota configurations:", error);
+      }
+    };
+    initConfigurations();
+  }, []);
+
   async function handleConfigurationChange(value: string | number) {
     const configId = value as string;
     clearSession();
-    setIotaConfiguration(configId);
+    setSelectedConfig(configId);
+    if (!configId) {
+      return;
+    }
     try {
       setIotaIsInitializing(true);
-      fetchQueries(configId);
-      const response = await fetch(
-        "/api/iota/start?" +
-          new URLSearchParams({
-            iotaConfigurationId: configId,
-          }),
-        {
-          method: "GET",
-        },
-      );
-      const credentials = (await response.json()) as IotaCredentials;
+      getQueryOptions(configId);
+      const credentials = await getIotaCredentials(configId);
       const iotaSession = new Session({ credentials });
       await iotaSession.initialize();
       setIotaSession(iotaSession);
@@ -70,7 +81,7 @@ export default function IotaSessionMultipleRequestsPage({
     }
   }
 
-  async function fetchQueries(configurationId: string) {
+  async function getQueryOptions(configurationId: string) {
     const response = await fetch(
       "/api/iota/query-options?" +
         new URLSearchParams({
@@ -82,6 +93,19 @@ export default function IotaSessionMultipleRequestsPage({
     );
     const options = (await response.json()) as SelectOption[];
     setQueryOptions(options);
+  }
+
+  async function getIotaCredentials(configurationId: string) {
+    const response = await fetch(
+      "/api/iota/start?" +
+        new URLSearchParams({
+          iotaConfigurationId: configurationId,
+        }),
+      {
+        method: "GET",
+      },
+    );
+    return (await response.json()) as IotaCredentials;
   }
 
   async function handleTDKShare(queryId: string) {
@@ -123,23 +147,32 @@ export default function IotaSessionMultipleRequestsPage({
           You must be logged in to share credentials from your Affinidi Vault
         </div>
       )}
+
       {holderDid && (
+        <div className="pb-4">
+          <p className="font-semibold">
+            Verified holder did (From Affinidi Login)
+          </p>
+          <p>{holderDid}</p>
+        </div>
+      )}
+
+      {holderDid && configOptions.length === 0 && (
+        <div className="py-3">Loading configurations...</div>
+      )}
+
+      {holderDid && configOptions.length > 0 && (
+        <Select
+          id="configurationIdSelect"
+          label="Configuration"
+          options={configOptions}
+          value={selectedConfig}
+          onChange={handleConfigurationChange}
+        />
+      )}
+
+      {holderDid && selectedConfig && (
         <div>
-          <div className="pb-4">
-            <p className="font-semibold">
-              Verified holder did (From Affinidi Login)
-            </p>
-            <p>{holderDid}</p>
-          </div>
-
-          <Select
-            id="configurationIdSelect"
-            label="Configuration"
-            options={configOptions}
-            value={iotaConfiguration}
-            onChange={handleConfigurationChange}
-          />
-
           <Select
             id="openModeSelect"
             label="Open Mode"
@@ -148,10 +181,13 @@ export default function IotaSessionMultipleRequestsPage({
             onChange={handleOpenModeChange}
           />
 
+          {queryOptions.length === 0 && (
+            <div className="py-3">Loading queries...</div>
+          )}
           {queryOptions.length > 0 && (
             <Select
               id="queryId"
-              label="Query ID"
+              label="Query"
               options={queryOptions}
               value={selectedQuery}
               onChange={handleQueryChange}
@@ -163,11 +199,14 @@ export default function IotaSessionMultipleRequestsPage({
           )}
 
           {iotaIsInitializing && (
-            <div>Initializing session with Affinidi Iota Framework...</div>
+            <div className="py-3">
+              Initializing session with Affinidi Iota Framework...
+            </div>
           )}
-          {iotaConfiguration && !iotaIsInitializing && !iotaSession && (
+          {selectedConfig && !iotaIsInitializing && !iotaSession && (
             <div>Failed to initialize Iota</div>
           )}
+
           {iotaRequests.length > 0 && (
             <div className="pt-8">
               <p className="font-semibold">Requests:</p>

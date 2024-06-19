@@ -21,7 +21,7 @@ const issuanceStartSchema = z
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<StartIssuanceResponse | ResponseError>
+  res: NextApiResponse<StartIssuanceResponse | ResponseError>,
 ) {
   try {
     const session = await getServerSession(req, res, authOptions);
@@ -47,9 +47,6 @@ export default async function handler(
     };
 
     const issuanceResult = await startIssuance(apiData);
-
-    console.log("issuanceResult post backend call", issuanceResult);
-
     res.status(200).json(issuanceResult);
   } catch (error: any) {
     res.status(500).json({ message: "Unable to start issuance" });

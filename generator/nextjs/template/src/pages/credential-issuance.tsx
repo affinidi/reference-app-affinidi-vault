@@ -2,6 +2,7 @@ import {
   IssuanceConfigDtoCredentialSupportedInner,
   StartIssuanceInputClaimModeEnum,
 } from "@affinidi-tdk/credential-issuance-client";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Message from "src/components/Message";
@@ -9,6 +10,7 @@ import Button from "src/components/core/Button";
 import Select, { SelectOption } from "src/components/core/Select";
 import DynamicForm, { FormSchema } from "src/components/issuance/DynamicForm";
 import Offer from "src/components/issuance/Offer";
+import { personalAccessTokenConfigured } from "src/lib/env";
 import { MessagePayload, OfferPayload } from "src/types/types";
 
 const claimModeOptions = [
@@ -20,7 +22,13 @@ const claimModeOptions = [
   },
 ];
 
-export default function CredentialIssuance() {
+export const getServerSideProps = (async () => {
+  return { props: { featureAvailable: personalAccessTokenConfigured() } };
+}) satisfies GetServerSideProps<{ featureAvailable: boolean }>;
+
+export default function CredentialIssuance({
+  featureAvailable,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [holderDid, setHolderDid] = useState<string>("");
   const [configOptions, setConfigOptions] = useState<SelectOption[]>([]);
   const [selectedConfig, setSelectedConfig] = useState<string>("");
@@ -60,7 +68,9 @@ export default function CredentialIssuance() {
         console.error("Error getting issuance configurations:", error);
       }
     };
-    initConfigurations();
+    if (featureAvailable) {
+      initConfigurations();
+    }
   }, []);
 
   async function handleConfigurationChange(value: string | number) {
@@ -177,85 +187,95 @@ export default function CredentialIssuance() {
   return (
     <>
       <h1 className="text-2xl font-semibold pb-6">Issue Credentials</h1>
-      {!holderDid && (
+
+      {!featureAvailable && (
+        <div>
+          Feature not available. Please set your Personal Access Token in your
+          environment secrets.
+        </div>
+      )}
+
+      {featureAvailable && !holderDid && (
         <div>
           You must be logged in to issue credentials to your Affinidi Vault
         </div>
       )}
 
-      {holderDid && (
-        <div className="pb-4">
-          <p className="font-semibold">
-            Verified holder did (From Affinidi Login)
-          </p>
-          <p>{holderDid}</p>
-        </div>
-      )}
+      {featureAvailable && holderDid && (
+        <>
+          <div className="pb-4">
+            <p className="font-semibold">
+              Verified holder did (From Affinidi Login)
+            </p>
+            <p>{holderDid}</p>
+          </div>
 
-      {holderDid && offer && (
-        <div>
-          <Offer offer={offer}></Offer>
-          <Button id="newIssuance" onClick={clearIssuance}>
-            New issuance
-          </Button>
-        </div>
-      )}
-
-      {holderDid && configOptions.length === 0 && (
-        <div className="py-3">Loading configurations...</div>
-      )}
-
-      {holderDid && configOptions.length > 0 && (
-        <Select
-          id="configurationIdSelect"
-          label="Configuration"
-          options={configOptions}
-          value={selectedConfig}
-          onChange={handleConfigurationChange}
-        />
-      )}
-
-      {holderDid && selectedConfig && !offer && (
-        <div>
-          <Select
-            id="claimMode"
-            label="Claim Mode"
-            options={claimModeOptions}
-            value={claimMode}
-            disabled={isFormDisabled}
-            onChange={handleClaimModeChange}
-          />
-          {typeOptions.length === 0 && (
-            <div className="py-3">Loading credential types...</div>
+          {offer && (
+            <div>
+              <Offer offer={offer}></Offer>
+              <Button id="newIssuance" onClick={clearIssuance}>
+                New issuance
+              </Button>
+            </div>
           )}
-          {typeOptions.length > 0 && (
+
+          {configOptions.length === 0 && (
+            <div className="py-3">Loading configurations...</div>
+          )}
+
+          {configOptions.length > 0 && (
             <Select
-              id="credentialTypeId"
-              label="Credential Type ID"
-              options={typeOptions}
-              value={selectedType}
-              disabled={isFormDisabled}
-              onChange={handleCredentialTypeChange}
+              id="configurationIdSelect"
+              label="Configuration"
+              options={configOptions}
+              value={selectedConfig}
+              onChange={handleConfigurationChange}
             />
           )}
-          {message && (
-            <div className="pt-4">
-              <Message payload={message} />
-            </div>
-          )}
-          {formProperties && claimMode && (
+
+          {selectedConfig && !offer && (
             <div>
-              <h1 className="text-xl font-semibold pb-6 pt-4">
-                Credential data
-              </h1>
-              <DynamicForm
-                schema={formProperties}
-                onSubmit={handleSubmit}
+              <Select
+                id="claimMode"
+                label="Claim Mode"
+                options={claimModeOptions}
+                value={claimMode}
                 disabled={isFormDisabled}
+                onChange={handleClaimModeChange}
               />
+              {typeOptions.length === 0 && (
+                <div className="py-3">Loading credential types...</div>
+              )}
+              {typeOptions.length > 0 && (
+                <Select
+                  id="credentialTypeId"
+                  label="Credential Type ID"
+                  options={typeOptions}
+                  value={selectedType}
+                  disabled={isFormDisabled}
+                  onChange={handleCredentialTypeChange}
+                />
+              )}
+              {message && (
+                <div className="pt-4">
+                  <Message payload={message} />
+                </div>
+              )}
+              {formProperties && claimMode && (
+                <div>
+                  <h1 className="text-xl font-semibold pb-6 pt-4">
+                    Credential data
+                  </h1>
+                  <DynamicForm
+                    schema={formProperties}
+                    onSubmit={handleSubmit}
+                    disabled={isFormDisabled}
+                  />
+                </div>
+              )}
             </div>
           )}
-        </div>
+        </>
       )}
     </>
   );

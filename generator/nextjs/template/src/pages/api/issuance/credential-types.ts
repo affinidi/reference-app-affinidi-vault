@@ -11,16 +11,21 @@ export default async function handler(
     IssuanceConfigDtoCredentialSupportedInner[] | ResponseError
   >,
 ) {
-  const session = await getServerSession(req, res, authOptions);
-  if (!session) {
-    res.status(401).json({ message: "You must be logged in." });
-    return;
+  try {
+    const session = await getServerSession(req, res, authOptions);
+    if (!session) {
+      res.status(401).json({ message: "You must be logged in." });
+      return;
+    }
+    const { issuanceConfigurationId } = req.query;
+
+    const configurationDetails = await getIssuanceConfigurationById(
+      issuanceConfigurationId as string,
+    );
+
+    res.status(200).json(configurationDetails.credentialSupported!);
+  } catch (error: any) {
+    res.status(500).json({ message: "Unable to fetch credential types" });
+    console.log(error);
   }
-  const { issuanceConfigurationId } = req.query;
-
-  const configurationDetails = await getIssuanceConfigurationById(
-    issuanceConfigurationId as string,
-  );
-
-  res.status(200).json(configurationDetails.credentialSupported!);
 }

@@ -4,7 +4,7 @@ import { ResponseError } from "src/types/types";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<StartIssuanceResponse | ResponseError>
+  res: NextApiResponse<StartIssuanceResponse | ResponseError>,
 ) {
   try {
     const { jsonSchemaUrl } = req.query;
@@ -15,6 +15,6 @@ export default async function handler(
     res.status(200).json(schema);
   } catch (error: any) {
     res.status(404).json({ message: "Schema not found" });
-    throw error;
+    console.log(error);
   }
 }

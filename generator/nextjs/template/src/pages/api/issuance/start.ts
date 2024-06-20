@@ -50,6 +50,6 @@ export default async function handler(
     res.status(200).json(issuanceResult);
   } catch (error: any) {
     res.status(500).json({ message: "Unable to start issuance" });
-    throw error;
+    console.log(error);
   }
 }

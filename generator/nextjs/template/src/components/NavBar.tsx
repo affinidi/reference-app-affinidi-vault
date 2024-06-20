@@ -2,7 +2,6 @@ import { Session } from "next-auth";
 import { getSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
-import { hostUrl } from "src/lib/variables";
 import Button from "./core/Button";
 
 const NavBar: FC = () => {
@@ -22,7 +21,7 @@ const NavBar: FC = () => {
   }, []);
 
   async function handleLogin() {
-    await signIn("affinidi", { callbackUrl: hostUrl });
+    await signIn("affinidi");
   }
 
   async function handleLogOut() {
@@ -67,8 +66,7 @@ const NavBar: FC = () => {
             Receive Credentials
           </Link>
         </nav>
-        {!hostUrl && <span>Affinidi Login not configured</span>}
-        {session && hostUrl && (
+        {session && (
           <div className="flex">
             <div className="flex flex-col justify-center px-4">
               <p>{session.user?.email}</p>
@@ -79,7 +77,7 @@ const NavBar: FC = () => {
             </Button>
           </div>
         )}
-        {!session && hostUrl && (
+        {!session && (
           <button
             id="affinidiLogin"
             onClick={handleLogin}

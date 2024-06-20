@@ -8,15 +8,23 @@ import {
   publicKey,
   tokenEndpoint,
   tokenId,
-} from "src/lib/secrets";
+} from "src/lib/env";
 
-export const authProvider = new AuthProvider({
-  apiGatewayUrl: apiGatewayUrl, // TODO remove
-  tokenEndpoint: tokenEndpoint, // TODO remove
-  keyId: keyId,
-  tokenId: tokenId,
-  passphrase: passphrase,
-  privateKey: privateKey,
-  publicKey: publicKey,
-  projectId: projectId,
-});
+const instance = global as unknown as { provider: AuthProvider };
+
+export const getAuthProvider = () => {
+  if (instance.provider) {
+    return instance.provider;
+  }
+  instance.provider = new AuthProvider({
+    projectId: projectId,
+    tokenId: tokenId,
+    privateKey: privateKey,
+    publicKey: publicKey,
+    keyId: keyId,
+    passphrase: passphrase,
+    tokenEndpoint: tokenEndpoint, // TODO remove
+    apiGatewayUrl: apiGatewayUrl, // TODO remove
+  });
+  return instance.provider;
+};

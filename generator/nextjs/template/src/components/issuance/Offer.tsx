@@ -1,7 +1,9 @@
 import QRCode from "qrcode.react";
 import { FC } from "react";
-import { vaultUrl } from "src/lib/variables";
 import { OfferPayload } from "src/types/types";
+
+// TODO get from TDK
+const vaultUrl = "https://vault.dev.affinidi.com/claim";
 
 const Offer: FC<{ offer: OfferPayload }> = ({ offer }) => {
   const getVaultLink = (vaultUrl: string, credentialOfferUri: string) => {

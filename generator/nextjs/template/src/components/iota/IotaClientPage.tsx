@@ -9,7 +9,6 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Button from "../core/Button";
 import Select, { SelectOption } from "../core/Select";
-import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
 
 const openModeOptions = [
   {
@@ -22,7 +21,11 @@ const openModeOptions = [
   },
 ];
 
-export default function IotaSessionMultipleRequestsPage() {
+export default function IotaSessionMultipleRequestsPage({
+  featureAvailable,
+}: {
+  featureAvailable: boolean;
+}) {
   const [holderDid, setHolderDid] = useState<string>("");
   const [configOptions, setConfigOptions] = useState<SelectOption[]>([]);
   const [selectedConfig, setSelectedConfig] = useState<string>("");
@@ -57,7 +60,9 @@ export default function IotaSessionMultipleRequestsPage() {
         console.error("Error getting Iota configurations:", error);
       }
     };
-    initConfigurations();
+    if (featureAvailable) {
+      initConfigurations();
+    }
   }, []);
 
   async function handleConfigurationChange(value: string | number) {
@@ -142,93 +147,106 @@ export default function IotaSessionMultipleRequestsPage() {
   return (
     <>
       <h1 className="text-2xl font-semibold pb-6">Receive Credentials</h1>
-      {!holderDid && (
+
+      {!featureAvailable && (
+        <div>
+          Feature not available. Please set your Personal Access Token in your
+          environment secrets.
+        </div>
+      )}
+
+      {featureAvailable && !holderDid && (
         <div>
           You must be logged in to share credentials from your Affinidi Vault
         </div>
       )}
 
-      {holderDid && (
-        <div className="pb-4">
-          <p className="font-semibold">
-            Verified holder did (From Affinidi Login)
-          </p>
-          <p>{holderDid}</p>
-        </div>
-      )}
+      {featureAvailable && holderDid && (
+        <>
+          <div className="pb-4">
+            <p className="font-semibold">
+              Verified holder did (From Affinidi Login)
+            </p>
+            <p>{holderDid}</p>
+          </div>
 
-      {holderDid && configOptions.length === 0 && (
-        <div className="py-3">Loading configurations...</div>
-      )}
-
-      {holderDid && configOptions.length > 0 && (
-        <Select
-          id="configurationIdSelect"
-          label="Configuration"
-          options={configOptions}
-          value={selectedConfig}
-          onChange={handleConfigurationChange}
-        />
-      )}
-
-      {holderDid && selectedConfig && (
-        <div>
-          <Select
-            id="openModeSelect"
-            label="Open Mode"
-            options={openModeOptions}
-            value={openMode}
-            onChange={handleOpenModeChange}
-          />
-
-          {queryOptions.length === 0 && (
-            <div className="py-3">Loading queries...</div>
+          {configOptions.length === 0 && (
+            <div className="py-3">Loading configurations...</div>
           )}
-          {queryOptions.length > 0 && (
+
+          {configOptions.length > 0 && (
             <Select
-              id="queryId"
-              label="Query"
-              options={queryOptions}
-              value={selectedQuery}
-              onChange={handleQueryChange}
+              id="configurationIdSelect"
+              label="Configuration"
+              options={configOptions}
+              value={selectedConfig}
+              onChange={handleConfigurationChange}
             />
           )}
 
-          {iotaSession && selectedQuery && (
-            <Button onClick={() => handleTDKShare(selectedQuery)}>Share</Button>
-          )}
+          {selectedConfig && (
+            <div>
+              <Select
+                id="openModeSelect"
+                label="Open Mode"
+                options={openModeOptions}
+                value={openMode}
+                onChange={handleOpenModeChange}
+              />
 
-          {iotaIsInitializing && (
-            <div className="py-3">
-              Initializing session with Affinidi Iota Framework...
-            </div>
-          )}
-          {selectedConfig && !iotaIsInitializing && !iotaSession && (
-            <div>Failed to initialize Iota</div>
-          )}
+              {queryOptions.length === 0 && (
+                <div className="py-3">Loading queries...</div>
+              )}
+              {queryOptions.length > 0 && (
+                <Select
+                  id="queryId"
+                  label="Query"
+                  options={queryOptions}
+                  value={selectedQuery}
+                  onChange={handleQueryChange}
+                />
+              )}
 
-          {iotaRequests.length > 0 && (
-            <div className="pt-8">
-              <p className="font-semibold">Requests:</p>
-              {iotaRequests.map((request) => (
-                <p key={request.correlationId}>{request.correlationId}</p>
-              ))}
+              {iotaSession && selectedQuery && (
+                <Button onClick={() => handleTDKShare(selectedQuery)}>
+                  Share
+                </Button>
+              )}
+
+              {iotaIsInitializing && (
+                <div className="py-3">
+                  Initializing session with Affinidi Iota Framework...
+                </div>
+              )}
+              {selectedConfig && !iotaIsInitializing && !iotaSession && (
+                <div>Failed to initialize Iota</div>
+              )}
+
+              {iotaRequests.length > 0 && (
+                <div className="pt-8">
+                  <p className="font-semibold">Requests:</p>
+                  {iotaRequests.map((request) => (
+                    <p key={request.correlationId}>{request.correlationId}</p>
+                  ))}
+                </div>
+              )}
+              {iotaResponses.length > 0 && (
+                <div className="pt-8">
+                  <p className="font-semibold">Responses:</p>
+                  {iotaResponses.map((response) => (
+                    <p key={response.correlationId}>
+                      {response.correlationId}:{" "}
+                      {JSON.stringify(
+                        response.vpToken.verifiableCredential[0]
+                          .credentialSubject,
+                      )}
+                    </p>
+                  ))}
+                </div>
+              )}
             </div>
           )}
-          {iotaResponses.length > 0 && (
-            <div className="pt-8">
-              <p className="font-semibold">Responses:</p>
-              {iotaResponses.map((response) => (
-                <p key={response.correlationId}>
-                  {response.correlationId}:{" "}
-                  {JSON.stringify(
-                    response.vpToken.verifiableCredential[0].credentialSubject,
-                  )}
-                </p>
-              ))}
-            </div>
-          )}
-        </div>
+        </>
       )}
     </>
   );

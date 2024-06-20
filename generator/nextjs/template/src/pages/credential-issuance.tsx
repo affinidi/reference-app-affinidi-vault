@@ -118,15 +118,9 @@ export default function CredentialIssuance({
       return;
     }
 
-    const response = await fetch(
-      "/api/schema?" +
-        new URLSearchParams({
-          jsonSchemaUrl: credentialType.jsonSchemaUrl,
-        }),
-      {
-        method: "GET",
-      },
-    );
+    const response = await fetch(credentialType.jsonSchemaUrl, {
+      method: "GET",
+    });
     const schema = await response.json();
     console.log(schema);
     setFormProperties(schema.properties.credentialSubject);
@@ -219,11 +213,11 @@ export default function CredentialIssuance({
             </div>
           )}
 
-          {configOptions.length === 0 && (
+          {!offer && configOptions.length === 0 && (
             <div className="py-3">Loading configurations...</div>
           )}
 
-          {configOptions.length > 0 && (
+          {!offer && configOptions.length > 0 && (
             <Select
               id="configurationIdSelect"
               label="Configuration"
@@ -233,7 +227,7 @@ export default function CredentialIssuance({
             />
           )}
 
-          {selectedConfig && !offer && (
+          {!offer && selectedConfig && (
             <div>
               <Select
                 id="claimMode"
@@ -249,7 +243,7 @@ export default function CredentialIssuance({
               {typeOptions.length > 0 && (
                 <Select
                   id="credentialTypeId"
-                  label="Credential Type ID"
+                  label="Credential Type (Schema)"
                   options={typeOptions}
                   value={selectedType}
                   disabled={isFormDisabled}

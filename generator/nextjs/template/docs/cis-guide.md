@@ -4,27 +4,8 @@ To issue a Verifiable Credential, it is required to setup the **Issuance Configu
 
 You can easily do this using the [Affinidi Portal](https://portal.affinidi.com)
 
-1. Go to [Affinidi Portal](https://portal.affinidi.com).
+1. Login on [Affinidi Portal](https://portal.affinidi.com)
 
-2. Open `Wallets` menu under the `Tools` section and click on `Create Wallet` with any name (e.g. `MyWallet`) and DID method as `did:key`.
-    ![alt text](./cis-image/wallet-create.png)
+2. Go to the Schema Builder tool and search for a schema or create a new one schema. If you want to use an existing one copy it's Schema ID, JSON Schema URL and Ld Context URL.
 
-For more information, refer to the [Wallets documentation](https://docs.affinidi.com/dev-tools/wallets)
-
-3. Go to `Credential Issuance Service` under `Services` section.
-
-4. Click on `Create Configuration` and set the following fields:
-
-    `Issuing Wallet`: Select Wallet Created previous step
-    `Lifetime of Credential Offer` as `600`
-    
-5. Add schemas by clicking on "Add new item" under `Supported Schemas`
-
-Schema 1 : 
-- *Schema* as `Manual Input`, 
-- *Credential Type ID* as `InsuranceRegistration`
-- *JSON Schema URL* as `https://schema.affinidi.io/TtestschemaIsusdfsfsfdV1R0.json`
-- *JSDON-LD Context URL* = `https://schema.affinidi.io/TtestschemaIsusdfsfsfdV1R0.jsonld`
-
-Sample Configuration
-![alt text](./cis-image/cis-configuration.png)
+3. Go to the Credential Issuance service and create a new configuration. Select or create the wallet you will use to issue credentials. Add an offer timeline and the schema values from the previous step.

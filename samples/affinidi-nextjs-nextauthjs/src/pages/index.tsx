@@ -1,33 +1,16 @@
-import styled from "styled-components";
-
-import LocalLandingPage from "src/components/LocalLandingPage/LocalLandingPage";
-import LandingPage from "src/components/LandingPage/LandingPage";
-
-import { pxToRem } from "src/styles/px-to-rem";
-
-import { useAuthentication } from "src/lib/hooks/use-authentication";
-import { useLocalContent } from "src/lib/hooks/use-local-content";
-
-const Wrapper = styled.div`
-  min-height: 100%;
-  padding: 0px ${pxToRem(80)};
-`;
-
 const Home = () => {
-  const { isAuthenticated } = useAuthentication();
-  const { country } = useLocalContent();
-
-  if (!isAuthenticated || !country)
-    return (
-      <Wrapper>
-        <LandingPage />
-      </Wrapper>
-    );
-
   return (
-    <Wrapper>
-      <LocalLandingPage />
-    </Wrapper>
+    <>
+      <h1 className="text-2xl font-semibold pb-6">
+        Welcome to Affinidi Sample Application
+      </h1>
+      <p className="pb-4 text-xl">This app showcases how to:</p>
+      <ul className="grid gap-2 text-lg">
+        <li>- Integrate Affinidi Login using NextAuth.js</li>
+        <li>- Issue credentials to Affinidi Vault</li>
+        <li>- Query credentials through Affinidi Iota Framework</li>
+      </ul>
+    </>
   );
 };
 

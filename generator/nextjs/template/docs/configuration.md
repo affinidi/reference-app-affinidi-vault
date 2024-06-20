@@ -36,5 +36,5 @@ sequenceDiagram;
 ```ini
 PROVIDER_CLIENT_ID="<CLIENT_ID>"
 PROVIDER_CLIENT_SECRET="<CLIENT_SECRET>"
-PROVIDER_ISSUER="https://apse1.api.affinidi.io/vpa/v1/login/project/<PROJECT-ID>"
+PROVIDER_ISSUER="<ISSUER_URL>"
 ```

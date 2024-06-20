@@ -1,9 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
-import { ThemeProvider } from "styled-components";
-import { SessionProvider } from 'next-auth/react'
-import { theme } from "src/styles/theme";
-import NavBar from "src/components/NavBar/NavBar";
+import NavBar from "src/components/NavBar";
 
 import "../styles/globals.css";
 
@@ -21,12 +19,12 @@ export default function App({
 
   return (
     <SessionProvider>
-    <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <NavBar />
-        <Component {...pageProps} />
+        <div className="mx-auto container py-8 px-4">
+          <Component {...pageProps} />
+        </div>
       </QueryClientProvider>
-    </ThemeProvider>
     </SessionProvider>
   );
 }

@@ -8,7 +8,6 @@ const Home = () => {
       <ul className="grid gap-2 text-lg">
         <li>- Integrate Affinidi Login using NextAuth.js</li>
         <li>- Issue credentials to Affinidi Vault</li>
-        <li>- Query credentials through Affinidi Iota Framework</li>
       </ul>
     </>
   );

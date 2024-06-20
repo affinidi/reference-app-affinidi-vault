@@ -1,5 +1,5 @@
 import { signIn } from "next-auth/react";
 
 export async function clientLogin() {
-  await signIn("auth0");
+  await signIn("affinidi");
 }

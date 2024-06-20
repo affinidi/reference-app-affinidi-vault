@@ -3,8 +3,8 @@ import {
   providerClientId,
   providerClientSecret,
   providerIssuer,
-} from "src/lib/secrets";
-import { socialConnectorName } from "src/lib/variables";
+  socialConnectorName,
+} from "src/lib/env";
 
 export const PROVIDER_ATTRIBUTES_KEY = "profile";
 

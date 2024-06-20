@@ -3,7 +3,7 @@ import {
   providerClientId,
   providerClientSecret,
   providerIssuer,
-} from "src/lib/secrets";
+} from "src/lib/env";
 
 export const PROVIDER_ATTRIBUTES_KEY = "custom";
 

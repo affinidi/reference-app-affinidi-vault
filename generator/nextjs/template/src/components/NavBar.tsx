@@ -1,8 +1,9 @@
 import { Session } from "next-auth";
-import { getSession, signIn, signOut } from "next-auth/react";
+import { getSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import Button from "./core/Button";
+import { clientLogin } from "src/lib/auth/client-login";
 
 const NavBar: FC = () => {
   const [session, setSession] = useState<Session>();
@@ -21,7 +22,7 @@ const NavBar: FC = () => {
   }, []);
 
   async function handleLogin() {
-    await signIn("affinidi");
+    await clientLogin();
   }
 
   async function handleLogOut() {

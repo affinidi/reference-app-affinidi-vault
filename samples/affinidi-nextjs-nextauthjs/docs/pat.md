@@ -1,10 +1,8 @@
 # Setup Personal Access Token (PAT)
 
-To create a personal Access Token,use Affinidi CLI 
+To create a personal Access Token, use Affinidi CLI 
 
 ## Install Affinidi CLI
-
-Follow the guide below if you haven’t installed yet
 
 1. Install Affinidi CLI using NPM
 
@@ -24,15 +22,15 @@ Follow the guide below if you haven’t installed yet
   affinidi start
   ```
 
-2. Once logged in successfully, create token by running below command
+2. Once logged in successfully, create a token by running below command
 
     ```sh
-    affinidi token create-token -n MyAppVerificationKey -w -p my-secret-passphrase
+    affinidi token create-token -n MyTokenName -w -p my-secret-passphrase
     ```
 
-`MyAppVerificationKey` : Replace with your own Name of the Personal Access Token, at least 8 chars long
+`MyTokenName` : Replace with a name for your Personal Access Token, at least 8 chars long
 
-`my-secret-passphrase` : Replace with your own Passphrase for generation of private public key pair
+`my-secret-passphrase` : Replace with your own passphrase for the generation of the private public key pair
 
 Sample response:
 
@@ -59,11 +57,11 @@ affinidi token create-token --help
 
    ```
     PROJECT_ID="YOUR_PROJECT_ID"
-    KEY_ID="YOUR_KEY_ID"
     TOKEN_ID="YOUR_TOKEN_ID"
-    PASSPHRASE="YOUR_SECRET_PASSPHRASE"
     PRIVATE_KEY="YOUR_PAT_PRIVATE_KEY"
     PUBLIC_KEY="YOUR_PAT_PRIVATE_KEY"
+    KEY_ID="YOUR_KEY_ID"
+    PASSPHRASE="YOUR_SECRET_PASSPHRASE"
    ```
 
 Learn more command from our [Documentation](https://docs.affinidi.com/dev-tools/affinidi-cli/manage-token)

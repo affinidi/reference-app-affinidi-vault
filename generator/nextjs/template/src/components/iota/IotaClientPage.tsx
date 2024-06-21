@@ -21,6 +21,13 @@ const openModeOptions = [
   },
 ];
 
+type DataRequests = {
+  [id: string]: {
+    request: IotaRequest;
+    response?: IotaResponse;
+  };
+};
+
 export default function IotaSessionMultipleRequestsPage({
   featureAvailable,
 }: {
@@ -29,13 +36,13 @@ export default function IotaSessionMultipleRequestsPage({
   const [holderDid, setHolderDid] = useState<string>("");
   const [configOptions, setConfigOptions] = useState<SelectOption[]>([]);
   const [selectedConfig, setSelectedConfig] = useState<string>("");
-  const [iotaResponses, setIotaResponses] = useState<IotaResponse[]>([]);
   const [iotaSession, setIotaSession] = useState<Session>();
   const [iotaIsInitializing, setIotaIsInitializing] = useState(false);
-  const [iotaRequests, setIotaRequests] = useState<IotaRequest[]>([]);
   const [queryOptions, setQueryOptions] = useState<SelectOption[]>([]);
   const [selectedQuery, setSelectedQuery] = useState<string>("");
   const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.Popup);
+  const [dataRequests, setDataRequests] = useState<DataRequests>({});
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
 
   // Prefill did from session
   const { data: session } = useSession();
@@ -119,16 +126,35 @@ export default function IotaSessionMultipleRequestsPage({
     }
     try {
       console.log(queryId);
+      setIsFormDisabled(true);
       const request = await iotaSession.prepareRequest({ queryId });
+      setIsFormDisabled(false);
       console.log(request);
-      setIotaRequests((prevArray) => [...prevArray, request]);
+      addNewDataRequest(request);
       request.openVault({ mode: openMode });
       const response = await request.getResponse();
-      setIotaResponses((prevArray) => [...prevArray, response]);
+      updateDataRequestWithResponse(response);
     } catch (e) {
       console.error(e);
     }
   }
+
+  const addNewDataRequest = (request: IotaRequest) => {
+    setDataRequests((prevRequests) => ({
+      ...prevRequests,
+      [request.correlationId]: { request },
+    }));
+  };
+
+  const updateDataRequestWithResponse = (response: IotaResponse) => {
+    setDataRequests((prevRequests) => ({
+      ...prevRequests,
+      [response.correlationId]: {
+        ...prevRequests[response.correlationId],
+        response,
+      },
+    }));
+  };
 
   async function handleOpenModeChange(value: string | number) {
     setOpenMode(value as number);
@@ -142,6 +168,7 @@ export default function IotaSessionMultipleRequestsPage({
     setIotaSession(undefined);
     setQueryOptions([]);
     setSelectedQuery("");
+    setIsFormDisabled(false);
   }
 
   return (
@@ -180,6 +207,7 @@ export default function IotaSessionMultipleRequestsPage({
               label="Configuration"
               options={configOptions}
               value={selectedConfig}
+              disabled={isFormDisabled}
               onChange={handleConfigurationChange}
             />
           )}
@@ -191,6 +219,7 @@ export default function IotaSessionMultipleRequestsPage({
                 label="Open Mode"
                 options={openModeOptions}
                 value={openMode}
+                disabled={isFormDisabled}
                 onChange={handleOpenModeChange}
               />
 
@@ -203,12 +232,16 @@ export default function IotaSessionMultipleRequestsPage({
                   label="Query"
                   options={queryOptions}
                   value={selectedQuery}
+                  disabled={isFormDisabled}
                   onChange={handleQueryChange}
                 />
               )}
 
               {iotaSession && selectedQuery && (
-                <Button onClick={() => handleTDKShare(selectedQuery)}>
+                <Button
+                  disabled={isFormDisabled}
+                  onClick={() => handleTDKShare(selectedQuery)}
+                >
                   Share
                 </Button>
               )}
@@ -222,26 +255,32 @@ export default function IotaSessionMultipleRequestsPage({
                 <div>Failed to initialize Iota</div>
               )}
 
-              {iotaRequests.length > 0 && (
-                <div className="pt-8">
-                  <p className="font-semibold">Requests:</p>
-                  {iotaRequests.map((request) => (
-                    <p key={request.correlationId}>{request.correlationId}</p>
-                  ))}
-                </div>
-              )}
-              {iotaResponses.length > 0 && (
-                <div className="pt-8">
-                  <p className="font-semibold">Responses:</p>
-                  {iotaResponses.map((response) => (
-                    <p key={response.correlationId}>
-                      {response.correlationId}:{" "}
-                      {JSON.stringify(
-                        response.vpToken.verifiableCredential[0]
-                          .credentialSubject,
-                      )}
-                    </p>
-                  ))}
+              {Object.keys(dataRequests).length > 0 && (
+                <div className="mt-8 border rounded-md">
+                  <table className="table-fixed text-left w-full">
+                    <thead className="border-b">
+                      <tr>
+                        <th className="border-r px-4 py-2">Request ID</th>
+                        <th className="px-4 py-2">Response</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Object.keys(dataRequests).map((id: string) => (
+                        <tr className="border-b">
+                          <td className="border-r px-4 py-2">{id}</td>
+                          <td className="px-4 py-2">
+                            <pre>
+                              {JSON.stringify(
+                                dataRequests[id].response?.vpToken,
+                                undefined,
+                                2,
+                              )}
+                            </pre>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               )}
             </div>

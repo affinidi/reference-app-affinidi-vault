@@ -3,7 +3,7 @@ import { FC } from "react";
 import { OfferPayload } from "src/types/types";
 
 // TODO get from TDK
-const vaultUrl = "https://vault.dev.affinidi.com/claim";
+const vaultUrl = "https://vault.affinidi.com/claim";
 
 const Offer: FC<{ offer: OfferPayload }> = ({ offer }) => {
   const getVaultLink = (vaultUrl: string, credentialOfferUri: string) => {

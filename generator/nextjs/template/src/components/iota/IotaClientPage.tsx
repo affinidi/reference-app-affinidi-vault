@@ -67,7 +67,7 @@ export default function IotaSessionMultipleRequestsPage({
     if (featureAvailable) {
       initConfigurations();
     }
-  });
+  }, [featureAvailable]);
 
   async function handleConfigurationChange(value: string | number) {
     const configId = value as string;

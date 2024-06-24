@@ -61,9 +61,6 @@ export default function CredentialIssuance({
         const configurations = await response.json();
         console.log(configurations);
         setConfigOptions(configurations);
-        if (configurations.length > 0) {
-          handleConfigurationChange(configurations[0].value);
-        }
       } catch (error) {
         console.error("Error getting issuance configurations:", error);
       }
@@ -71,7 +68,7 @@ export default function CredentialIssuance({
     if (featureAvailable) {
       initConfigurations();
     }
-  });
+  }, [featureAvailable]);
 
   async function handleConfigurationChange(value: string | number) {
     const configId = value as string;

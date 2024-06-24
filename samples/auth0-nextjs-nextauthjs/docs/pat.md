@@ -1,0 +1,67 @@
+# Setup Personal Access Token (PAT)
+
+To create a personal Access Token, use Affinidi CLI 
+
+## Install Affinidi CLI
+
+1. Install Affinidi CLI using NPM
+
+`npm install -g @affinidi/cli`
+
+2. Verify that the installation is successful
+
+`affinidi --version`
+
+> Note that Affinidi CLI requires Node version 18 and above.
+
+### Create Personal Access Token (PAT)
+
+1. Log in to Affinidi CLI by running
+
+  ```sh
+  affinidi start
+  ```
+
+2. Once logged in successfully, create a token by running below command
+
+    ```sh
+    affinidi token create-token -n MyTokenName -w -p my-secret-passphrase
+    ```
+
+`MyTokenName` : Replace with a name for your Personal Access Token, at least 8 chars long
+
+`my-secret-passphrase` : Replace with your own passphrase for the generation of the private public key pair
+
+Sample response:
+
+```json
+
+{
+  "apiGatewayUrl": "https://apse1.api.affinidi.io",
+  "tokenEndpoint": "https://apse1.auth.developer.affinidi.io/auth/oauth2/token",
+  "keyId": "XXXXXXXXXXXXXXXX",
+  "tokenId": "XXXXXXXXXXXXXXXX",
+  "passphrase": "XXXXXXXXXXXXXXXX",
+  "privateKey": "XXXXXXXXXXXXXXXX",
+  "publicKey": "XXXXXXXXXXXXXXXX",
+  "projectId": "XXXXXXXXXXXXXXXX"
+}
+```
+
+For more details on the command run below command
+```sh
+affinidi token create-token --help
+```
+
+3. Update `.env` file for the below variables with values obtained in above response
+
+   ```
+    PROJECT_ID="YOUR_PROJECT_ID"
+    TOKEN_ID="YOUR_TOKEN_ID"
+    PRIVATE_KEY="YOUR_PAT_PRIVATE_KEY"
+    PUBLIC_KEY="YOUR_PAT_PRIVATE_KEY"
+    KEY_ID="YOUR_KEY_ID"
+    PASSPHRASE="YOUR_SECRET_PASSPHRASE"
+   ```
+
+Learn more command from our [Documentation](https://docs.affinidi.com/dev-tools/affinidi-cli/manage-token)

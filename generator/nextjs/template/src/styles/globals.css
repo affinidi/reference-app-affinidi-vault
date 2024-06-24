@@ -1,50 +1,55 @@
-@import "@fontsource/playfair-display/700.css";
-@import "@fontsource/lato/700.css";
-@import "@fontsource/lato/400.css";
-@import "@fontsource/lora/400.css";
-@import "@fontsource/lora/700.css";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html {
-  height: 100%;
-  font-size: 8px;
-}
-
 body {
-  height: 100%;
-  margin: 0;
-  font-size: 2rem;
-  font-family: "lato", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-* {
-  box-sizing: border-box;
+.affinidi-login-m {
+    border: 0;
+    width: 188px;
+    height: 48px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    box-sizing: border-box;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    object-fit: contain;
+    border-radius: 48px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 30 24" fill="none"><path d="M3.927 20.281A11.966 11.966 0 0 0 12.61 24c3.416 0 6.499-1.428 8.684-3.719H3.926h.001zM21.295 6.762H1.813A11.933 11.933 0 0 0 .707 10.48h20.588V6.762zM21.293 3.719A11.967 11.967 0 0 0 12.609 0a11.966 11.966 0 0 0-8.683 3.719h17.367zM21.295 13.521H.707c.167 1.319.548 2.57 1.106 3.719h19.482v-3.718zM23.41 6.762c.558 1.148.94 2.4 1.106 3.718h4.78V6.762H23.41z" fill="%23fff"/><path d="M29.293 20.281h-8V24h8V20.28zM23.41 17.24h5.886v-3.718h-4.78a11.933 11.933 0 0 1-1.106 3.718zM29.293 0h-8v3.719h8V0z" fill="%23fff"/><path d="M24.514 10.48a11.934 11.934 0 0 0-1.106-3.72 12.017 12.017 0 0 0-2.115-3.041v16.563a12.05 12.05 0 0 0 2.115-3.042 11.935 11.935 0 0 0 1.2-5.24c0-.516-.031-1.023-.094-1.522v.001z" fill="%23040822"/></svg>') no-repeat 20px center;
+    background-color: #1d58fc;
+    color: #ffffff;
+    padding-left: 60px;
+
+    flex-grow: 0;
+    font-family: Figtree;
+    font-size: 16px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: 0.6px;
 }
 
-#__next {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
+.affinidi-login-m:hover {
+    background-color: #4a79fd;
+    filter: contrast(90%);
 }
 
-#__next > * {
-  flex: 1;
-  width: 100%;
-  max-width: 1440px;
+.affinidi-login-m:active {
+    background-color: #1d58fc;
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
+.affinidi-login-m-loading {
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><g clip-path="url(%23uzl55nssua)"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.727 4.545v2.728l3.864-3.637L9.727 0v2.727C5.457 2.727 2 5.982 2 10c0 1.427.444 2.755 1.198 3.873l1.41-1.327A5.09 5.09 0 0 1 3.932 10c0-3.01 2.598-5.455 5.795-5.455zm6.53 1.582-1.41 1.328c.425.763.676 1.627.676 2.545 0 3.01-2.599 5.454-5.796 5.454v-2.727l-3.863 3.637L9.727 20v-2.727c4.27 0 7.727-3.255 7.727-7.273a6.904 6.904 0 0 0-1.197-3.873z" fill="%23fff"/></g><defs><clipPath id="uzl55nssua"><path fill="%23fff" d="M0 0h20v20H0z"/></clipPath></defs></svg>') no-repeat center;
+    background-color: #4a79fd;
+    filter: contrast(90%);
+}
 
-  font-size: 16px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: azure;
-  width: 100%;
-  height: 100%;
+.affinidi-login-m:disabled {
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 30 24" fill="none"><path d="M3.927 20.281A11.966 11.966 0 0 0 12.61 24c3.416 0 6.499-1.428 8.684-3.719H3.926h.001zM21.295 6.762H1.813A11.933 11.933 0 0 0 .707 10.48h20.588V6.762zM21.293 3.719A11.967 11.967 0 0 0 12.609 0a11.966 11.966 0 0 0-8.683 3.719h17.367zM21.295 13.521H.707c.167 1.319.548 2.57 1.106 3.719h19.482v-3.718zM23.41 6.762c.558 1.148.94 2.4 1.106 3.718h4.78V6.762H23.41z" fill="%23fff"/><path d="M29.293 20.281h-8V24h8V20.28zM23.41 17.24h5.886v-3.718h-4.78a11.933 11.933 0 0 1-1.106 3.718zM29.293 0h-8v3.719h8V0z" fill="%23fff"/><path d="M24.514 10.48a11.934 11.934 0 0 0-1.106-3.72 12.017 12.017 0 0 0-2.115-3.041v16.563a12.05 12.05 0 0 0 2.115-3.042 11.935 11.935 0 0 0 1.2-5.24c0-.516-.031-1.023-.094-1.522v.001z" fill="%23fff"/></svg>') no-repeat 20px center;
+    background-color: #e6e6e9;
 }

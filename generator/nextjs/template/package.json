@@ -1,34 +1,36 @@
 {
-  "name": "reference-app-template",
+  "name": "reference-app-affinidi-nextjs-nextauthjs",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS='--max-http-header-size=99999999' next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@fontsource/lato": "^4.5.10",
-    "@fontsource/lora": "^5.0.8",
-    "@fontsource/playfair-display": "^4.5.13",
-    "@tanstack/react-query": "^4.24.4",
-    "next": "^13.5.3",
-    "next-api-middleware": "^2.0.1",
-    "next-auth": "^4.22.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "styled-components": "^5.3.6"
+    "@affinidi-tdk/auth-provider": "^1.6.0",
+    "@affinidi-tdk/credential-issuance-client": "^1.7.0",
+    "jsonwebtoken": "^9.0.2",
+    "next": "^14.2.4",
+    "next-auth": "^4.24.3",
+    "qrcode.react": "^3.1.0",
+    "qs": "^6.12.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "18.11.18",
-    "@types/react": "18.0.27",
-    "@types/react-dom": "18.0.10",
-    "@types/styled-components": "^5.1.26",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "18.19.39",
+    "@types/qs": "^6.9.15",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.13",
     "cross-env": "^7.0.3",
     "eslint": "^8.50.0",
-    "eslint-config-next": "^13.5.3",
+    "eslint-config-next": "^14.2.4",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2"
   }

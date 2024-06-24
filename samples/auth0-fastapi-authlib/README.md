@@ -111,7 +111,7 @@ In case you have python2 installed, use `python` instead of `python3` in the fol
 Start server with:
 
 ```
-python3 manage.py runserver
+python3 app.py
 ```
 
 Then visit: http://localhost:8201/

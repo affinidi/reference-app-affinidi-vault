@@ -84,7 +84,7 @@ export default function CredentialIssuance({
     }
     const response = await fetch(
       "/api/issuance/credential-types?" +
-        new URLSearchParams({ issuanceConfigurationId: configId }),
+      new URLSearchParams({ issuanceConfigurationId: configId }),
       {
         method: "GET",
       },
@@ -147,7 +147,6 @@ export default function CredentialIssuance({
       body: JSON.stringify({
         credentialData,
         credentialTypeId: selectedType,
-        holderDid,
         claimMode,
       }),
       headers: {

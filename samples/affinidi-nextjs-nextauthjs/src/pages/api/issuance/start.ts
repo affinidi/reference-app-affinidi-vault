@@ -13,7 +13,6 @@ import { z } from "zod";
 const issuanceStartSchema = z
   .object({
     credentialTypeId: z.string(),
-    holderDid: z.string(),
     credentialData: z.any(),
     claimMode: z.nativeEnum(StartIssuanceInputClaimModeEnum),
   })

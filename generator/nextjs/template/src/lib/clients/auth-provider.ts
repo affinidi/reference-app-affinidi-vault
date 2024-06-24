@@ -10,13 +10,9 @@ import {
   tokenId,
 } from "src/lib/env";
 
-const instance = global as unknown as { provider: AuthProvider };
 
 export const getAuthProvider = () => {
-  if (instance.provider) {
-    return instance.provider;
-  }
-  instance.provider = new AuthProvider({
+  return new AuthProvider({
     projectId: projectId,
     tokenId: tokenId,
     privateKey: privateKey,
@@ -26,5 +22,4 @@ export const getAuthProvider = () => {
     tokenEndpoint: tokenEndpoint, // TODO remove
     apiGatewayUrl: apiGatewayUrl, // TODO remove
   });
-  return instance.provider;
 };

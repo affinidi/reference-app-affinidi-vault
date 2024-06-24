@@ -71,7 +71,7 @@ export default function CredentialIssuance({
     if (featureAvailable) {
       initConfigurations();
     }
-  }, []);
+  });
 
   async function handleConfigurationChange(value: string | number) {
     const configId = value as string;
@@ -84,7 +84,7 @@ export default function CredentialIssuance({
     }
     const response = await fetch(
       "/api/issuance/credential-types?" +
-        new URLSearchParams({ issuanceConfigurationId: configId }),
+      new URLSearchParams({ issuanceConfigurationId: configId }),
       {
         method: "GET",
       },

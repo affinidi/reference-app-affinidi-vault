@@ -60,9 +60,6 @@ export default function IotaSessionMultipleRequestsPage({
         const configurations = await response.json();
         setConfigOptions(configurations);
         console.log(configurations);
-        if (configurations.length > 0) {
-          handleConfigurationChange(configurations[0].value);
-        }
       } catch (error) {
         console.error("Error getting Iota configurations:", error);
       }
@@ -70,7 +67,7 @@ export default function IotaSessionMultipleRequestsPage({
     if (featureAvailable) {
       initConfigurations();
     }
-  }, []);
+  });
 
   async function handleConfigurationChange(value: string | number) {
     const configId = value as string;
@@ -96,9 +93,9 @@ export default function IotaSessionMultipleRequestsPage({
   async function getQueryOptions(configurationId: string) {
     const response = await fetch(
       "/api/iota/query-options?" +
-        new URLSearchParams({
-          iotaConfigurationId: configurationId,
-        }),
+      new URLSearchParams({
+        iotaConfigurationId: configurationId,
+      }),
       {
         method: "GET",
       },
@@ -110,9 +107,9 @@ export default function IotaSessionMultipleRequestsPage({
   async function getIotaCredentials(configurationId: string) {
     const response = await fetch(
       "/api/iota/start?" +
-        new URLSearchParams({
-          iotaConfigurationId: configurationId,
-        }),
+      new URLSearchParams({
+        iotaConfigurationId: configurationId,
+      }),
       {
         method: "GET",
       },
@@ -266,7 +263,7 @@ export default function IotaSessionMultipleRequestsPage({
                     </thead>
                     <tbody>
                       {Object.keys(dataRequests).map((id: string) => (
-                        <tr className="border-b">
+                        <tr key={id} className="border-b">
                           <td className="border-r px-4 py-2">{id}</td>
                           <td className="px-4 py-2">
                             <pre>

@@ -19,7 +19,7 @@ export const providerClientId = process.env.PROVIDER_CLIENT_ID!;
 export const providerClientSecret = process.env.PROVIDER_CLIENT_SECRET!;
 export const providerIssuer = process.env.PROVIDER_ISSUER!;
 
-// Optional envs for credential issuance
+// Optional envs for credential issuance and Affinidi Iota Framework
 export const projectId = process.env.PROJECT_ID!;
 export const tokenId = process.env.TOKEN_ID!;
 export const privateKey = process.env.PRIVATE_KEY!;
@@ -35,3 +35,7 @@ export function personalAccessTokenConfigured(): boolean {
     publicKey !== undefined
   );
 }
+
+// TODO remove
+export const apiGatewayUrl = process.env.API_GATEWAY_URL!;
+export const tokenEndpoint = process.env.TOKEN_ENDPOINT!;

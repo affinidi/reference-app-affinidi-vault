@@ -11,6 +11,9 @@
   "dependencies": {
     "@affinidi-tdk/auth-provider": "^1.6.0",
     "@affinidi-tdk/credential-issuance-client": "^1.7.0",
+    "@affinidi-tdk/iota-browser": "file:dist-local/affinidi-tdk-iota-browser-0.2.11.tgz",
+    "@affinidi-tdk/iota-client": "^1.4.0",
+    "@affinidi-tdk/iota-utils": "file:dist-local/iota-utils@0.1.4.jsii.tgz",
     "jsonwebtoken": "^9.0.2",
     "next": "^14.2.4",
     "next-auth": "^4.24.3",

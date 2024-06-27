@@ -1,17 +1,10 @@
+import { VaultUtils } from "@affinidi-tdk/common";
 import QRCode from "qrcode.react";
 import { FC } from "react";
 import { OfferPayload } from "src/types/types";
 
-// TODO get from TDK
-const vaultUrl = "https://vault.affinidi.com/claim";
-
 const Offer: FC<{ offer: OfferPayload }> = ({ offer }) => {
-  const getVaultLink = (vaultUrl: string, credentialOfferUri: string) => {
-    const params = new URLSearchParams();
-    params.append("credential_offer_uri", credentialOfferUri);
-    const queryString = params.toString();
-    return `${vaultUrl}?${queryString}`;
-  };
+  const vaultLink = VaultUtils.buildClaimLink(offer.credentialOfferUri)
 
   return (
     <div>
@@ -19,16 +12,15 @@ const Offer: FC<{ offer: OfferPayload }> = ({ offer }) => {
         Your credential offer is ready. Claim it by following the link or
         scanning the QR code and pasting the transaction code.
       </p>
-      <a
-        id="credentialOfferUri"
+      <a id="credentialOfferUri"
         className="text-blue-500"
-        href={getVaultLink(vaultUrl, offer.credentialOfferUri)}
+        href={vaultLink}
         target="_blank"
-      >{`${getVaultLink(vaultUrl, offer.credentialOfferUri)}`}</a>
+      >{vaultLink}</a>
       <div className="flex justify-center">
         <QRCode
           className="my-6"
-          value={getVaultLink(vaultUrl, offer.credentialOfferUri)}
+          value={vaultLink}
           size={256}
         />
       </div>

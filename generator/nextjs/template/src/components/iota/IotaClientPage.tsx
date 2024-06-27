@@ -1,10 +1,10 @@
 import {
+  IotaCredentials,
   IotaRequest,
   IotaResponse,
   OpenMode,
   Session,
 } from "@affinidi-tdk/iota-browser";
-import { IotaCredentials } from "@affinidi-tdk/iota-utils";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Button from "../core/Button";
@@ -59,7 +59,6 @@ export default function IotaSessionMultipleRequestsPage({
         });
         const configurations = await response.json();
         setConfigOptions(configurations);
-        console.log(configurations);
       } catch (error) {
         console.error("Error getting Iota configurations:", error);
       }
@@ -122,11 +121,9 @@ export default function IotaSessionMultipleRequestsPage({
       throw new Error("IotaSession not initialized");
     }
     try {
-      console.log(queryId);
       setIsFormDisabled(true);
       const request = await iotaSession.prepareRequest({ queryId });
       setIsFormDisabled(false);
-      console.log(request);
       addNewDataRequest(request);
       request.openVault({ mode: openMode });
       const response = await request.getResponse();

@@ -10,13 +10,11 @@ import { startIssuance } from "src/lib/clients/credential-issuance";
 import { ResponseError } from "src/types/types";
 import { z } from "zod";
 
-const issuanceStartSchema = z
-  .object({
-    credentialTypeId: z.string(),
-    credentialData: z.any(),
-    claimMode: z.nativeEnum(StartIssuanceInputClaimModeEnum),
-  })
-  .strict();
+const issuanceStartSchema = z.object({
+  credentialTypeId: z.string(),
+  credentialData: z.any(),
+  claimMode: z.nativeEnum(StartIssuanceInputClaimModeEnum),
+});
 
 export default async function handler(
   req: NextApiRequest,

@@ -38,4 +38,3 @@ export function personalAccessTokenConfigured(): boolean {
 
 // TODO remove
 export const apiGatewayUrl = process.env.API_GATEWAY_URL!;
-export const tokenEndpoint = process.env.TOKEN_ENDPOINT!;

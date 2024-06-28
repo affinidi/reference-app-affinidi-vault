@@ -1,9 +1,14 @@
-import { IotaCredentials, IotaUtils } from "@affinidi-tdk/iota-utils";
+import { IotaCredentials, Iota } from "@affinidi-tdk/iota-core";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "src/lib/auth/next-auth-options";
 import { getAuthProvider } from "src/lib/clients/auth-provider";
 import { ResponseError } from "src/types/types";
+import { z } from "zod";
+
+const iotaStartSchema = z.object({
+  iotaConfigurationId: z.string(),
+});
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,13 +20,14 @@ export default async function handler(
       res.status(401).json({ message: "You must be logged in." });
       return;
     }
-    const { iotaConfigurationId } = req.query;
+    const { iotaConfigurationId } = iotaStartSchema.parse(req.query);
+
     const authProvider = getAuthProvider();
     const iotaToken = authProvider.createIotaToken(
-      iotaConfigurationId as string,
+      iotaConfigurationId,
       session.userId,
     );
-    const iotaCredentials = await IotaUtils.limitedTokenToIotaCredentials(
+    const iotaCredentials = await Iota.limitedTokenToIotaCredentials(
       iotaToken.iotaJwt,
     );
 

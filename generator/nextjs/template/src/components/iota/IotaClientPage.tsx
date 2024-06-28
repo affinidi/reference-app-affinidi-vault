@@ -1,5 +1,6 @@
 import {
   IotaCredentials,
+  IotaError,
   IotaRequest,
   IotaResponse,
   OpenMode,
@@ -24,7 +25,7 @@ const openModeOptions = [
 type DataRequests = {
   [id: string]: {
     request: IotaRequest;
-    response?: IotaResponse;
+    result?: IotaResponse | IotaError;
   };
 };
 
@@ -83,7 +84,9 @@ export default function IotaSessionMultipleRequestsPage({
       await iotaSession.initialize();
       setIotaSession(iotaSession);
     } catch (error) {
-      console.error("Error initializing Iota Session:", error);
+      if (error instanceof IotaError) {
+        console.log(error.code);
+      }
     } finally {
       setIotaIsInitializing(false);
     }
@@ -118,7 +121,7 @@ export default function IotaSessionMultipleRequestsPage({
 
   async function handleTDKShare(queryId: string) {
     if (!iotaSession) {
-      throw new Error("IotaSession not initialized");
+      throw new Error("Iota session not initialized");
     }
     try {
       setIsFormDisabled(true);
@@ -128,8 +131,11 @@ export default function IotaSessionMultipleRequestsPage({
       request.openVault({ mode: openMode });
       const response = await request.getResponse();
       updateDataRequestWithResponse(response);
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      if (error instanceof IotaError) {
+        updateDataRequestWithError(error)
+        console.log(error.code);
+      }
     }
   }
 
@@ -145,9 +151,21 @@ export default function IotaSessionMultipleRequestsPage({
       ...prevRequests,
       [response.correlationId]: {
         ...prevRequests[response.correlationId],
-        response,
+        result: response,
       },
     }));
+  };
+
+  const updateDataRequestWithError = (error: IotaError) => {
+    if (error.correlationId) {
+      setDataRequests((prevRequests) => ({
+        ...prevRequests,
+        [error.correlationId!]: {
+          ...prevRequests[error.correlationId!],
+          result: error,
+        },
+      }));
+    }
   };
 
   async function handleOpenModeChange(value: string | number) {
@@ -254,8 +272,8 @@ export default function IotaSessionMultipleRequestsPage({
                   <table className="table-fixed text-left w-full">
                     <thead className="border-b">
                       <tr>
-                        <th className="border-r px-4 py-2">Request ID</th>
-                        <th className="px-4 py-2">Response</th>
+                        <th className="w-1/3 border-r px-4 py-2">Request ID</th>
+                        <th className="w-2/3 px-4 py-2">Result</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -264,8 +282,10 @@ export default function IotaSessionMultipleRequestsPage({
                           <td className="border-r px-4 py-2">{id}</td>
                           <td className="px-4 py-2">
                             <pre>
+                              {dataRequests[id].result instanceof IotaError && <p>Error received:</p>}
+                              {!(dataRequests[id].result instanceof IotaError) && <p>Response received:</p>}
                               {JSON.stringify(
-                                dataRequests[id].response?.vpToken,
+                                dataRequests[id].result,
                                 undefined,
                                 2,
                               )}

@@ -12,7 +12,7 @@
     "@affinidi-tdk/auth-provider": "^1.8.0",
     "@affinidi-tdk/common": "^1.0.0",
     "@affinidi-tdk/credential-issuance-client": "^1.7.0",
-    "@affinidi-tdk/iota-browser": "file:dist-local/affinidi-tdk-iota-browser-0.2.21.tgz",
+    "@affinidi-tdk/iota-browser": "file:dist-local/affinidi-tdk-iota-browser-0.2.23.tgz",
     "@affinidi-tdk/iota-client": "^1.4.0",
     "@affinidi-tdk/iota-core": "file:dist-local/iota-core@0.0.5.jsii.tgz",
     "next": "^14.2.4",

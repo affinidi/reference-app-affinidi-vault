@@ -1,0 +1,37 @@
+Keystore type: PKCS12
+Keystore provider: SUN
+
+Your keystore contains 1 entry
+
+Alias name: upload
+Creation date: 08-Apr-2024
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: CN=Chaitanya Samprajan, OU=Affinidi, O=Affinidi, L=Bengaluru, ST=Karnataka, C=in
+Issuer: CN=Chaitanya Samprajan, OU=Affinidi, O=Affinidi, L=Bengaluru, ST=Karnataka, C=in
+Serial number: 8da1cf8
+Valid from: Mon Apr 08 18:52:49 IST 2024 until: Fri Aug 25 18:52:49 IST 2051
+Certificate fingerprints:
+	 SHA1: 0A:64:43:78:84:29:94:CC:D1:4A:B7:F0:49:EA:6D:3E:1A:03:89:66
+	 SHA256: 50:77:24:C4:E2:70:BA:6B:B1:E1:B7:9B:B0:4F:F3:69:4B:B0:D7:86:A4:22:18:EA:D8:EE:77:E3:91:CD:FA:5B
+Signature algorithm name: SHA256withRSA
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 3
+
+Extensions: 
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: 24 2B D0 04 48 E0 5F D0   01 92 94 EF 15 4D 24 D3  $+..H._......M$.
+0010: A2 89 76 6E                                        ..vn
+]
+]
+
+
+
+*******************************************
+*******************************************
+
+

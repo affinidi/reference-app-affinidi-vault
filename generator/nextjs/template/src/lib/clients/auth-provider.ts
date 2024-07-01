@@ -8,7 +8,6 @@ import {
   tokenId,
 } from "src/lib/env";
 
-
 export const getAuthProvider = () => {
   return new AuthProvider({
     projectId: projectId,

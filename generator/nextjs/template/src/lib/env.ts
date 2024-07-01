@@ -35,6 +35,3 @@ export function personalAccessTokenConfigured(): boolean {
     publicKey !== undefined
   );
 }
-
-// TODO remove
-export const apiGatewayUrl = process.env.API_GATEWAY_URL!;

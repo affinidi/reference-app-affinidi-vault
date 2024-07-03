@@ -19,11 +19,13 @@ Setting up the reference app is easy, just follow these steps:
 
 3. Set up environment variables. Please read the [configuration guide](./docs/configuration.md).
 
-4. (Optional for credential issuance) Setup `Personal Access Token` (PAT) Using Affinidi CLI. Please read the [PAT guide](./docs/pat.md).
+4. (Optional for credential issuance and Affinidi Iota Framework) Setup `Personal Access Token` (PAT) Using Affinidi CLI. Please read the [PAT guide](./docs/pat.md).
    
-5. (Optional for credential issuance) Create `Credential Issuance Configuration` in `Affinidi Portal`. Please read the [Credential Issuance guide](./docs/cis-guide.md) here.
+5. (Optional for credential issuance) Create `Credential Issuance Configuration` in `Affinidi Portal`. Please read the [Credential Issuance guide here](./docs/cis-guide.md).
 
-6. Launch the app:
+6. (Optional for Affinidi Iota Framework) Create `Affinidi Iota Framework Configuration` in `Affinidi Portal`. Please read the [Affinidi Iota Framework guide here](https://docs.affinidi.com/services/iota-framework).
+
+7. Launch the app:
 
    ```
    npm run dev
@@ -33,7 +35,7 @@ Setting up the reference app is easy, just follow these steps:
 
 **Important**
 
-Use the same project for all your configuration like Personal Access Token (PAT), Credential Issuance & Affinidi Login
+Use the same project for all your configurations like Personal Access Token (PAT), Credential Issuance & Affinidi Login
 
 In `Affinidi CLI`, to list all your projects run: `affinidi project list-projects`
 In `Affinidi CLI`, to change the active project run:` affinidi project select-project -i <project-id>`

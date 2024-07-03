@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@affinidi-tdk/auth-provider": "^1.8.0",
+    "@affinidi-tdk/auth-provider": "1.8.0",
     "@affinidi-tdk/common": "^1.0.0",
     "@affinidi-tdk/credential-issuance-client": "^1.7.0",
     "@affinidi-tdk/iota-browser": "^1.0.0",

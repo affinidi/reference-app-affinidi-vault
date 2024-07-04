@@ -32,7 +32,7 @@
     "install:affinidi-java-springboot": "cd samples/affinidi-java-springboot && sh mvnw install",
     "start": "concurrently -n w: \"npm:start:*(!template)\"",
     "start:template": "npm run --prefix generator/template dev -- -p 3000",
-    "start:affinidi-nextjs-nextauthjs": "npm run --prefix samples/affinidi-nextjs-nextauthjs dev -- -p 3001",
+    "start:affinidi-nextjs-nextauthjs": "npm run --prefix samples/affinidi-nextjs-nextauthjs dev -- -p 3000",
     "start:auth0-nextjs-nextauthjs": "npm run --prefix samples/auth0-nextjs-nextauthjs dev -- -p 3002",
     "start:affinidi-django-authlib": "python3 samples/affinidi-django-authlib/manage.py migrate && python3 samples/affinidi-django-authlib/manage.py runserver 8000",
     "start:auth0-django-authlib": "python3 samples/auth0-django-authlib/manage.py migrate && python3 samples/auth0-django-authlib/manage.py runserver 8001",

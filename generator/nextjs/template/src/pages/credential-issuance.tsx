@@ -8,16 +8,11 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Message from "src/components/Message";
 import Button from "src/components/core/Button";
-import Select from "src/components/core/Select";
+import Select, { SelectOption } from "src/components/core/Select";
 import DynamicForm from "src/components/issuance/DynamicForm";
 import Offer from "src/components/issuance/Offer";
 import { personalAccessTokenConfigured } from "src/lib/env";
 import { MessagePayload, OfferPayload } from "src/types/types";
-import {
-  fetchCredentialSchema,
-  fetchCredentialTypes,
-  fetchIssuanceConfigurations,
-} from "../services/api";
 
 const claimModeOptions = [
   {
@@ -27,6 +22,28 @@ const claimModeOptions = [
     value: StartIssuanceInputClaimModeEnum.TxCode,
   },
 ];
+
+const fetchCredentialSchema = async (jsonSchemaUrl: string) => {
+  const response = await fetch(jsonSchemaUrl, {
+    method: "GET",
+  });
+  const schema = await response.json();
+  return schema;
+};
+
+const fetchCredentialTypes = (
+  issuanceConfigurationId: string
+): Promise<void | IssuanceConfigDtoCredentialSupportedInner[]> =>
+  fetch(
+    "/api/issuance/credential-types?" +
+      new URLSearchParams({ issuanceConfigurationId }),
+    { method: "GET" }
+  ).then((res) => res.json());
+
+const fetchIssuanceConfigurations = (): Promise<void | SelectOption[]> =>
+  fetch("/api/issuance/configuration-options", { method: "GET" }).then((res) =>
+    res.json()
+  );
 
 export const getServerSideProps = (async () => {
   return { props: { featureAvailable: personalAccessTokenConfigured() } };
@@ -207,16 +224,18 @@ export default function CredentialIssuance({
               {credentialTypes.isLoading && (
                 <div>Loading credential types...</div>
               )}
-              {credentialTypes.data && credentialTypes.data.length > 0 && (
+              {!credentialTypes.isLoading && (
                 <Select
                   id="credentialTypeId"
                   label="Credential Type (Schema)"
-                  options={credentialTypes.data?.map(
-                    (type: IssuanceConfigDtoCredentialSupportedInner) => ({
-                      label: type.credentialTypeId,
-                      value: type.credentialTypeId,
-                    })
-                  )}
+                  options={
+                    credentialTypes.data?.map(
+                      (type: IssuanceConfigDtoCredentialSupportedInner) => ({
+                        label: type.credentialTypeId,
+                        value: type.credentialTypeId,
+                      })
+                    ) || []
+                  }
                   value={selectedTypeId}
                   disabled={isFormDisabled}
                   onChange={(value) =>

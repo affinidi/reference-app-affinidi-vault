@@ -33,12 +33,13 @@ const fetchCredentialSchema = async (jsonSchemaUrl: string) => {
 
 const fetchCredentialTypes = (
   issuanceConfigurationId: string
-): Promise<void | IssuanceConfigDtoCredentialSupportedInner[]> =>
-  fetch(
+): Promise<void | IssuanceConfigDtoCredentialSupportedInner[]> => {
+  return fetch(
     "/api/issuance/credential-types?" +
       new URLSearchParams({ issuanceConfigurationId }),
     { method: "GET" }
   ).then((res) => res.json());
+};
 
 const fetchIssuanceConfigurations = (): Promise<void | SelectOption[]> =>
   fetch("/api/issuance/configuration-options", { method: "GET" }).then((res) =>
@@ -97,13 +98,6 @@ export default function CredentialIssuance({
       return fetchCredentialSchema(credentialType.jsonSchemaUrl);
     },
     enabled: !!selectedTypeId,
-  });
-
-  console.log({
-    selectedConfigId,
-    configurations: configurations.data,
-    credentialTypes: credentialTypes.data,
-    schema: schema.data,
   });
 
   const handleSubmit = async (credentialData: any) => {
@@ -196,8 +190,8 @@ export default function CredentialIssuance({
             renderOffer(offer)
           ) : (
             <div>
-              {configurations.isLoading && <div>Loading configurations...</div>}
-              {!configurations.isLoading && (
+              {configurations.isPending && <div>Loading configurations...</div>}
+              {!configurations.isPending && (
                 <Select
                   id="configurationIdSelect"
                   label="Configuration"
@@ -221,10 +215,10 @@ export default function CredentialIssuance({
                   onChange={(val) => setClaimMode(val as string)}
                 />
               )}
-              {credentialTypes.isLoading && (
+              {selectedConfigId && credentialTypes.isPending && (
                 <div>Loading credential types...</div>
               )}
-              {!credentialTypes.isLoading && (
+              {credentialTypes.isSuccess && (
                 <Select
                   id="credentialTypeId"
                   label="Credential Type (Schema)"

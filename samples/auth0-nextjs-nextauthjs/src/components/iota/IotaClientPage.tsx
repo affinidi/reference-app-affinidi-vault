@@ -6,8 +6,9 @@ import {
   OpenMode,
   Session,
 } from "@affinidi-tdk/iota-browser";
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../core/Button";
 import Select, { SelectOption } from "../core/Select";
 
@@ -29,103 +30,86 @@ type DataRequests = {
   };
 };
 
+const fetchIotaConfigurations = (): Promise<void | SelectOption[]> =>
+  fetch("/api/iota/configuration-options", { method: "GET" }).then((res) =>
+    res.json()
+  );
+
+const getQueryOptions = async (configurationId: string) => {
+  const response = await fetch(
+    "/api/iota/query-options?" +
+      new URLSearchParams({
+        iotaConfigurationId: configurationId,
+      }),
+    {
+      method: "GET",
+    }
+  );
+  return (await response.json()) as SelectOption[];
+};
+
+const getIotaCredentials = async (configurationId: string) => {
+  const response = await fetch(
+    "/api/iota/start?" +
+      new URLSearchParams({
+        iotaConfigurationId: configurationId,
+      }),
+    {
+      method: "GET",
+    }
+  );
+  return (await response.json()) as IotaCredentials;
+};
+
 export default function IotaSessionMultipleRequestsPage({
   featureAvailable,
 }: {
   featureAvailable: boolean;
 }) {
-  const [holderDid, setHolderDid] = useState<string>("");
-  const [configOptions, setConfigOptions] = useState<SelectOption[]>([]);
-  const [selectedConfig, setSelectedConfig] = useState<string>("");
-  const [iotaSession, setIotaSession] = useState<Session>();
-  const [iotaIsInitializing, setIotaIsInitializing] = useState(false);
-  const [queryOptions, setQueryOptions] = useState<SelectOption[]>([]);
+  const [selectedConfigId, setSelectedConfigId] = useState<string>("");
   const [selectedQuery, setSelectedQuery] = useState<string>("");
   const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.Popup);
   const [dataRequests, setDataRequests] = useState<DataRequests>({});
   const [isFormDisabled, setIsFormDisabled] = useState(false);
 
-  // Prefill did from session
+  // Get did from session
   const { data: session } = useSession();
-  useEffect(() => {
-    if (!session || !session.user) return;
-    setHolderDid(session.userId);
-  }, [session]);
 
-  useEffect(() => {
-    const initConfigurations = async () => {
-      try {
-        const response = await fetch("/api/iota/configuration-options", {
-          method: "GET",
-        });
-        const configurations = await response.json();
-        setConfigOptions(configurations);
-      } catch (error) {
-        console.error("Error getting Iota configurations:", error);
-      }
-    };
-    if (featureAvailable) {
-      initConfigurations();
-    }
-  }, [featureAvailable]);
+  const configurations = useQuery({
+    queryKey: ["configurations"],
+    queryFn: fetchIotaConfigurations,
+    enabled: !!featureAvailable,
+  });
 
-  async function handleConfigurationChange(value: string | number) {
-    const configId = value as string;
-    clearSession();
-    setSelectedConfig(configId);
-    if (!configId) {
-      return;
-    }
-    try {
-      setIotaIsInitializing(true);
-      getQueryOptions(configId);
-      const credentials = await getIotaCredentials(configId);
+  const iotaSession = useQuery({
+    queryKey: ["iotaSession", selectedConfigId],
+    queryFn: async ({ queryKey }) => {
+      const credentials = await getIotaCredentials(queryKey[1]);
       const iotaSession = new Session({ credentials });
       await iotaSession.initialize();
-      setIotaSession(iotaSession);
-    } catch (error) {
-      if (error instanceof IotaError) {
-        console.log(error.code);
-      }
-    } finally {
-      setIotaIsInitializing(false);
-    }
-  }
+      return iotaSession;
+    },
+    enabled: !!selectedConfigId,
+  });
 
-  async function getQueryOptions(configurationId: string) {
-    const response = await fetch(
-      "/api/iota/query-options?" +
-      new URLSearchParams({
-        iotaConfigurationId: configurationId,
-      }),
-      {
-        method: "GET",
-      },
-    );
-    const options = (await response.json()) as SelectOption[];
-    setQueryOptions(options);
-  }
+  const queryOptions = useQuery({
+    queryKey: ["configurations", selectedConfigId],
+    queryFn: ({ queryKey }) => getQueryOptions(queryKey[1]),
+    enabled: !!selectedConfigId,
+  });
 
-  async function getIotaCredentials(configurationId: string) {
-    const response = await fetch(
-      "/api/iota/start?" +
-      new URLSearchParams({
-        iotaConfigurationId: configurationId,
-      }),
-      {
-        method: "GET",
-      },
-    );
-    return (await response.json()) as IotaCredentials;
+  async function handleConfigurationChange(value: string | number) {
+    clearSession();
+    setSelectedConfigId(value as string);
   }
 
   async function handleTDKShare(queryId: string) {
-    if (!iotaSession) {
+    if (!iotaSession.data) {
       throw new Error("Iota session not initialized");
     }
     try {
       setIsFormDisabled(true);
-      const request = await iotaSession.prepareRequest({ queryId });
+      const request = await iotaSession.data.prepareRequest({ queryId });
       setIsFormDisabled(false);
       addNewDataRequest(request);
       request.openVault({ mode: openMode });
@@ -133,7 +117,7 @@ export default function IotaSessionMultipleRequestsPage({
       updateDataRequestWithResponse(response);
     } catch (error) {
       if (error instanceof IotaError) {
-        updateDataRequestWithError(error)
+        updateDataRequestWithError(error);
         console.log(error.code);
       }
     }
@@ -168,63 +152,66 @@ export default function IotaSessionMultipleRequestsPage({
     }
   };
 
-  async function handleOpenModeChange(value: string | number) {
-    setOpenMode(value as number);
-  }
-
-  async function handleQueryChange(value: string | number) {
-    setSelectedQuery(value as string);
-  }
-
   async function clearSession() {
-    setIotaSession(undefined);
-    setQueryOptions([]);
     setSelectedQuery("");
     setIsFormDisabled(false);
   }
+
+  const renderVerifiedHolder = (userId: string) => {
+    return (
+      <div className="pb-4">
+        <p className="font-semibold">
+          Verified holder did (From Affinidi Login)
+        </p>
+        <p>{userId}</p>
+      </div>
+    );
+  };
+
+  const hasErrors = !featureAvailable || !session || !session.userId;
+  const renderErrors = () => {
+    if (!featureAvailable) {
+      return (
+        <div>
+          Feature not available. Please set your Personal Access Token in your
+          environment secrets.
+        </div>
+      );
+    }
+
+    if (!session || !session.userId) {
+      return (
+        <div>
+          You must be logged in to issue credentials to your Affinidi Vault
+        </div>
+      );
+    }
+  };
 
   return (
     <>
       <h1 className="text-2xl font-semibold pb-6">Receive Credentials</h1>
 
-      {!featureAvailable && (
-        <div>
-          Feature not available. Please set your Personal Access Token in your
-          environment secrets.
-        </div>
-      )}
-
-      {featureAvailable && !holderDid && (
-        <div>
-          You must be logged in to share credentials from your Affinidi Vault
-        </div>
-      )}
-
-      {featureAvailable && holderDid && (
+      {renderErrors()}
+      {!hasErrors && (
         <>
-          <div className="pb-4">
-            <p className="font-semibold">
-              Verified holder did (From Affinidi Login)
-            </p>
-            <p>{holderDid}</p>
-          </div>
+          {renderVerifiedHolder(session.userId)}
 
-          {configOptions.length === 0 && (
+          {configurations.isPending && (
             <div className="py-3">Loading configurations...</div>
           )}
-
-          {configOptions.length > 0 && (
+          {!configurations.isPending && (
             <Select
               id="configurationIdSelect"
               label="Configuration"
-              options={configOptions}
-              value={selectedConfig}
+              options={configurations.data || []}
+              value={selectedConfigId}
               disabled={isFormDisabled}
               onChange={handleConfigurationChange}
             />
           )}
 
-          {selectedConfig && (
+          {selectedConfigId && (
             <div>
               <Select
                 id="openModeSelect"
@@ -232,24 +219,24 @@ export default function IotaSessionMultipleRequestsPage({
                 options={openModeOptions}
                 value={openMode}
                 disabled={isFormDisabled}
-                onChange={handleOpenModeChange}
+                onChange={(val) => setOpenMode(val as number)}
               />
 
-              {queryOptions.length === 0 && (
+              {queryOptions.isPending && (
                 <div className="py-3">Loading queries...</div>
               )}
-              {queryOptions.length > 0 && (
+              {!queryOptions.isPending && (
                 <Select
                   id="queryId"
                   label="Query"
-                  options={queryOptions}
+                  options={queryOptions.data || []}
                   value={selectedQuery}
                   disabled={isFormDisabled}
-                  onChange={handleQueryChange}
+                  onChange={(val) => setSelectedQuery(val as string)}
                 />
               )}
 
-              {iotaSession && selectedQuery && (
+              {!iotaSession.isPending && selectedQuery && (
                 <Button
                   disabled={isFormDisabled}
                   onClick={() => handleTDKShare(selectedQuery)}
@@ -258,14 +245,12 @@ export default function IotaSessionMultipleRequestsPage({
                 </Button>
               )}
 
-              {iotaIsInitializing && (
+              {iotaSession.isPending && (
                 <div className="py-3">
                   Initializing session with Affinidi Iota Framework...
                 </div>
               )}
-              {selectedConfig && !iotaIsInitializing && !iotaSession && (
-                <div>Failed to initialize Iota</div>
-              )}
+              {iotaSession.isError && <div>Failed to initialize Iota</div>}
 
               {Object.keys(dataRequests).length > 0 && (
                 <div className="mt-8 border rounded-md">
@@ -282,12 +267,16 @@ export default function IotaSessionMultipleRequestsPage({
                           <td className="border-r px-4 py-2">{id}</td>
                           <td className="px-4 py-2">
                             <pre>
-                              {dataRequests[id].result instanceof IotaError && <p>Error received:</p>}
-                              {!(dataRequests[id].result instanceof IotaError) && <p>Response received:</p>}
+                              {dataRequests[id].result instanceof IotaError && (
+                                <p>Error received:</p>
+                              )}
+                              {!(
+                                dataRequests[id].result instanceof IotaError
+                              ) && <p>Response received:</p>}
                               {JSON.stringify(
                                 dataRequests[id].result,
                                 undefined,
-                                2,
+                                2
                               )}
                             </pre>
                           </td>

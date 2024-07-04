@@ -190,7 +190,9 @@ export default function CredentialIssuance({
             renderOffer(offer)
           ) : (
             <div>
-              {configurations.isPending && <div>Loading configurations...</div>}
+              {configurations.isPending && (
+                <div className="py-3">Loading configurations...</div>
+              )}
               {!configurations.isPending && (
                 <Select
                   id="configurationIdSelect"

@@ -33,7 +33,7 @@ const fetchCredentialSchema = async (jsonSchemaUrl: string) => {
 
 const fetchCredentialTypes = (
   issuanceConfigurationId: string
-): Promise<void | IssuanceConfigDtoCredentialSupportedInner[]> => {
+): Promise<IssuanceConfigDtoCredentialSupportedInner[]> => {
   return fetch(
     "/api/issuance/credential-types?" +
       new URLSearchParams({ issuanceConfigurationId }),
@@ -41,7 +41,7 @@ const fetchCredentialTypes = (
   ).then((res) => res.json());
 };
 
-const fetchIssuanceConfigurations = (): Promise<void | SelectOption[]> =>
+const fetchIssuanceConfigurations = (): Promise<SelectOption[]> =>
   fetch("/api/issuance/configuration-options", { method: "GET" }).then((res) =>
     res.json()
   );
@@ -69,22 +69,22 @@ export default function CredentialIssuance({
   // Get did from session
   const { data: session } = useSession();
 
-  const configurations = useQuery({
+  const configurationsQuery = useQuery({
     queryKey: ["configurations"],
     queryFn: fetchIssuanceConfigurations,
     enabled: !!featureAvailable,
   });
 
-  const credentialTypes = useQuery({
+  const credentialTypesQuery = useQuery({
     queryKey: ["types", selectedConfigId],
     queryFn: ({ queryKey }) => fetchCredentialTypes(queryKey[1]),
     enabled: !!selectedConfigId,
   });
 
-  const schema = useQuery({
+  const schemaQuery = useQuery({
     queryKey: ["schema", selectedTypeId],
     queryFn: () => {
-      const credentialType = credentialTypes.data?.find(
+      const credentialType = credentialTypesQuery.data?.find(
         (type) => type.credentialTypeId === selectedTypeId
       );
       if (!credentialType) {
@@ -190,23 +190,37 @@ export default function CredentialIssuance({
             renderOffer(offer)
           ) : (
             <div>
-              {configurations.isPending && (
+              {configurationsQuery.isPending && (
                 <div className="py-3">Loading configurations...</div>
               )}
-              {!configurations.isPending && (
-                <Select
-                  id="configurationIdSelect"
-                  label="Configuration"
-                  options={configurations.data || []}
-                  value={selectedConfigId}
-                  onChange={(value) =>
-                    setFormData({
-                      ...formData,
-                      selectedConfigId: value as string,
-                    })
-                  }
-                />
-              )}
+              {configurationsQuery.isSuccess &&
+                configurationsQuery.data.length === 0 && (
+                  <div className="py-3">
+                    You don't have any configurations. Go to the{" "}
+                    <a
+                      className="text-blue-500"
+                      href="https://portal.affinidi.com"
+                    >
+                      Affinidi Portal
+                    </a>{" "}
+                    to create one.
+                  </div>
+                )}
+              {configurationsQuery.isSuccess &&
+                configurationsQuery.data.length > 0 && (
+                  <Select
+                    id="configurationIdSelect"
+                    label="Configuration"
+                    options={configurationsQuery.data || []}
+                    value={selectedConfigId}
+                    onChange={(value) =>
+                      setFormData({
+                        ...formData,
+                        selectedConfigId: value as string,
+                      })
+                    }
+                  />
+                )}
               {selectedConfigId && (
                 <Select
                   id="claimMode"
@@ -217,15 +231,28 @@ export default function CredentialIssuance({
                   onChange={(val) => setClaimMode(val as string)}
                 />
               )}
-              {selectedConfigId && credentialTypes.isPending && (
+              {credentialTypesQuery.isFetching && (
                 <div>Loading credential types...</div>
               )}
-              {credentialTypes.isSuccess && (
+              {credentialTypesQuery.isSuccess &&
+                credentialTypesQuery.data.length === 0 && (
+                  <div className="py-3">
+                    You don't have any credential types. Go to the{" "}
+                    <a
+                      className="text-blue-500"
+                      href="https://portal.affinidi.com"
+                    >
+                      Affinidi Portal
+                    </a>{" "}
+                    to create one.
+                  </div>
+                )}
+              {credentialTypesQuery.isSuccess && (
                 <Select
                   id="credentialTypeId"
                   label="Credential Type (Schema)"
                   options={
-                    credentialTypes.data?.map(
+                    credentialTypesQuery.data?.map(
                       (type: IssuanceConfigDtoCredentialSupportedInner) => ({
                         label: type.credentialTypeId,
                         value: type.credentialTypeId,
@@ -247,13 +274,13 @@ export default function CredentialIssuance({
                   <Message payload={message} />
                 </div>
               )}
-              {schema.data?.properties.credentialSubject && (
+              {schemaQuery.data?.properties.credentialSubject && (
                 <div>
                   <h1 className="text-xl font-semibold pb-6 pt-4">
                     Credential data
                   </h1>
                   <DynamicForm
-                    schema={schema.data?.properties.credentialSubject}
+                    schema={schemaQuery.data?.properties.credentialSubject}
                     onSubmit={handleSubmit}
                     disabled={
                       !selectedConfigId || !selectedTypeId || isFormDisabled

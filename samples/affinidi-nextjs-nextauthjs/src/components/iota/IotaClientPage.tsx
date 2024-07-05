@@ -30,7 +30,7 @@ type DataRequests = {
   };
 };
 
-const fetchIotaConfigurations = (): Promise<void | SelectOption[]> =>
+const fetchIotaConfigurations = (): Promise<SelectOption[]> =>
   fetch("/api/iota/configuration-options", { method: "GET" }).then((res) =>
     res.json()
   );
@@ -75,13 +75,13 @@ export default function IotaSessionMultipleRequestsPage({
   // Get did from session
   const { data: session } = useSession();
 
-  const configurations = useQuery({
+  const configurationsQuery = useQuery({
     queryKey: ["configurations"],
     queryFn: fetchIotaConfigurations,
     enabled: !!featureAvailable,
   });
 
-  const iotaSession = useQuery({
+  const iotaSessionQuery = useQuery({
     queryKey: ["iotaSession", selectedConfigId],
     queryFn: async ({ queryKey }) => {
       const credentials = await getIotaCredentials(queryKey[1]);
@@ -92,7 +92,7 @@ export default function IotaSessionMultipleRequestsPage({
     enabled: !!selectedConfigId,
   });
 
-  const queryOptions = useQuery({
+  const iotaQueryOptionsQuery = useQuery({
     queryKey: ["configurations", selectedConfigId],
     queryFn: ({ queryKey }) => getQueryOptions(queryKey[1]),
     enabled: !!selectedConfigId,
@@ -104,12 +104,12 @@ export default function IotaSessionMultipleRequestsPage({
   }
 
   async function handleTDKShare(queryId: string) {
-    if (!iotaSession.data) {
+    if (!iotaSessionQuery.data) {
       throw new Error("Iota session not initialized");
     }
     try {
       setIsFormDisabled(true);
-      const request = await iotaSession.data.prepareRequest({ queryId });
+      const request = await iotaSessionQuery.data.prepareRequest({ queryId });
       setIsFormDisabled(false);
       addNewDataRequest(request);
       request.openVault({ mode: openMode });
@@ -197,95 +197,114 @@ export default function IotaSessionMultipleRequestsPage({
         <>
           {renderVerifiedHolder(session.userId)}
 
-          {configurations.isPending && (
+          {configurationsQuery.isPending && (
             <div className="py-3">Loading configurations...</div>
           )}
-          {!configurations.isPending && (
+          {configurationsQuery.isSuccess &&
+            configurationsQuery.data.length === 0 && (
+              <div className="py-3">
+                You don't have any configurations. Go to the{" "}
+                <a className="text-blue-500" href="https://portal.affinidi.com">
+                  Affinidi Portal
+                </a>{" "}
+                to create one.
+              </div>
+            )}
+          {configurationsQuery.isSuccess &&
+            configurationsQuery.data.length > 0 && (
+              <Select
+                id="configurationIdSelect"
+                label="Configuration"
+                options={configurationsQuery.data || []}
+                value={selectedConfigId}
+                disabled={isFormDisabled}
+                onChange={handleConfigurationChange}
+              />
+            )}
+          {selectedConfigId && (
             <Select
-              id="configurationIdSelect"
-              label="Configuration"
-              options={configurations.data || []}
-              value={selectedConfigId}
+              id="openModeSelect"
+              label="Open Mode"
+              options={openModeOptions}
+              value={openMode}
               disabled={isFormDisabled}
-              onChange={handleConfigurationChange}
+              onChange={(val) => setOpenMode(val as number)}
             />
           )}
 
-          {selectedConfigId && (
-            <div>
+          {iotaQueryOptionsQuery.isFetching && (
+            <div className="py-3">Loading queries...</div>
+          )}
+          {iotaQueryOptionsQuery.isSuccess &&
+            iotaQueryOptionsQuery.data.length === 0 && (
+              <div className="py-3">
+                You don't have any queries. Go to the{" "}
+                <a className="text-blue-500" href="https://portal.affinidi.com">
+                  Affinidi Portal
+                </a>{" "}
+                to create one.
+              </div>
+            )}
+          {iotaQueryOptionsQuery.isSuccess &&
+            iotaQueryOptionsQuery.data.length > 0 && (
               <Select
-                id="openModeSelect"
-                label="Open Mode"
-                options={openModeOptions}
-                value={openMode}
+                id="queryId"
+                label="Query"
+                options={iotaQueryOptionsQuery.data || []}
+                value={selectedQuery}
                 disabled={isFormDisabled}
-                onChange={(val) => setOpenMode(val as number)}
+                onChange={(val) => setSelectedQuery(val as string)}
               />
+            )}
 
-              {queryOptions.isPending && (
-                <div className="py-3">Loading queries...</div>
-              )}
-              {!queryOptions.isPending && (
-                <Select
-                  id="queryId"
-                  label="Query"
-                  options={queryOptions.data || []}
-                  value={selectedQuery}
-                  disabled={isFormDisabled}
-                  onChange={(val) => setSelectedQuery(val as string)}
-                />
-              )}
+          {iotaSessionQuery.isSuccess && selectedQuery && (
+            <Button
+              disabled={isFormDisabled}
+              onClick={() => handleTDKShare(selectedQuery)}
+            >
+              Share
+            </Button>
+          )}
 
-              {!iotaSession.isPending && selectedQuery && (
-                <Button
-                  disabled={isFormDisabled}
-                  onClick={() => handleTDKShare(selectedQuery)}
-                >
-                  Share
-                </Button>
-              )}
+          {iotaSessionQuery.isFetching && (
+            <div className="py-3">
+              Initializing session with Affinidi Iota Framework...
+            </div>
+          )}
+          {iotaSessionQuery.isError && <div>Failed to initialize Iota</div>}
 
-              {iotaSession.isPending && (
-                <div className="py-3">
-                  Initializing session with Affinidi Iota Framework...
-                </div>
-              )}
-              {iotaSession.isError && <div>Failed to initialize Iota</div>}
-
-              {Object.keys(dataRequests).length > 0 && (
-                <div className="mt-8 border rounded-md">
-                  <table className="table-fixed text-left w-full">
-                    <thead className="border-b">
-                      <tr>
-                        <th className="w-1/3 border-r px-4 py-2">Request ID</th>
-                        <th className="w-2/3 px-4 py-2">Result</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {Object.keys(dataRequests).map((id: string) => (
-                        <tr key={id} className="border-b">
-                          <td className="border-r px-4 py-2">{id}</td>
-                          <td className="px-4 py-2">
-                            <pre>
-                              {dataRequests[id].result instanceof IotaError && (
-                                <p>Error received:</p>
-                              )}
-                              {!(
-                                dataRequests[id].result instanceof IotaError
-                              ) && <p>Response received:</p>}
-                              {JSON.stringify(
-                                dataRequests[id].result,
-                                undefined,
-                                2
-                              )}
-                            </pre>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
+          {Object.keys(dataRequests).length > 0 && (
+            <div className="mt-8 border rounded-md">
+              <table className="table-fixed text-left w-full">
+                <thead className="border-b">
+                  <tr>
+                    <th className="w-1/3 border-r px-4 py-2">Request ID</th>
+                    <th className="w-2/3 px-4 py-2">Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.keys(dataRequests).map((id: string) => (
+                    <tr key={id} className="border-b">
+                      <td className="border-r px-4 py-2">{id}</td>
+                      <td className="px-4 py-2">
+                        <pre>
+                          {dataRequests[id].result instanceof IotaError && (
+                            <p>Error received:</p>
+                          )}
+                          {!(dataRequests[id].result instanceof IotaError) && (
+                            <p>Response received:</p>
+                          )}
+                          {JSON.stringify(
+                            dataRequests[id].result,
+                            undefined,
+                            2
+                          )}
+                        </pre>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
         </>

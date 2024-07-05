@@ -70,7 +70,7 @@ export default function CredentialIssuance({
   const { data: session } = useSession();
 
   const configurationsQuery = useQuery({
-    queryKey: ["configurations"],
+    queryKey: ["issuanceConfigurations"],
     queryFn: fetchIssuanceConfigurations,
     enabled: !!featureAvailable,
   });

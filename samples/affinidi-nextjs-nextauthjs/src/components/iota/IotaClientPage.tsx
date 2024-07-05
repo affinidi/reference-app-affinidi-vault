@@ -76,7 +76,7 @@ export default function IotaSessionMultipleRequestsPage({
   const { data: session } = useSession();
 
   const configurationsQuery = useQuery({
-    queryKey: ["configurations"],
+    queryKey: ["iotaConfigurations"],
     queryFn: fetchIotaConfigurations,
     enabled: !!featureAvailable,
   });
@@ -93,7 +93,7 @@ export default function IotaSessionMultipleRequestsPage({
   });
 
   const iotaQueryOptionsQuery = useQuery({
-    queryKey: ["configurations", selectedConfigId],
+    queryKey: ["queryOptions", selectedConfigId],
     queryFn: ({ queryKey }) => getQueryOptions(queryKey[1]),
     enabled: !!selectedConfigId,
   });

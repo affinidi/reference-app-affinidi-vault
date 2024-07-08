@@ -203,7 +203,7 @@ export default function IotaSessionMultipleRequestsPage({
           {configurationsQuery.isSuccess &&
             configurationsQuery.data.length === 0 && (
               <div className="py-3">
-                You don't have any configurations. Go to the{" "}
+                You don&apos;t have any configurations. Go to the{" "}
                 <a className="text-blue-500" href="https://portal.affinidi.com">
                   Affinidi Portal
                 </a>{" "}
@@ -238,7 +238,7 @@ export default function IotaSessionMultipleRequestsPage({
           {iotaQueryOptionsQuery.isSuccess &&
             iotaQueryOptionsQuery.data.length === 0 && (
               <div className="py-3">
-                You don't have any queries. Go to the{" "}
+                You don&apos;t have any queries. Go to the{" "}
                 <a className="text-blue-500" href="https://portal.affinidi.com">
                   Affinidi Portal
                 </a>{" "}

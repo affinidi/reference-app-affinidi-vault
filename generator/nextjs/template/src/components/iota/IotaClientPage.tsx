@@ -38,9 +38,9 @@ const fetchIotaConfigurations = (): Promise<SelectOption[]> =>
 const getQueryOptions = async (configurationId: string) => {
   const response = await fetch(
     "/api/iota/query-options?" +
-      new URLSearchParams({
-        iotaConfigurationId: configurationId,
-      }),
+    new URLSearchParams({
+      iotaConfigurationId: configurationId,
+    }),
     {
       method: "GET",
     }
@@ -51,9 +51,9 @@ const getQueryOptions = async (configurationId: string) => {
 const getIotaCredentials = async (configurationId: string) => {
   const response = await fetch(
     "/api/iota/start?" +
-      new URLSearchParams({
-        iotaConfigurationId: configurationId,
-      }),
+    new URLSearchParams({
+      iotaConfigurationId: configurationId,
+    }),
     {
       method: "GET",
     }
@@ -291,7 +291,7 @@ export default function IotaSessionMultipleRequestsPage({
                           {dataRequests[id].result instanceof IotaError && (
                             <p>Error received:</p>
                           )}
-                          {!(dataRequests[id].result instanceof IotaError) && (
+                          {dataRequests[id].result instanceof IotaResponse && (
                             <p>Response received:</p>
                           )}
                           {JSON.stringify(

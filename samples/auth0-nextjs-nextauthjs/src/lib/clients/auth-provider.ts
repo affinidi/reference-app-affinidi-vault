@@ -1,5 +1,5 @@
 import { AuthProvider } from "@affinidi-tdk/auth-provider";
-import { passphrase, privateKey, projectId, tokenId } from "src/lib/env";
+import { keyId, passphrase, privateKey, projectId, tokenId } from "src/lib/env";
 
 const instance = global as unknown as { provider: AuthProvider };
 
@@ -12,6 +12,7 @@ export const getAuthProvider = () => {
     tokenId,
     privateKey,
     ...(passphrase && { passphrase }),
+    ...(keyId && { keyId }),
   });
   return instance.provider;
 };

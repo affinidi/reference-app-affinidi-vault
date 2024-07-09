@@ -38,9 +38,9 @@ const fetchIotaConfigurations = (): Promise<SelectOption[]> =>
 const getQueryOptions = async (configurationId: string) => {
   const response = await fetch(
     "/api/iota/query-options?" +
-      new URLSearchParams({
-        iotaConfigurationId: configurationId,
-      }),
+    new URLSearchParams({
+      iotaConfigurationId: configurationId,
+    }),
     {
       method: "GET",
     }
@@ -51,9 +51,9 @@ const getQueryOptions = async (configurationId: string) => {
 const getIotaCredentials = async (configurationId: string) => {
   const response = await fetch(
     "/api/iota/start?" +
-      new URLSearchParams({
-        iotaConfigurationId: configurationId,
-      }),
+    new URLSearchParams({
+      iotaConfigurationId: configurationId,
+    }),
     {
       method: "GET",
     }
@@ -203,7 +203,7 @@ export default function IotaSessionMultipleRequestsPage({
           {configurationsQuery.isSuccess &&
             configurationsQuery.data.length === 0 && (
               <div className="py-3">
-                You don't have any configurations. Go to the{" "}
+                You don&apos;t have any configurations. Go to the{" "}
                 <a className="text-blue-500" href="https://portal.affinidi.com">
                   Affinidi Portal
                 </a>{" "}
@@ -238,7 +238,7 @@ export default function IotaSessionMultipleRequestsPage({
           {iotaQueryOptionsQuery.isSuccess &&
             iotaQueryOptionsQuery.data.length === 0 && (
               <div className="py-3">
-                You don't have any queries. Go to the{" "}
+                You don&apos;t have any queries. Go to the{" "}
                 <a className="text-blue-500" href="https://portal.affinidi.com">
                   Affinidi Portal
                 </a>{" "}
@@ -274,37 +274,28 @@ export default function IotaSessionMultipleRequestsPage({
           {iotaSessionQuery.isError && <div>Failed to initialize Iota</div>}
 
           {Object.keys(dataRequests).length > 0 && (
-            <div className="mt-8 border rounded-md">
-              <table className="table-fixed text-left w-full">
-                <thead className="border-b">
-                  <tr>
-                    <th className="w-1/3 border-r px-4 py-2">Request ID</th>
-                    <th className="w-2/3 px-4 py-2">Result</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.keys(dataRequests).map((id: string) => (
-                    <tr key={id} className="border-b">
-                      <td className="border-r px-4 py-2">{id}</td>
-                      <td className="px-4 py-2">
-                        <pre>
-                          {dataRequests[id].result instanceof IotaError && (
-                            <p>Error received:</p>
-                          )}
-                          {!(dataRequests[id].result instanceof IotaError) && (
-                            <p>Response received:</p>
-                          )}
-                          {JSON.stringify(
-                            dataRequests[id].result,
-                            undefined,
-                            2
-                          )}
-                        </pre>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="mt-8">
+              {Object.keys(dataRequests).reverse().map((id: string) => (
+                <div key={id} className="mt-4 p-6 px-6 border rounded-md overflow-x-auto">
+                  <p className="pb-2 font-semibold">Request:</p>
+                  <p className="pb-4">{id}</p>
+                  <div>
+                    {dataRequests[id].result instanceof IotaError && (
+                      <p className="pb-2 font-semibold">Error received:</p>
+                    )}
+                    {dataRequests[id].result instanceof IotaResponse && (
+                      <p className="pb-2 font-semibold">Response received:</p>
+                    )}
+                    <pre>
+                      {JSON.stringify(
+                        dataRequests[id].result,
+                        undefined,
+                        2
+                      )}
+                    </pre>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </>

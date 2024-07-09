@@ -36,7 +36,7 @@ const fetchCredentialTypes = (
 ): Promise<IssuanceConfigDtoCredentialSupportedInner[]> => {
   return fetch(
     "/api/issuance/credential-types?" +
-      new URLSearchParams({ issuanceConfigurationId }),
+    new URLSearchParams({ issuanceConfigurationId }),
     { method: "GET" }
   ).then((res) => res.json());
 };
@@ -196,7 +196,7 @@ export default function CredentialIssuance({
               {configurationsQuery.isSuccess &&
                 configurationsQuery.data.length === 0 && (
                   <div className="py-3">
-                    You don't have any configurations. Go to the{" "}
+                    You don&apos;t have any configurations. Go to the{" "}
                     <a
                       className="text-blue-500"
                       href="https://portal.affinidi.com"
@@ -237,7 +237,7 @@ export default function CredentialIssuance({
               {credentialTypesQuery.isSuccess &&
                 credentialTypesQuery.data.length === 0 && (
                   <div className="py-3">
-                    You don't have any credential types. Go to the{" "}
+                    You don&apos;t have any credential types. Go to the{" "}
                     <a
                       className="text-blue-500"
                       href="https://portal.affinidi.com"

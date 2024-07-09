@@ -23,16 +23,11 @@ export const providerIssuer = process.env.PROVIDER_ISSUER!;
 export const projectId = process.env.PROJECT_ID!;
 export const tokenId = process.env.TOKEN_ID!;
 export const privateKey = process.env.PRIVATE_KEY!;
-export const publicKey = process.env.PUBLIC_KEY!;
-export const keyId = process.env.KEY_ID!;
 export const passphrase = process.env.PASSPHRASE!;
 
 export function personalAccessTokenConfigured(): boolean {
   return (
-    projectId !== undefined &&
-    tokenId !== undefined &&
-    privateKey !== undefined &&
-    publicKey !== undefined
+    projectId !== undefined && tokenId !== undefined && privateKey !== undefined
   );
 }
 

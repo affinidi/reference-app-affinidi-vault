@@ -1,60 +1,85 @@
 {
-    "affinidi-nextjs-nextauthjs": {
-        "redirectUris": {
-            "callbackUrl": "http://localhost:3000/api/auth/callback/affinidi"
-        },
-        "metadata": {
-            "name": "Affinidi Login integration using NextJS and NextAuthJS",
-            "description": "A code sample using NextJS framework and uses NextAuthJS library to enable passwordless login using Affinidi IDP.",
-            "idp": {
-                "name": "Affinidi",
-                "link": "https://www.affinidi.com/product/affinidi-login"
-            },
-            "framework": {
-                "name": "NextJS",
-                "icon": "nextjs-logo.svg",
-                "link": "https://nextjs.org/"
-            },
-            "language": {
-                "name": "TypeScript",
-                "icon": "typescript-logo.svg",
-                "link": "https://www.typescriptlang.org/"
-            },
-            "library": {
-                "name": "NextAuthJS",
-                "icon": "",
-                "link": "https://next-auth.js.org/"
-            }
-        }
+  "affinidi-nextjs-nextauthjs": {
+    "redirectUris": {
+      "callbackUrl": "http://localhost:3000/api/auth/callback/affinidi"
     },
-    "auth0-nextjs-nextauthjs": {
-        "redirectUris": {
-            "callbackUrl": "http://localhost:3000/api/auth/callback/auth0",
-            "logOutUrl": "http://localhost:3000",
-            "webOriginUrl": "http://localhost:3000"
-        },
-        "metadata": {
-            "name": "Affinidi Login Integration using NextJS, NextAuthJS and Auth0",
-            "description": "A code sample using NextJS framework and uses NextAuthJS library to enable passwordless login using Auth0 IDP.",
-            "idp": {
-                "name": "Auth0",
-                "link": "https://auth0.com/"
-            },
-            "framework": {
-                "name": "NextJS",
-                "icon": "nextjs-logo.svg",
-                "link": "https://nextjs.org/"
-            },
-            "language": {
-                "name": "TypeScript",
-                "icon": "typescript-logo.svg",
-                "link": "https://www.typescriptlang.org/"
-            },
-            "library": {
-                "name": "NextAuthJS",
-                "icon": "",
-                "link": "https://next-auth.js.org/"
-            }
+    "metadata": {
+      "name": "Affinidi Login integration using NextJS and NextAuthJS",
+      "description": "A code sample using NextJS framework and uses NextAuthJS library to enable passwordless login using Affinidi IDP.",
+      "features": ["iota", "credential_issuance"],
+      "idp": {
+        "name": "Affinidi",
+        "link": "https://www.affinidi.com/product/affinidi-login"
+      },
+      "framework": {
+        "name": "NextJS",
+        "icon": "nextjs-logo.svg",
+        "link": "https://nextjs.org/"
+      },
+      "language": {
+        "name": "TypeScript",
+        "icon": "typescript-logo.svg",
+        "link": "https://www.typescriptlang.org/"
+      },
+      "library": {
+        "name": "NextAuthJS",
+        "icon": "",
+        "link": "https://next-auth.js.org/"
+      },
+      "token": {
+        "policy": {
+          "actions": [
+            "cis.operation.startIssuance",
+            "cis.operation.getIssuanceConfigList",
+            "cis.operation.getIssuanceConfigById",
+            "ais.operation.listIotaConfigurations",
+            "ais.operation.listPexQueries"
+          ]
         }
+      }
     }
+  },
+  "auth0-nextjs-nextauthjs": {
+    "redirectUris": {
+      "callbackUrl": "http://localhost:3000/api/auth/callback/auth0",
+      "logOutUrl": "http://localhost:3000",
+      "webOriginUrl": "http://localhost:3000"
+    },
+    "metadata": {
+      "name": "Affinidi Login Integration using NextJS, NextAuthJS and Auth0",
+      "description": "A code sample using NextJS framework and uses NextAuthJS library to enable passwordless login using Auth0 IDP.",
+      "features": ["iota", "credential_issuance"],
+      "idp": {
+        "name": "Auth0",
+        "link": "https://auth0.com/"
+      },
+      "framework": {
+        "name": "NextJS",
+        "icon": "nextjs-logo.svg",
+        "link": "https://nextjs.org/"
+      },
+      "language": {
+        "name": "TypeScript",
+        "icon": "typescript-logo.svg",
+        "link": "https://www.typescriptlang.org/"
+      },
+      "library": {
+        "name": "NextAuthJS",
+        "icon": "",
+        "link": "https://next-auth.js.org/"
+      },
+      "token": {
+        "policy": {
+          "actions": [
+            "cis.operation.startIssuance",
+            "cis.operation.getIssuanceConfigList",
+            "cis.operation.getIssuanceConfigById",
+            "ais.operation.listIotaConfigurations",
+            "ais.operation.listPexQueries"
+          ]
+        }
+      }
+    }
+  }
 }
+

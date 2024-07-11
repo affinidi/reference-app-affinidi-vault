@@ -290,6 +290,10 @@
         "metadata": {
             "name": "Affinidi Login integration using NextJS and NextAuthJS",
             "description": "A code sample using NextJS framework and uses NextAuthJS library to enable passwordless login using Affinidi IDP.",
+            "features": [
+                "iota",
+                "credential_issuance"
+            ],
             "idp": {
                 "name": "Affinidi",
                 "link": "https://www.affinidi.com/product/affinidi-login"
@@ -308,6 +312,17 @@
                 "name": "NextAuthJS",
                 "icon": "",
                 "link": "https://next-auth.js.org/"
+            },
+            "token": {
+                "policy": {
+                    "actions": [
+                        "cis:startIssuance",
+                        "cis:getIssuanceConfigList",
+                        "cis:getIssuanceConfigById",
+                        "ais:listIotaConfigurations",
+                        "ais:listPexQueries"
+                    ]
+                }
             }
         }
     },
@@ -320,6 +335,10 @@
         "metadata": {
             "name": "Affinidi Login Integration using NextJS, NextAuthJS and Auth0",
             "description": "A code sample using NextJS framework and uses NextAuthJS library to enable passwordless login using Auth0 IDP.",
+            "features": [
+                "iota",
+                "credential_issuance"
+            ],
             "idp": {
                 "name": "Auth0",
                 "link": "https://auth0.com/"
@@ -338,6 +357,17 @@
                 "name": "NextAuthJS",
                 "icon": "",
                 "link": "https://next-auth.js.org/"
+            },
+            "token": {
+                "policy": {
+                    "actions": [
+                        "cis.operation.startIssuance",
+                        "cis.operation.getIssuanceConfigList",
+                        "cis.operation.getIssuanceConfigById",
+                        "ais.operation.listIotaConfigurations",
+                        "ais.operation.listPexQueries"
+                    ]
+                }
             }
         }
     },

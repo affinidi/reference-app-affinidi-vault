@@ -316,11 +316,11 @@
             "token": {
                 "policy": {
                     "actions": [
-                        "cis.operation.startIssuance",
-                        "cis.operation.getIssuanceConfigList",
-                        "cis.operation.getIssuanceConfigById",
-                        "ais.operation.listIotaConfigurations",
-                        "ais.operation.listPexQueries"
+                        "cis:startIssuance",
+                        "cis:getIssuanceConfigList",
+                        "cis:getIssuanceConfigById",
+                        "ais:listIotaConfigurations",
+                        "ais:listPexQueries"
                     ]
                 }
             }

@@ -281,15 +281,21 @@ export default function IotaSessionMultipleRequestsPage({
                   <p className="pb-2 font-semibold">Request:</p>
                   <p className="pb-4">{id}</p>
                   <div>
-                    {dataRequests[id].error && (
+                    {dataRequests[id].error && (<>
                       <p className="pb-2 font-semibold">Error received:</p>
+                      <pre>
+                        {JSON.stringify(dataRequests[id].error, undefined, 2)}
+                      </pre>
+                    </>
                     )}
                     {dataRequests[id].response && (
-                      <p className="pb-2 font-semibold">Response received:</p>
+                      <>
+                        <p className="pb-2 font-semibold">Response received:</p>
+                        <pre>
+                          {JSON.stringify(dataRequests[id].response, undefined, 2)}
+                        </pre>
+                      </>
                     )}
-                    <pre>
-                      {JSON.stringify(dataRequests[id], undefined, 2)}
-                    </pre>
                   </div>
                 </div>
               ))}

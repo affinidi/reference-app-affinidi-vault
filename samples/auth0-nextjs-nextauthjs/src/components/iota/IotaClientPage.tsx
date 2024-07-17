@@ -26,7 +26,8 @@ const openModeOptions = [
 type DataRequests = {
   [id: string]: {
     request: IotaRequest;
-    result?: IotaResponse | IotaError;
+    response?: IotaResponse;
+    error?: IotaError;
   };
 };
 
@@ -135,7 +136,7 @@ export default function IotaSessionMultipleRequestsPage({
       ...prevRequests,
       [response.correlationId]: {
         ...prevRequests[response.correlationId],
-        result: response,
+        response,
       },
     }));
   };
@@ -146,7 +147,7 @@ export default function IotaSessionMultipleRequestsPage({
         ...prevRequests,
         [error.correlationId!]: {
           ...prevRequests[error.correlationId!],
-          result: error,
+          error,
         },
       }));
     }
@@ -280,19 +281,21 @@ export default function IotaSessionMultipleRequestsPage({
                   <p className="pb-2 font-semibold">Request:</p>
                   <p className="pb-4">{id}</p>
                   <div>
-                    {dataRequests[id].result instanceof IotaError && (
+                    {dataRequests[id].error && (<>
                       <p className="pb-2 font-semibold">Error received:</p>
+                      <pre>
+                        {JSON.stringify(dataRequests[id].error, undefined, 2)}
+                      </pre>
+                    </>
                     )}
-                    {dataRequests[id].result instanceof IotaResponse && (
-                      <p className="pb-2 font-semibold">Response received:</p>
+                    {dataRequests[id].response && (
+                      <>
+                        <p className="pb-2 font-semibold">Response received:</p>
+                        <pre>
+                          {JSON.stringify(dataRequests[id].response, undefined, 2)}
+                        </pre>
+                      </>
                     )}
-                    <pre>
-                      {JSON.stringify(
-                        dataRequests[id].result,
-                        undefined,
-                        2
-                      )}
-                    </pre>
                   </div>
                 </div>
               ))}

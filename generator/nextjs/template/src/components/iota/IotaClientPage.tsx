@@ -69,7 +69,7 @@ export default function IotaSessionMultipleRequestsPage({
 }) {
   const [selectedConfigId, setSelectedConfigId] = useState<string>("");
   const [selectedQuery, setSelectedQuery] = useState<string>("");
-  const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.Popup);
+  const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.NewTab);
   const [dataRequests, setDataRequests] = useState<DataRequests>({});
   const [isFormDisabled, setIsFormDisabled] = useState(false);
 

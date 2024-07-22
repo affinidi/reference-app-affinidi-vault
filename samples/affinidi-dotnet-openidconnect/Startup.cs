@@ -45,13 +45,13 @@ public class Startup
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options => {
                 
                 // Use the strongest setting in production, which also enables HTTP on developer workstations
-                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.SameSite = SameSiteMode.Lax;
             })
             .AddOpenIdConnect(options => {
 
                 // Use the same settings for temporary cookies
-                options.NonceCookie.SameSite = SameSiteMode.Strict;
-                options.CorrelationCookie.SameSite = SameSiteMode.Strict;
+                options.NonceCookie.SameSite = SameSiteMode.Lax;
+                options.CorrelationCookie.SameSite = SameSiteMode.Lax;
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 
                 // Set the main OpenID Connect settings

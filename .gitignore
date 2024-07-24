@@ -45,3 +45,4 @@ keys
 generator/dotnet/template/obj/
 samples/affinidi-dotnet-openidconnect/obj/
 reference-app-affinidi-vault.sln
+samples/affinidi-dotnet-openidconnect/affinidi-dotnet-openidconnect.sln

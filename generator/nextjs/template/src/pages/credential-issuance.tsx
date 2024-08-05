@@ -16,12 +16,8 @@ import { personalAccessTokenConfigured } from "src/lib/env";
 import { MessagePayload, OfferPayload } from "src/types/types";
 
 const claimModeOptions = [
-  {
-    value: StartIssuanceInputClaimModeEnum.FixedHolder,
-  },
-  {
-    value: StartIssuanceInputClaimModeEnum.TxCode,
-  },
+  { value: StartIssuanceInputClaimModeEnum.FixedHolder },
+  { value: StartIssuanceInputClaimModeEnum.TxCode },
 ];
 
 const fetchCredentialSchema = async (jsonSchemaUrl: string) => {
@@ -32,14 +28,15 @@ const fetchCredentialSchema = async (jsonSchemaUrl: string) => {
   return schema;
 };
 
-const fetchCredentialTypes = (
+const fetchCredentialTypes = async (
   issuanceConfigurationId: string,
 ): Promise<IssuanceConfigDtoCredentialSupportedInner[]> => {
-  return fetch(
+  const response = await fetch(
     "/api/issuance/credential-types?" +
       new URLSearchParams({ issuanceConfigurationId }),
     { method: "GET" },
-  ).then((res) => res.json());
+  );
+  return await response.json();
 };
 
 const fetchIssuanceConfigurations = (): Promise<SelectOption[]> =>
@@ -248,9 +245,10 @@ export default function CredentialIssuance({
                   />
                 )}
               {credentialTypesQuery.isFetching && (
-                <div>Loading credential types...</div>
+                <div className="pb-3">Loading credential types...</div>
               )}
               {credentialTypesQuery.isSuccess &&
+                !credentialTypesQuery.isFetching &&
                 credentialTypesQuery.data.length === 0 && (
                   <div className="py-3">
                     You don&apos;t have any credential types. Go to the{" "}
@@ -263,47 +261,49 @@ export default function CredentialIssuance({
                     to create one.
                   </div>
                 )}
-              {credentialTypesQuery.isSuccess && (
-                <Select
-                  id="credentialTypeId"
-                  label="Credential Type (Schema)"
-                  options={
-                    credentialTypesQuery.data?.map(
-                      (type: IssuanceConfigDtoCredentialSupportedInner) => ({
-                        label: type.credentialTypeId,
-                        value: type.credentialTypeId,
-                      }),
-                    ) || []
-                  }
-                  value={selectedTypeId}
-                  disabled={isFormDisabled}
-                  onChange={(value) =>
-                    setFormData({
-                      ...formData,
-                      selectedTypeId: value as string,
-                    })
-                  }
-                />
-              )}
+              {credentialTypesQuery.isSuccess &&
+                !credentialTypesQuery.isFetching && (
+                  <Select
+                    id="credentialTypeId"
+                    label="Credential Type (Schema)"
+                    options={
+                      credentialTypesQuery.data?.map(
+                        (type: IssuanceConfigDtoCredentialSupportedInner) => ({
+                          label: type.credentialTypeId,
+                          value: type.credentialTypeId,
+                        }),
+                      ) || []
+                    }
+                    value={selectedTypeId}
+                    disabled={isFormDisabled}
+                    onChange={(value) =>
+                      setFormData({
+                        ...formData,
+                        selectedTypeId: value as string,
+                      })
+                    }
+                  />
+                )}
               {message && (
                 <div className="pt-4">
                   <Message payload={message} />
                 </div>
               )}
-              {schemaQuery.data?.properties.credentialSubject && (
-                <div>
-                  <h1 className="text-xl font-semibold pb-6 pt-4">
-                    Credential data
-                  </h1>
-                  <DynamicForm
-                    schema={schemaQuery.data?.properties.credentialSubject}
-                    onSubmit={handleSubmit}
-                    disabled={
-                      !selectedConfigId || !selectedTypeId || isFormDisabled
-                    }
-                  />
-                </div>
-              )}
+              {selectedConfigId &&
+                schemaQuery.data?.properties.credentialSubject && (
+                  <div>
+                    <h1 className="text-xl font-semibold pb-6 pt-4">
+                      Credential data
+                    </h1>
+                    <DynamicForm
+                      schema={schemaQuery.data?.properties.credentialSubject}
+                      onSubmit={handleSubmit}
+                      disabled={
+                        !selectedConfigId || !selectedTypeId || isFormDisabled
+                      }
+                    />
+                  </div>
+                )}
             </div>
           )}
         </div>

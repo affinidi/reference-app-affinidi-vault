@@ -5,9 +5,10 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Message from "src/components/Message";
 import Button from "src/components/core/Button";
+import Input from "src/components/core/Input";
 import Select, { SelectOption } from "src/components/core/Select";
 import DynamicForm from "src/components/issuance/DynamicForm";
 import Offer from "src/components/issuance/Offer";
@@ -16,7 +17,7 @@ import { MessagePayload, OfferPayload } from "src/types/types";
 
 const claimModeOptions = [
   {
-    value: StartIssuanceInputClaimModeEnum.Normal,
+    value: StartIssuanceInputClaimModeEnum.FixedHolder,
   },
   {
     value: StartIssuanceInputClaimModeEnum.TxCode,
@@ -32,18 +33,18 @@ const fetchCredentialSchema = async (jsonSchemaUrl: string) => {
 };
 
 const fetchCredentialTypes = (
-  issuanceConfigurationId: string
+  issuanceConfigurationId: string,
 ): Promise<IssuanceConfigDtoCredentialSupportedInner[]> => {
   return fetch(
     "/api/issuance/credential-types?" +
-    new URLSearchParams({ issuanceConfigurationId }),
-    { method: "GET" }
+      new URLSearchParams({ issuanceConfigurationId }),
+    { method: "GET" },
   ).then((res) => res.json());
 };
 
 const fetchIssuanceConfigurations = (): Promise<SelectOption[]> =>
   fetch("/api/issuance/configuration-options", { method: "GET" }).then((res) =>
-    res.json()
+    res.json(),
   );
 
 export const getServerSideProps = (async () => {
@@ -58,16 +59,25 @@ export default function CredentialIssuance({
     selectedTypeId: string;
   }>({ selectedConfigId: "", selectedTypeId: "" });
   const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [holderDid, setHolderDid] = useState<string>();
   const [offer, setOffer] = useState<OfferPayload>();
   const [message, setMessage] = useState<MessagePayload>();
   const [claimMode, setClaimMode] = useState<string>(
-    StartIssuanceInputClaimModeEnum.TxCode
+    StartIssuanceInputClaimModeEnum.FixedHolder,
   );
 
-  const { selectedConfigId, selectedTypeId } = formData;
-
-  // Get did from session
+  // Prefill did from session
   const { data: session } = useSession();
+  useEffect(() => {
+    async function setUsersHolderDid() {
+      if (session) {
+        setHolderDid(session.userId);
+      }
+    }
+    setUsersHolderDid();
+  }, [session]);
+
+  const { selectedConfigId, selectedTypeId } = formData;
 
   const configurationsQuery = useQuery({
     queryKey: ["issuanceConfigurations"],
@@ -85,7 +95,7 @@ export default function CredentialIssuance({
     queryKey: ["schema", selectedTypeId],
     queryFn: () => {
       const credentialType = credentialTypesQuery.data?.find(
-        (type) => type.credentialTypeId === selectedTypeId
+        (type) => type.credentialTypeId === selectedTypeId,
       );
       if (!credentialType) {
         setMessage({
@@ -102,10 +112,21 @@ export default function CredentialIssuance({
 
   const handleSubmit = async (credentialData: any) => {
     console.log("credentialData:", credentialData);
+    if (
+      !holderDid &&
+      claimMode == StartIssuanceInputClaimModeEnum.FixedHolder
+    ) {
+      setMessage({
+        message: "Holder DID is required in FIXED_DID claim mode",
+        type: "error",
+      });
+      return;
+    }
     setIsFormDisabled(true);
     const response = await fetch("/api/issuance/start", {
       method: "POST",
       body: JSON.stringify({
+        holderDid,
         credentialData,
         credentialTypeId: selectedTypeId,
         claimMode,
@@ -134,10 +155,14 @@ export default function CredentialIssuance({
     setOffer(undefined);
     setIsFormDisabled(false);
     setMessage(undefined);
-    setFormData({ selectedConfigId: "", selectedTypeId: "" });
+    setFormData({
+      ...formData,
+      selectedConfigId: "",
+      selectedTypeId: "",
+    });
   }
 
-  const hasErrors = !featureAvailable || !session || !session.userId;
+  const hasErrors = !featureAvailable;
   const renderErrors = () => {
     if (!featureAvailable) {
       return (
@@ -147,25 +172,6 @@ export default function CredentialIssuance({
         </div>
       );
     }
-
-    if (!session || !session.userId) {
-      return (
-        <div>
-          You must be logged in to issue credentials to your Affinidi Vault
-        </div>
-      );
-    }
-  };
-
-  const renderVerifiedHolder = (userId: string) => {
-    return (
-      <div className="pb-4">
-        <p className="font-semibold">
-          Verified holder did (From Affinidi Login)
-        </p>
-        <p>{userId}</p>
-      </div>
-    );
   };
 
   const renderOffer = (offerTorender: OfferPayload) => {
@@ -185,11 +191,31 @@ export default function CredentialIssuance({
       {renderErrors()}
       {!hasErrors && (
         <div>
-          {renderVerifiedHolder(session.userId)}
           {offer ? (
             renderOffer(offer)
           ) : (
             <div>
+              <Select
+                id="claimMode"
+                label="Claim Mode"
+                options={claimModeOptions}
+                value={claimMode}
+                disabled={isFormDisabled}
+                onChange={(val) => setClaimMode(val as string)}
+              />
+              <Input
+                id="did"
+                label={
+                  session
+                    ? "Holder DID (Prefiled from Affinidi Login)"
+                    : "Holder DID"
+                }
+                value={holderDid}
+                required={
+                  claimMode == StartIssuanceInputClaimModeEnum.FixedHolder
+                }
+                onChange={(e) => setHolderDid(e.target.value)}
+              />
               {configurationsQuery.isPending && (
                 <div className="py-3">Loading configurations...</div>
               )}
@@ -221,16 +247,6 @@ export default function CredentialIssuance({
                     }
                   />
                 )}
-              {selectedConfigId && (
-                <Select
-                  id="claimMode"
-                  label="Claim Mode"
-                  options={claimModeOptions}
-                  value={claimMode}
-                  disabled={isFormDisabled}
-                  onChange={(val) => setClaimMode(val as string)}
-                />
-              )}
               {credentialTypesQuery.isFetching && (
                 <div>Loading credential types...</div>
               )}
@@ -256,7 +272,7 @@ export default function CredentialIssuance({
                       (type: IssuanceConfigDtoCredentialSupportedInner) => ({
                         label: type.credentialTypeId,
                         value: type.credentialTypeId,
-                      })
+                      }),
                     ) || []
                   }
                   value={selectedTypeId}

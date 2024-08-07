@@ -183,7 +183,7 @@ export default function IotaSessionMultipleRequestsPage({
     if (!session || !session.userId) {
       return (
         <div>
-          You must be logged in to issue credentials to your Affinidi Vault
+          You must be logged in to request credentials from your Affinidi Vault
         </div>
       );
     }

@@ -33,18 +33,18 @@ type DataRequests = {
 
 const fetchIotaConfigurations = (): Promise<SelectOption[]> =>
   fetch("/api/iota/configuration-options", { method: "GET" }).then((res) =>
-    res.json()
+    res.json(),
   );
 
 const getQueryOptions = async (configurationId: string) => {
   const response = await fetch(
     "/api/iota/query-options?" +
-    new URLSearchParams({
-      iotaConfigurationId: configurationId,
-    }),
+      new URLSearchParams({
+        iotaConfigurationId: configurationId,
+      }),
     {
       method: "GET",
-    }
+    },
   );
   return (await response.json()) as SelectOption[];
 };
@@ -52,12 +52,12 @@ const getQueryOptions = async (configurationId: string) => {
 const getIotaCredentials = async (configurationId: string) => {
   const response = await fetch(
     "/api/iota/start?" +
-    new URLSearchParams({
-      iotaConfigurationId: configurationId,
-    }),
+      new URLSearchParams({
+        iotaConfigurationId: configurationId,
+      }),
     {
       method: "GET",
-    }
+    },
   );
   return (await response.json()) as IotaCredentials;
 };
@@ -183,7 +183,7 @@ export default function IotaSessionMultipleRequestsPage({
     if (!session || !session.userId) {
       return (
         <div>
-          You must be logged in to issue credentials to your Affinidi Vault
+          You must be logged in to request credentials from your Affinidi Vault
         </div>
       );
     }
@@ -237,6 +237,7 @@ export default function IotaSessionMultipleRequestsPage({
             <div className="py-3">Loading queries...</div>
           )}
           {iotaQueryOptionsQuery.isSuccess &&
+            !iotaQueryOptionsQuery.isFetching &&
             iotaQueryOptionsQuery.data.length === 0 && (
               <div className="py-3">
                 You don&apos;t have any queries. Go to the{" "}
@@ -247,6 +248,7 @@ export default function IotaSessionMultipleRequestsPage({
               </div>
             )}
           {iotaQueryOptionsQuery.isSuccess &&
+            !iotaQueryOptionsQuery.isFetching &&
             iotaQueryOptionsQuery.data.length > 0 && (
               <Select
                 id="queryId"
@@ -276,29 +278,45 @@ export default function IotaSessionMultipleRequestsPage({
 
           {Object.keys(dataRequests).length > 0 && (
             <div className="mt-8">
-              {Object.keys(dataRequests).reverse().map((id: string) => (
-                <div key={id} className="mt-4 p-6 px-6 border rounded-md overflow-x-auto">
-                  <p className="pb-2 font-semibold">Request:</p>
-                  <p className="pb-4">{id}</p>
-                  <div>
-                    {dataRequests[id].error && (<>
-                      <p className="pb-2 font-semibold">Error received:</p>
-                      <pre>
-                        {JSON.stringify(dataRequests[id].error, undefined, 2)}
-                      </pre>
-                    </>
-                    )}
-                    {dataRequests[id].response && (
-                      <>
-                        <p className="pb-2 font-semibold">Response received:</p>
-                        <pre>
-                          {JSON.stringify(dataRequests[id].response, undefined, 2)}
-                        </pre>
-                      </>
-                    )}
+              {Object.keys(dataRequests)
+                .reverse()
+                .map((id: string) => (
+                  <div
+                    key={id}
+                    className="mt-4 p-6 px-6 border rounded-md overflow-x-auto"
+                  >
+                    <p className="pb-2 font-semibold">Request:</p>
+                    <p className="pb-4">{id}</p>
+                    <div>
+                      {dataRequests[id].error && (
+                        <>
+                          <p className="pb-2 font-semibold">Error received:</p>
+                          <pre>
+                            {JSON.stringify(
+                              dataRequests[id].error,
+                              undefined,
+                              2,
+                            )}
+                          </pre>
+                        </>
+                      )}
+                      {dataRequests[id].response && (
+                        <>
+                          <p className="pb-2 font-semibold">
+                            Response received:
+                          </p>
+                          <pre>
+                            {JSON.stringify(
+                              dataRequests[id].response,
+                              undefined,
+                              2,
+                            )}
+                          </pre>
+                        </>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           )}
         </>

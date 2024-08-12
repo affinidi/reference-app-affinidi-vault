@@ -32,6 +32,15 @@ export default async function handler(
     const { credentialTypeId, credentialData, claimMode, holderDid } =
       issuanceStartSchema.parse(req.body);
 
+    if (
+      !holderDid &&
+      claimMode == StartIssuanceInputClaimModeEnum.FixedHolder
+    ) {
+      res.status(400).json({
+        message: "Holder DID is required in FIXED_DID claim mode",
+      });
+    }
+
     const apiData: StartIssuanceInput = {
       claimMode,
       ...(holderDid && { holderDid }),

@@ -20,6 +20,15 @@ export default async function handler(
   res: NextApiResponse<StartIssuanceResponse | ResponseError>,
 ) {
   try {
+    // NOTE: With TX_CODE claim mode the holder's DID is optional,
+    // so Affinidi Login is not strictly required.
+    // However, we highly recommend to add auth to this issuance endpoint.
+    //
+    // const session = await getServerSession(req, res, authOptions);
+    // if (!session) {
+    //   res.status(401).json({ message: "You must be logged in." });
+    //   return;
+    // }
     const { credentialTypeId, credentialData, claimMode, holderDid } =
       issuanceStartSchema.parse(req.body);
 

@@ -39,6 +39,7 @@ export default async function handler(
       res.status(400).json({
         message: "Holder DID is required in FIXED_DID claim mode",
       });
+      return;
     }
 
     const apiData: StartIssuanceInput = {

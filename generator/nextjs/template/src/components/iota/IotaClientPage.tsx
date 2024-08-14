@@ -11,6 +11,8 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Button from "../core/Button";
 import Select, { SelectOption } from "../core/Select";
+import { AwsExchangeCredentialsOK } from "@affinidi-tdk/iota-client";
+import { IotaAuthProvider } from "@affinidi-tdk/iota-core";
 
 const openModeOptions = [
   {
@@ -49,7 +51,9 @@ const getQueryOptions = async (configurationId: string) => {
   return (await response.json()) as SelectOption[];
 };
 
-const getIotaCredentials = async (configurationId: string) => {
+const getIotaCredentials = async (
+  configurationId: string,
+): Promise<IotaCredentials> => {
   const response = await fetch(
     "/api/iota/start?" +
       new URLSearchParams({
@@ -59,7 +63,16 @@ const getIotaCredentials = async (configurationId: string) => {
       method: "GET",
     },
   );
-  return (await response.json()) as IotaCredentials;
+  const identityCredentials =
+    (await response.json()) as AwsExchangeCredentialsOK;
+  const iotaAuthProvider = new IotaAuthProvider(); // Can pass apiGW to constructor for dev
+  const credentials = await iotaAuthProvider.exchangeIdentityCredentials(
+    identityCredentials.credentials,
+  );
+  return {
+    credentials,
+    connectionClientId: identityCredentials.connectionClientId,
+  };
 };
 
 export default function IotaSessionMultipleRequestsPage({

@@ -1,4 +1,4 @@
-import { IssuanceConfigDtoCredentialSupportedInner } from "@affinidi-tdk/credential-issuance-client";
+import { CredentialSupportedObject } from "@affinidi-tdk/credential-issuance-client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getIssuanceConfigurationById } from "src/lib/clients/credential-issuance";
 import { ResponseError } from "src/types/types";
@@ -8,9 +8,7 @@ import { ResponseError } from "src/types/types";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<
-    IssuanceConfigDtoCredentialSupportedInner[] | ResponseError
-  >,
+  res: NextApiResponse<CredentialSupportedObject[] | ResponseError>,
 ) {
   try {
     const { issuanceConfigurationId } = req.query;

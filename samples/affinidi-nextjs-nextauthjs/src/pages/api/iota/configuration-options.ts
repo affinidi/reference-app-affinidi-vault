@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { SelectOption } from "src/components/core/Select";
 import { authOptions } from "src/lib/auth/next-auth-options";
-import { listIotaConfigurations } from "src/lib/clients/iota";
+import { listIotaConfigurations, startIotaRedirectFlow } from "src/lib/clients/iota";
 import { ResponseError } from "src/types/types";
 
 // NOTE: This endpoint is for demo purposes and most likely not required,
@@ -13,6 +13,8 @@ export default async function handler(
   res: NextApiResponse<SelectOption[] | ResponseError>,
 ) {
   try {
+    await startIotaRedirectFlow()
+
     const session = await getServerSession(req, res, authOptions);
     if (!session) {
       res.status(401).json({ message: "You must be logged in." });

@@ -23,6 +23,7 @@ export default async function handler(
     const configurationOptions = configurations.map((configuration) => ({
       label: configuration.name,
       value: configuration.configurationId,
+      mode: configuration.mode,
     }));
 
     res.status(200).json(configurationOptions);

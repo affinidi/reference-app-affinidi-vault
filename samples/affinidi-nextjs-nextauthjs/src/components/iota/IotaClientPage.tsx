@@ -6,6 +6,7 @@ import {
   OpenMode,
   Session,
 } from "@affinidi-tdk/iota-browser";
+import { IotaConfigurationDtoModeEnum } from "@affinidi-tdk/iota-client";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -72,6 +73,8 @@ export default function IotaSessionMultipleRequestsPage({
   const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.NewTab);
   const [dataRequests, setDataRequests] = useState<DataRequests>({});
   const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [isWebsocket, setIsWebsocket] = useState(false);
+  const [redirectUris, setRedirectUris] = useState<string[]>([""]);
 
   // Get did from session
   const { data: session } = useSession();
@@ -102,6 +105,13 @@ export default function IotaSessionMultipleRequestsPage({
   async function handleConfigurationChange(value: string | number) {
     clearSession();
     setSelectedConfigId(value as string);
+    const selectedConfig = configurationsQuery?.data?.find(config => config.value === value)
+    setIsWebsocket(selectedConfig?.mode === IotaConfigurationDtoModeEnum.Websocket)
+
+    if (!isWebsocket) {
+      setRedirectUris(selectedConfig?.redirectUris);
+    }
+    console.log(redirectUris)
   }
 
   async function handleTDKShare(queryId: string) {
@@ -222,7 +232,7 @@ export default function IotaSessionMultipleRequestsPage({
                 onChange={handleConfigurationChange}
               />
             )}
-          {selectedConfigId && (
+          {selectedConfigId && isWebsocket && (
             <Select
               id="openModeSelect"
               label="Open Mode"
@@ -260,7 +270,7 @@ export default function IotaSessionMultipleRequestsPage({
               />
             )}
 
-          {iotaSessionQuery.isSuccess && selectedQuery && (
+          {iotaSessionQuery.isSuccess && selectedQuery && isWebsocket && (
             <Button
               disabled={isFormDisabled}
               onClick={() => handleTDKShare(selectedQuery)}
@@ -269,7 +279,7 @@ export default function IotaSessionMultipleRequestsPage({
             </Button>
           )}
 
-          {iotaSessionQuery.isFetching && (
+          {iotaSessionQuery.isFetching && isWebsocket && (
             <div className="py-3">
               Initializing session with Affinidi Iota Framework...
             </div>

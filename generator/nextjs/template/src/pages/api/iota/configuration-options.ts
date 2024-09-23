@@ -7,7 +7,7 @@ import { ResponseError } from "src/types/types";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<SelectOption[] | ResponseError>,
+  res: NextApiResponse<SelectOption[] | ResponseError>
 ) {
   try {
     const session = await getServerSession(req, res, authOptions);
@@ -20,6 +20,7 @@ export default async function handler(
     const configurationOptions = configurations.map((configuration) => ({
       label: configuration.name,
       value: configuration.configurationId,
+      mode: configuration.mode,
     }));
 
     res.status(200).json(configurationOptions);

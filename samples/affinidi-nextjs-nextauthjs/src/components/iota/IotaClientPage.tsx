@@ -34,7 +34,7 @@ type DataRequests = {
 
 const fetchIotaConfigurations = (): Promise<SelectOption[]> =>
   fetch("/api/iota/configuration-options", { method: "GET" }).then((res) =>
-    res.json(),
+    res.json()
   );
 
 const getQueryOptions = async (configurationId: string) => {
@@ -45,7 +45,7 @@ const getQueryOptions = async (configurationId: string) => {
       }),
     {
       method: "GET",
-    },
+    }
   );
   return (await response.json()) as SelectOption[];
 };
@@ -58,7 +58,7 @@ const getIotaCredentials = async (configurationId: string) => {
       }),
     {
       method: "GET",
-    },
+    }
   );
   return (await response.json()) as IotaCredentials;
 };
@@ -105,13 +105,17 @@ export default function IotaSessionMultipleRequestsPage({
   async function handleConfigurationChange(value: string | number) {
     clearSession();
     setSelectedConfigId(value as string);
-    const selectedConfig = configurationsQuery?.data?.find(config => config.value === value)
-    setIsWebsocket(selectedConfig?.mode === IotaConfigurationDtoModeEnum.Websocket)
+    const selectedConfig = configurationsQuery?.data?.find(
+      (config) => config.value === value
+    );
+    setIsWebsocket(
+      selectedConfig?.mode === IotaConfigurationDtoModeEnum.Websocket
+    );
 
     if (!isWebsocket) {
       setRedirectUris(selectedConfig?.redirectUris);
     }
-    console.log(redirectUris)
+    console.log(redirectUris);
   }
 
   async function handleTDKShare(queryId: string) {
@@ -305,7 +309,7 @@ export default function IotaSessionMultipleRequestsPage({
                             {JSON.stringify(
                               dataRequests[id].error,
                               undefined,
-                              2,
+                              2
                             )}
                           </pre>
                         </>
@@ -319,7 +323,7 @@ export default function IotaSessionMultipleRequestsPage({
                             {JSON.stringify(
                               dataRequests[id].response,
                               undefined,
-                              2,
+                              2
                             )}
                           </pre>
                         </>

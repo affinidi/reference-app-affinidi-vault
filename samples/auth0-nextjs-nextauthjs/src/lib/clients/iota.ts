@@ -58,7 +58,7 @@ export async function initiateDataSharingRequest(
       correlationId: randomUUID(),
       nonce,
       redirectUri,
-    });
+  });
 
   console.log(
     ">>>>",

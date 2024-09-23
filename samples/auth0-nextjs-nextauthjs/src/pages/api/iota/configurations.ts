@@ -1,13 +1,13 @@
+import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import { SelectOption } from "src/components/core/Select";
 import { authOptions } from "src/lib/auth/next-auth-options";
 import { listIotaConfigurations } from "src/lib/clients/iota";
 import { ResponseError } from "src/types/types";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<SelectOption[] | ResponseError>
+  res: NextApiResponse<IotaConfigurationDto[] | ResponseError>
 ) {
   try {
     const session = await getServerSession(req, res, authOptions);
@@ -17,15 +17,9 @@ export default async function handler(
     }
 
     const configurations = await listIotaConfigurations();
-    const configurationOptions = configurations.map((configuration) => ({
-      label: configuration.name,
-      value: configuration.configurationId,
-      mode: configuration.mode,
-    }));
-
-    res.status(200).json(configurationOptions);
+    res.status(200).json(configurations);
   } catch (error: any) {
-    res.status(500).json({ message: "Unable to get issuance configurations" });
+    res.status(500).json({ message: "Unable to get iota configurations" });
     console.log(error);
   }
 }

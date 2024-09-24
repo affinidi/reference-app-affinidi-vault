@@ -1,76 +1,48 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 
-// export default function IotaCallbackPage ({
-//   featureAvailable,
-// }: {
-//   featureAvailable: boolean;
-// }) {
-export default function IotaCallbackPage () {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<any>(null);
+interface GetIotaResponseParams {
+  configurationId: string;
+  responseCode: string;
+  correlationId: string;
+  transactionId: string;
+}
 
-  const searchParams = useSearchParams()
-  const responseCode = searchParams.get('response_code');
+const getIotaResponse = async (params: GetIotaResponseParams) => {
+  const response = await fetch("/api/iota/iota-response", {
+    method: "POST",
+    body: JSON.stringify(params),
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
+  return await response.json();
+};
 
-  const iotaRedirectString = localStorage.getItem('iotaRedirect') || '';
+export default function IotaCallbackPage() {
+  const searchParams = useSearchParams();
+  const responseCode = searchParams.get("response_code");
 
-  // if (!iotaRedirectString) {
-  //   throw Error('DB record is missing. Restart the flow.')
-  // }
+  const iotaRedirectString = localStorage.getItem("iotaRedirect") || "";
 
-  const { configurationId, correlationId, transactionId } = JSON.parse(iotaRedirectString);
+  const iotaResponseQuery = useQuery({
+    queryKey: ["queryOptions", iotaRedirectString],
+    queryFn: ({ queryKey }) =>
+      getIotaResponse({ ...JSON.parse(queryKey[1]), responseCode }),
+    enabled: iotaRedirectString !== "" && responseCode !== null,
+  });
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch("/api/iota/iota-response", {
-        method: "POST",
-        body: JSON.stringify({
-          responseCode,
-          configurationId,
-          correlationId,
-          transactionId,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-        },
-      })
-
-      const result = await response.json();
-      setData(result);
-    } catch (error: any) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const loading = iotaResponseQuery.isFetching;
+  const error = iotaResponseQuery.error;
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  // const hasErrors = !featureAvailable;
-
-  // const renderErrors = () => {
-  //   if (!featureAvailable) {
-  //     return (
-  //       <div>
-  //         Feature not available. Please set your Personal Access Token in your
-  //         environment secrets.
-  //       </div>
-  //     );
-  //   }
-  // };
-
   return (
     <div>
       <h1>Data Loaded:</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <pre>{JSON.stringify(iotaResponseQuery.data, null, 2)}</pre>
     </div>
   );
-};
+}

@@ -102,27 +102,3 @@ export async function fetchIotaVpResponse(
   const vp = JSON.parse((iotaVpResponse.data as any).vpToken);
   return vp;
 }
-
-export async function mockVault(jwt: string) {
-  const api = new CallbackApi(
-    new Configuration({
-      basePath: `${apiGatewayUrl}/ais`,
-    })
-  );
-
-  const {
-    PRESENTATION_SUBMISSION: presentation_submission,
-    VP_TOKEN: vp_token,
-  } = process.env;
-
-  const state = jose.decodeJwt(jwt).state! as string;
-
-  const callbackResponse: any = await api.iotOIDC4VPCallback({
-    state,
-    presentation_submission,
-    vp_token,
-  });
-  // const callbackResponse: CallbackResponseOK = await callbackApi.iotOIDC4VPCallback({ state, presentation_submission, vp_token })
-
-  return callbackResponse?.data;
-}

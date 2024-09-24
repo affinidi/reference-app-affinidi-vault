@@ -8,8 +8,8 @@ import {
   InitiateDataSharingRequestOKData,
   FetchIOTAVPResponseOK,
 } from "@affinidi-tdk/iota-client";
+import { v4 as uuidv4 } from "uuid";
 import * as jose from "jose";
-import { randomUUID } from "crypto";
 import { getAuthProvider } from "./auth-provider";
 import { apiGatewayUrl } from "../env";
 
@@ -22,7 +22,19 @@ export async function listIotaConfigurations() {
     })
   );
   const { data } = await api.listIotaConfigurations();
-  return data.configurations;
+  return data.configurations.filter((config) => config.mode === IotaConfigurationDtoModeEnum.Websocket);
+}
+
+export async function listIotaRedirectConfigurations() {
+  const authProvider = getAuthProvider();
+  const api = new ConfigurationsApi(
+    new Configuration({
+      apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/ais`,
+    })
+  );
+  const { data } = await api.listIotaConfigurations();
+  return data.configurations.filter((config) => config.mode === IotaConfigurationDtoModeEnum.Redirect);
 }
 
 export async function listPexQueriesByConfigurationId(configurationId: string) {
@@ -50,22 +62,16 @@ export async function initiateDataSharingRequest(
       basePath: `${apiGatewayUrl}/ais`,
     })
   );
+
   const { data: dataSharingRequestResponse } =
     await api.initiateDataSharingRequest({
       configurationId,
       mode: IotaConfigurationDtoModeEnum.Redirect,
       queryId,
-      correlationId: randomUUID(),
+      correlationId: uuidv4(),
       nonce,
       redirectUri,
   });
-
-  console.log(
-    ">>>>",
-    `http://localhost:3001/login?request=${
-      (dataSharingRequestResponse as any).data.jwt
-    }`
-  );
 
   const { correlationId, transactionId, jwt } =
     dataSharingRequestResponse.data as InitiateDataSharingRequestOKData;
@@ -117,7 +123,6 @@ export async function mockVault(jwt: string) {
     vp_token,
   });
   // const callbackResponse: CallbackResponseOK = await callbackApi.iotOIDC4VPCallback({ state, presentation_submission, vp_token })
-  console.log(callbackResponse?.data);
 
   return callbackResponse?.data;
 }

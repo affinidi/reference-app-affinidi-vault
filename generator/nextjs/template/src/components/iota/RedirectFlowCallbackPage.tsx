@@ -25,6 +25,7 @@ export default function IotaCallbackPage() {
   const responseCode = searchParams.get("response_code");
 
   const iotaRedirectString = localStorage.getItem("iotaRedirect") || "";
+  const iotaRedirect = JSON.parse(iotaRedirectString);
 
   const iotaResponseQuery = useQuery({
     queryKey: ["queryOptions", iotaRedirectString],
@@ -42,7 +43,8 @@ export default function IotaCallbackPage() {
   return (
     <div>
       <h1>Data Loaded:</h1>
-      <pre>{JSON.stringify(iotaResponseQuery.data, null, 2)}</pre>
+      <pre>Nonce matched: {iotaRedirect.nonce === iotaResponseQuery.data.nonce ? '✅' : '❌'}</pre>
+      <pre>Full response: {JSON.stringify(iotaResponseQuery.data, null, 2)}</pre>
     </div>
   );
 }

@@ -6,15 +6,12 @@ import {
   OpenMode,
   Session,
 } from "@affinidi-tdk/iota-browser";
-import {
-  IotaConfigurationDto,
-  IotaConfigurationDtoModeEnum,
-} from "@affinidi-tdk/iota-client";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Button from "../core/Button";
 import Select, { SelectOption } from "../core/Select";
+import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
 
 const openModeOptions = [
   {
@@ -76,7 +73,6 @@ export default function IotaSessionMultipleRequestsPage({
   const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.NewTab);
   const [dataRequests, setDataRequests] = useState<DataRequests>({});
   const [isFormDisabled, setIsFormDisabled] = useState(false);
-  const [selectedRedirectUri, setSelectedRedirectUri] = useState<string>("");
 
   // Get did from session
   const { data: session } = useSession();
@@ -108,19 +104,6 @@ export default function IotaSessionMultipleRequestsPage({
     clearSession();
     setSelectedConfigId(value as string);
   }
-
-  const selectedConfiguration = configurationsQuery.data?.find(
-    (query) => query.configurationId === selectedConfigId
-  );
-
-  const isRedirect =
-    selectedConfiguration?.mode === IotaConfigurationDtoModeEnum.Redirect;
-
-  console.log({
-    selectedConfiguration,
-    mode: selectedConfiguration?.mode,
-    isRedirect,
-  });
 
   async function handleTDKShare(queryId: string) {
     if (!iotaSessionQuery.data) {
@@ -243,7 +226,7 @@ export default function IotaSessionMultipleRequestsPage({
                 onChange={handleConfigurationChange}
               />
             )}
-          {selectedConfigId && !isRedirect && (
+          {selectedConfigId && (
             <Select
               id="openModeSelect"
               label="Open Mode"
@@ -251,20 +234,6 @@ export default function IotaSessionMultipleRequestsPage({
               value={openMode}
               disabled={isFormDisabled}
               onChange={(val) => setOpenMode(val as number)}
-            />
-          )}
-          {selectedConfigId && isRedirect && (
-            <Select
-              id="redirectUrlSelect"
-              label="Redirect Url"
-              value={selectedRedirectUri}
-              options={
-                selectedConfiguration?.redirectUris?.map((uri) => ({
-                  label: uri,
-                  value: uri,
-                })) || []
-              }
-              onChange={(val) => setSelectedRedirectUri(val as string)}
             />
           )}
 
@@ -295,7 +264,7 @@ export default function IotaSessionMultipleRequestsPage({
               />
             )}
 
-          {iotaSessionQuery.isSuccess && selectedQuery && !isRedirect && (
+          {iotaSessionQuery.isSuccess && selectedQuery && (
             <Button
               disabled={isFormDisabled}
               onClick={() => handleTDKShare(selectedQuery)}
@@ -304,7 +273,7 @@ export default function IotaSessionMultipleRequestsPage({
             </Button>
           )}
 
-          {iotaSessionQuery.isFetching && !isRedirect && (
+          {iotaSessionQuery.isFetching && (
             <div className="py-3">
               Initializing session with Affinidi Iota Framework...
             </div>

@@ -64,24 +64,25 @@ export default function IotaRedirectFlowPage({
 
   async function handleRedirectFlowShare(queryId: string) {
     setIsFormDisabled(true);
-
+    const nonce = uuidv4().slice(0, 10);
     const response = await fetch("/api/iota/init-share", {
       method: "POST",
       body: JSON.stringify({
         configurationId: selectedConfigId,
         queryId,
         redirectUri: selectedRedirectUri,
-        nonce: uuidv4().slice(0, 10),
+        nonce: nonce,
       }),
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json",
+        Accept: "application/json",
       },
     });
 
     const data = await response.json();
 
     const toStore = {
+      nonce,
       configurationId: selectedConfigId,
       correlationId: data.correlationId,
       transactionId: data.transactionId,

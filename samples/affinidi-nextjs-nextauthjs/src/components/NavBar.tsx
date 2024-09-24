@@ -64,14 +64,14 @@ const NavBar: FC = () => {
             className="py-4 font-medium transition-colors hover:text-blue-500"
             prefetch={false}
           >
-            Receive Credentials
+            Receive Credentials (WS)
           </Link>
           <Link
             href="/iota-redirect"
             className="py-4 font-medium transition-colors hover:text-blue-500"
             prefetch={false}
           >
-            Redirect flow
+            Receive Credentials (Redirect)
           </Link>
         </nav>
         {session && (

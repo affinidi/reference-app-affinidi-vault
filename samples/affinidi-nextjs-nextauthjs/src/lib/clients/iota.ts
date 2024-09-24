@@ -100,5 +100,5 @@ export async function fetchIotaVpResponse(
   });
 
   const vp = JSON.parse((iotaVpResponse.data as any).vpToken);
-  return vp;
+  return { vp: vp, nonce: iotaVpResponse.data.nonce };
 }

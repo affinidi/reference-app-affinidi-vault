@@ -6,6 +6,10 @@ import {
   OpenMode,
   Session,
 } from "@affinidi-tdk/iota-browser";
+import {
+  IotaConfigurationDto,
+  IotaConfigurationDtoModeEnum,
+} from "@affinidi-tdk/iota-client";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -31,9 +35,9 @@ type DataRequests = {
   };
 };
 
-const fetchIotaConfigurations = (): Promise<SelectOption[]> =>
-  fetch("/api/iota/configuration-options", { method: "GET" }).then((res) =>
-    res.json(),
+const fetchIotaConfigurations = (): Promise<IotaConfigurationDto[]> =>
+  fetch("/api/iota/configurations", { method: "GET" }).then((res) =>
+    res.json()
   );
 
 const getQueryOptions = async (configurationId: string) => {
@@ -44,7 +48,7 @@ const getQueryOptions = async (configurationId: string) => {
       }),
     {
       method: "GET",
-    },
+    }
   );
   return (await response.json()) as SelectOption[];
 };
@@ -57,7 +61,7 @@ const getIotaCredentials = async (configurationId: string) => {
       }),
     {
       method: "GET",
-    },
+    }
   );
   return (await response.json()) as IotaCredentials;
 };
@@ -72,6 +76,7 @@ export default function IotaSessionMultipleRequestsPage({
   const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.NewTab);
   const [dataRequests, setDataRequests] = useState<DataRequests>({});
   const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [selectedRedirectUri, setSelectedRedirectUri] = useState<string>("");
 
   // Get did from session
   const { data: session } = useSession();
@@ -103,6 +108,19 @@ export default function IotaSessionMultipleRequestsPage({
     clearSession();
     setSelectedConfigId(value as string);
   }
+
+  const selectedConfiguration = configurationsQuery.data?.find(
+    (query) => query.configurationId === selectedConfigId
+  );
+
+  const isRedirect =
+    selectedConfiguration?.mode === IotaConfigurationDtoModeEnum.Redirect;
+
+  console.log({
+    selectedConfiguration,
+    mode: selectedConfiguration?.mode,
+    isRedirect,
+  });
 
   async function handleTDKShare(queryId: string) {
     if (!iotaSessionQuery.data) {
@@ -216,13 +234,16 @@ export default function IotaSessionMultipleRequestsPage({
               <Select
                 id="configurationIdSelect"
                 label="Configuration"
-                options={configurationsQuery.data || []}
+                options={configurationsQuery.data.map((configuration) => ({
+                  label: configuration.name,
+                  value: configuration.configurationId,
+                }))}
                 value={selectedConfigId}
                 disabled={isFormDisabled}
                 onChange={handleConfigurationChange}
               />
             )}
-          {selectedConfigId && (
+          {selectedConfigId && !isRedirect && (
             <Select
               id="openModeSelect"
               label="Open Mode"
@@ -230,6 +251,20 @@ export default function IotaSessionMultipleRequestsPage({
               value={openMode}
               disabled={isFormDisabled}
               onChange={(val) => setOpenMode(val as number)}
+            />
+          )}
+          {selectedConfigId && isRedirect && (
+            <Select
+              id="redirectUrlSelect"
+              label="Redirect Url"
+              value={selectedRedirectUri}
+              options={
+                selectedConfiguration?.redirectUris?.map((uri) => ({
+                  label: uri,
+                  value: uri,
+                })) || []
+              }
+              onChange={(val) => setSelectedRedirectUri(val as string)}
             />
           )}
 
@@ -260,7 +295,7 @@ export default function IotaSessionMultipleRequestsPage({
               />
             )}
 
-          {iotaSessionQuery.isSuccess && selectedQuery && (
+          {iotaSessionQuery.isSuccess && selectedQuery && !isRedirect && (
             <Button
               disabled={isFormDisabled}
               onClick={() => handleTDKShare(selectedQuery)}
@@ -269,7 +304,7 @@ export default function IotaSessionMultipleRequestsPage({
             </Button>
           )}
 
-          {iotaSessionQuery.isFetching && (
+          {iotaSessionQuery.isFetching && !isRedirect && (
             <div className="py-3">
               Initializing session with Affinidi Iota Framework...
             </div>
@@ -295,7 +330,7 @@ export default function IotaSessionMultipleRequestsPage({
                             {JSON.stringify(
                               dataRequests[id].error,
                               undefined,
-                              2,
+                              2
                             )}
                           </pre>
                         </>
@@ -309,7 +344,7 @@ export default function IotaSessionMultipleRequestsPage({
                             {JSON.stringify(
                               dataRequests[id].response,
                               undefined,
-                              2,
+                              2
                             )}
                           </pre>
                         </>

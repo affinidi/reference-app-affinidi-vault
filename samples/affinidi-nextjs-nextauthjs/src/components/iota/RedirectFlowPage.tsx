@@ -93,8 +93,28 @@ export default function IotaRedirectFlowPage({
 
     localStorage.setItem('iotaRedirect', JSON.stringify(toStore));
 
-    const vaultLink = VaultUtils.buildShareLink(data.jwt, 'client_id');
+    const vaultLink = getShareLink(data.jwt, 'client_id');
     router.push(vaultLink)
+  }
+
+  function buildShareLinkInternal(vaultUrl: string, request: string, client_id: string): string {
+    const params = new URLSearchParams()
+    params.append('request', request)
+    params.append('client_id', client_id)
+    const queryString = params.toString()
+    return `${vaultUrl}?${queryString}`
+  }
+
+  function getShareLink(jwt: string, clientId: string) {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const vaultUrl = window.localStorage.getItem('affinidiVaultUrl')
+
+      if (vaultUrl) {
+        return buildShareLinkInternal(vaultUrl, jwt, clientId)
+      }
+    }
+
+    return VaultUtils.buildShareLink(jwt, clientId)
   }
 
   async function clearSession() {

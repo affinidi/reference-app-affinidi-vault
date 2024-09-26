@@ -1,9 +1,6 @@
 import { useRouter } from "next/navigation";
-import {
-  IotaConfigurationDto,
-  IotaConfigurationDtoModeEnum,
-} from "@affinidi-tdk/iota-client";
-import { VaultUtils } from '@affinidi-tdk/common';
+import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
+import { VaultUtils } from "@affinidi-tdk/common";
 import { v4 as uuidv4 } from "uuid";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -12,7 +9,7 @@ import Select, { SelectOption } from "../core/Select";
 
 const fetchIotaConfigurations = (): Promise<IotaConfigurationDto[]> =>
   fetch("/api/iota/redirect-configurations", { method: "GET" }).then((res) =>
-    res.json()
+    res.json(),
   );
 
 const getQueryOptions = async (configurationId: string) => {
@@ -23,7 +20,7 @@ const getQueryOptions = async (configurationId: string) => {
       }),
     {
       method: "GET",
-    }
+    },
   );
   return (await response.json()) as SelectOption[];
 };
@@ -62,7 +59,7 @@ export default function IotaRedirectFlowPage({
   }
 
   const selectedConfiguration = configurationsQuery?.data?.find(
-    (query) => query.configurationId === selectedConfigId
+    (query) => query.configurationId === selectedConfigId,
   );
 
   async function handleRedirectFlowShare(queryId: string) {
@@ -89,32 +86,36 @@ export default function IotaRedirectFlowPage({
       configurationId: selectedConfigId,
       correlationId: data.correlationId,
       transactionId: data.transactionId,
-    }
+    };
 
-    localStorage.setItem('iotaRedirect', JSON.stringify(toStore));
+    localStorage.setItem("iotaRedirect", JSON.stringify(toStore));
 
-    const vaultLink = getShareLink(data.jwt, 'client_id');
-    router.push(vaultLink)
+    const vaultLink = getShareLink(data.jwt, "client_id");
+    router.push(vaultLink);
   }
 
-  function buildShareLinkInternal(vaultUrl: string, request: string, client_id: string): string {
-    const params = new URLSearchParams()
-    params.append('request', request)
-    params.append('client_id', client_id)
-    const queryString = params.toString()
-    return `${vaultUrl}?${queryString}`
+  function buildShareLinkInternal(
+    vaultUrl: string,
+    request: string,
+    client_id: string,
+  ): string {
+    const params = new URLSearchParams();
+    params.append("request", request);
+    params.append("client_id", client_id);
+    const queryString = params.toString();
+    return `${vaultUrl}/login?${queryString}`;
   }
 
   function getShareLink(jwt: string, clientId: string) {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const vaultUrl = window.localStorage.getItem('affinidiVaultUrl')
+    if (typeof window !== "undefined" && window.localStorage) {
+      const vaultUrl = window.localStorage.getItem("affinidiVaultUrl");
 
       if (vaultUrl) {
-        return buildShareLinkInternal(vaultUrl, jwt, clientId)
+        return buildShareLinkInternal(vaultUrl, jwt, clientId);
       }
     }
 
-    return VaultUtils.buildShareLink(jwt, clientId)
+    return VaultUtils.buildShareLink(jwt, clientId);
   }
 
   async function clearSession() {
@@ -169,8 +170,7 @@ export default function IotaRedirectFlowPage({
                 disabled={isFormDisabled}
                 onChange={handleConfigurationChange}
               />
-            )
-          }
+            )}
           {selectedConfigId && (
             <Select
               id="redirectUrlSelect"
@@ -216,7 +216,7 @@ export default function IotaRedirectFlowPage({
           {selectedQuery && (
             <>
               <h1>Generated nonce: {nonce}</h1>
-              <br/>
+              <br />
 
               <Button
                 disabled={isFormDisabled}

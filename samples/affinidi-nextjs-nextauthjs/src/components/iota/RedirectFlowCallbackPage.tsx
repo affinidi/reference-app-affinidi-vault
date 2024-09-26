@@ -20,9 +20,14 @@ const getIotaResponse = async (params: GetIotaResponseParams) => {
   return await response.json();
 };
 
-export default function IotaCallbackPage() {
+export default function IotaCallbackPage({
+  featureAvailable,
+}: {
+  featureAvailable: boolean;
+}) {
   const searchParams = useSearchParams();
   const responseCode = searchParams.get("response_code");
+  const errorMessage = searchParams.get("error");
 
   const iotaRedirectString = localStorage.getItem("iotaRedirect") || "";
   const iotaRedirect = JSON.parse(iotaRedirectString);
@@ -40,11 +45,43 @@ export default function IotaCallbackPage() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
+  const generatedNonce = iotaRedirect.nonce;
+  const receivedNonce = iotaResponseQuery.data.nonce;
+  const matched = generatedNonce === receivedNonce;
+
+  const hasErrors = !featureAvailable || errorMessage;
+
+  const renderErrors = () => {
+    if (!featureAvailable) {
+      return (
+        <div>
+          Feature not available. Please set your Personal Access Token in your
+          environment secrets.
+        </div>
+      );
+    }
+
+    if (errorMessage) {
+      return (
+        <div>
+          <h1>{errorMessage}</h1>
+        </div>
+      );
+    }
+  };
+
   return (
-    <div>
-      <h1>Data Loaded:</h1>
-      <pre>Nonce matched: {iotaRedirect.nonce === iotaResponseQuery.data.nonce ? '✅' : '❌'}</pre>
-      <pre>Full response: {JSON.stringify(iotaResponseQuery.data, null, 2)}</pre>
-    </div>
+    <>
+      {renderErrors()}
+
+      {!hasErrors && (
+        <>
+          <pre>Generated nonce: {generatedNonce} | Received nonce: {receivedNonce} | Nonce matched: {matched ? '✅' : '❌'}</pre>
+          <br/><br/>
+          <h1>Data Loaded:</h1>
+          <pre>{JSON.stringify(iotaResponseQuery.data, null, 2)}</pre>
+        </>
+      )}
+    </>
   );
 }

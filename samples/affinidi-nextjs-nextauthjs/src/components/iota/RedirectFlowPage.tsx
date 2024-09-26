@@ -38,6 +38,7 @@ export default function IotaRedirectFlowPage({
 
   const [selectedConfigId, setSelectedConfigId] = useState<string>("");
   const [selectedQuery, setSelectedQuery] = useState<string>("");
+  const [nonce, setNonce] = useState<string>("");
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [selectedRedirectUri, setSelectedRedirectUri] = useState<string>("");
 
@@ -56,6 +57,8 @@ export default function IotaRedirectFlowPage({
   async function handleConfigurationChange(value: string | number) {
     clearSession();
     setSelectedConfigId(value as string);
+    const nonce = uuidv4().slice(0, 10);
+    setNonce(nonce);
   }
 
   const selectedConfiguration = configurationsQuery?.data?.find(
@@ -64,14 +67,14 @@ export default function IotaRedirectFlowPage({
 
   async function handleRedirectFlowShare(queryId: string) {
     setIsFormDisabled(true);
-    const nonce = uuidv4().slice(0, 10);
+
     const response = await fetch("/api/iota/init-share", {
       method: "POST",
       body: JSON.stringify({
         configurationId: selectedConfigId,
         queryId,
         redirectUri: selectedRedirectUri,
-        nonce: nonce,
+        nonce,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -151,7 +154,7 @@ export default function IotaRedirectFlowPage({
           {selectedConfigId && (
             <Select
               id="redirectUrlSelect"
-              label="Redirect Url"
+              label="Redirect Url (❗️expected: /iota-callback)"
               value={selectedRedirectUri}
               options={
                 selectedConfiguration?.redirectUris?.map((uri) => ({
@@ -191,12 +194,17 @@ export default function IotaRedirectFlowPage({
             )}
 
           {selectedQuery && (
-            <Button
-              disabled={isFormDisabled}
-              onClick={() => handleRedirectFlowShare(selectedQuery)}
-            >
-              Share
-            </Button>
+            <>
+              <h1>Generated nonce: {nonce}</h1>
+              <br/>
+
+              <Button
+                disabled={isFormDisabled}
+                onClick={() => handleRedirectFlowShare(selectedQuery)}
+              >
+                Share
+              </Button>
+            </>
           )}
         </>
       )}

@@ -9,12 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@affinidi-tdk/auth-provider": "^1.23.1",
-    "@affinidi-tdk/common": "^1.15.1",
-    "@affinidi-tdk/credential-issuance-client": "^1.23.1",
-    "@affinidi-tdk/iota-browser": "^1.13.1",
-    "@affinidi-tdk/iota-client": "^1.19.1",
-    "@affinidi-tdk/iota-core": "^1.14.1",
+    "@affinidi-tdk/auth-provider": "^1.29.0",
+    "@affinidi-tdk/common": "^1.21.0",
+    "@affinidi-tdk/credential-issuance-client": "^1.29.0",
+    "@affinidi-tdk/iota-browser": "^1.19.0",
+    "@affinidi-tdk/iota-client": "^1.25.0",
+    "@affinidi-tdk/iota-core": "^1.20.0",
     "@tanstack/react-query": "^5.49.2",
     "next": "^14.2.13",
     "next-auth": "^4.24.3",

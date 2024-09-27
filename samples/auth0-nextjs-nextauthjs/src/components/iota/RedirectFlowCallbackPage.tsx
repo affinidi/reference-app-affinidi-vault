@@ -29,7 +29,7 @@ export default function IotaCallbackPage({
   const responseCode = searchParams.get("response_code");
   const errorMessage = searchParams.get("error");
 
-  const iotaRedirectString = localStorage.getItem("iotaRedirect") || "";
+  const iotaRedirectString = localStorage.getItem("iotaRedirect") || "{}";
   const iotaRedirect = JSON.parse(iotaRedirectString);
 
   const iotaResponseQuery = useQuery({
@@ -45,8 +45,8 @@ export default function IotaCallbackPage({
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  const generatedNonce = iotaRedirect.nonce;
-  const receivedNonce = iotaResponseQuery.data.nonce;
+  const generatedNonce = iotaRedirect?.nonce;
+  const receivedNonce = iotaResponseQuery?.data?.nonce;
   const matched = generatedNonce === receivedNonce;
 
   const hasErrors = !featureAvailable || errorMessage;

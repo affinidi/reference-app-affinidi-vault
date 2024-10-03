@@ -1,0 +1,42 @@
+{
+  "affinidi-usecase-eventi": {
+    "redirectUris": {
+      "callbackUrl": "http://localhost:3000/api/auth/callback/affinidi"
+    },
+    "metadata": {
+      "name": "Event Management App using NextJS and NextAuthJS",
+      "description": "This is a event reference app to demonstrate Zero party data exchange, interoperability of data across business boundaries and consent based data management for applications using Affinidi Login, Affinidi Iota framework, Credential Issuance and Affinidi Vault",
+      "features": ["iota", "credential_issuance"],
+      "idp": {
+        "name": "Affinidi",
+        "link": "https://www.affinidi.com/product/affinidi-login"
+      },
+      "framework": {
+        "name": "Usecase",
+        "icon": "nextjs-logo.svg",
+        "link": "https://nextjs.org/"
+      },
+      "language": {
+        "name": "TypeScript",
+        "icon": "typescript-logo.svg",
+        "link": "https://www.typescriptlang.org/"
+      },
+      "library": {
+        "name": "Eventi",
+        "icon": "",
+        "link": "https://next-auth.js.org/"
+      },
+      "token": {
+        "policy": {
+          "actions": [
+            "cis:startIssuance",
+            "cis:getIssuanceConfigList",
+            "cis:getIssuanceConfigById",
+            "ais:listIotaConfigurations",
+            "ais:listPexQueries"
+          ]
+        }
+      }
+    }
+  }
+}

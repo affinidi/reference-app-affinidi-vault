@@ -22,7 +22,7 @@ export default async function handler(
     const configurations = await listIotaConfigurations();
     res.status(200).json(configurations);
   } catch (error: any) {
-    res.status(500).json({ message: "Unable to get iota configurations" });
+    res.status(500).json({ message: "Unable to get Affinidi Iota Framework configurations" });
     console.log(error);
   }
 }

@@ -20,7 +20,6 @@ export async function listIotaConfigurations() {
     })
   );
   const { data } = await api.listIotaConfigurations();
-  console.log(data)
   return data.configurations.filter((config) => config.mode === IotaConfigurationDtoModeEnum.Websocket);
 }
 

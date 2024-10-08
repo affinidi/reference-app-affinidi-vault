@@ -159,13 +159,21 @@ export default function CredentialIssuance({
     });
   }
 
-  const hasErrors = !featureAvailable;
+  const hasErrors = !featureAvailable || !session || !session.userId;
   const renderErrors = () => {
     if (!featureAvailable) {
       return (
         <div>
           Feature not available. Please set your Personal Access Token in your
           environment secrets.
+        </div>
+      );
+    }
+
+    if (!session || !session.userId) {
+      return (
+        <div>
+          You must be logged in to issue credentials to your Affinidi Vault
         </div>
       );
     }

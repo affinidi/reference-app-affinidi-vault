@@ -2,7 +2,7 @@ import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "src/lib/auth/next-auth-options";
-import { listIotaConfigurations } from "src/lib/clients/iota";
+import { listIotaWebsocketConfigurations } from "src/lib/clients/iota";
 import { ResponseError } from "src/types/types";
 
 // NOTE: This endpoint is for demo purposes and most likely not required,
@@ -19,7 +19,7 @@ export default async function handler(
       return;
     }
 
-    const configurations = await listIotaConfigurations();
+    const configurations = await listIotaWebsocketConfigurations();
     res.status(200).json(configurations);
   } catch (error: any) {
     res.status(500).json({ message: "Unable to get Affinidi Iota Framework configurations" });

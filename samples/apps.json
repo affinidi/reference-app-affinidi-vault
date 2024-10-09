@@ -118,11 +118,7 @@
             "token": {
                 "policy": {
                     "actions": [
-                        "cis:startIssuance",
-                        "cis:getIssuanceConfigList",
-                        "cis:getIssuanceConfigById",
-                        "ais:listIotaConfigurations",
-                        "ais:listPexQueries"
+                        "*"
                     ]
                 }
             }

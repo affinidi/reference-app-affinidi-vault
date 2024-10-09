@@ -1,75 +1,77 @@
 import { useState, useEffect } from "react";
-import * as S from "../Checkout/index.styled";
+import * as S from "./index.styled";
 import { iotaConfigId, eventTicketQuery } from "src/lib/variables";
 import useIotaQuery from "src/lib/hooks/useIotaQuery";
+import { OpenMode } from "@affinidi-tdk/iota-browser";
 
 const Verification = () => {
   const [eventTicketData, setEventTicketData] = useState();
 
-  // const {
-  //   isInitializing,
-  //   statusMessage,
-  //   handleInitiate,
-  //   errorMessage,
-  //   dataRequest,
-  //   data: iotaRequestData,
-  // } = useIotaQuery({ configurationId: iotaConfigId });
+  //React Custom Hook
 
-  // useEffect(() => {
-  //   if (!iotaRequestData) return;
-  //   //data for event ticket query
-  //   const eventTicketData = iotaRequestData[eventTicketQuery];
-  //   if (eventTicketData) {
-  //     setEventTicketData(eventTicketData);
-  //   }
-  // }, [iotaRequestData]);
-
+  //Event Handler
   const handleShareTicket = () => {
-    //handleInitiate(eventTicketQuery);
+    
+      //Initiate Affinidi Iota request
+
   };
 
   return (
     <>
-      {!eventTicketData && (
-        <>
-          <S.Wrapper style={{ fontSize: 42, marginTop: "2rem" }}>
-            <button
-              onClick={() => handleShareTicket()}
-              className={`rounded text-white py-1  w-1/3`}
-              style={{ backgroundColor: "#1F276F" }}
-            >
-              Click to Share Ticket Credential
-            </button>
-          </S.Wrapper>
-        </>
-      )}
-
-      {eventTicketData && (
-        <>
-          <S.Wrapper
-            style={{ color: "green", fontSize: 42, marginTop: "2rem" }}
-          >
-            Ticket is valid, Congrats!
-            <button
-              onClick={() => setEventTicketData(undefined)}
-              className={`bg-blue-600 text-white px-3 py-1 rounded-full hover:bg-black text-sm`}
-            >
+      <S.Wrapper>
+        <S.TickerooTitle>🎟️ Tickeroo</S.TickerooTitle>
+        <S.TickerooSubtitle>Ticket Verification Service</S.TickerooSubtitle>
+        <S.Wrapper>
+          {isInitializing && <>Loading....</>}
+          {errorMessage && <>{errorMessage}</>}
+        </S.Wrapper>
+      </S.Wrapper>
+      <S.BodyWrapper>
+        {!eventTicketData && (
+          <>
+            <S.VerifyButton onClick={() => handleShareTicket()}>
+              Start Ticket Verification
+            </S.VerifyButton>
+          </>
+        )}
+        {eventTicketData && (
+          <>
+            <S.TicketWrapper>
+              <S.Ticket>
+                <S.TicketInfo>
+                  <S.TicketDate>
+                    {
+                      new Date(eventTicketData.event?.startDate)
+                        .toISOString()
+                        .split("T")[0]
+                    }
+                  </S.TicketDate>
+                  <S.TicketTitle>{eventTicketData.event?.name}</S.TicketTitle>
+                  <hr />
+                  <S.AttendeeName>
+                    {eventTicketData.attendeeAtrributes?.firstName}{" "}
+                    {eventTicketData.attendeeAtrributes?.lastName}
+                  </S.AttendeeName>
+                  <S.TicketData>
+                    1 x {eventTicketData.ticket?.seat}
+                  </S.TicketData>
+                </S.TicketInfo>
+                <S.TicketStatus>✅ Verified</S.TicketStatus>
+              </S.Ticket>
+              <S.TicketRaw>
+                {JSON.stringify(
+                  dataRequest?.response?.verifiablePresentation,
+                  null,
+                  2
+                )}
+              </S.TicketRaw>
+            </S.TicketWrapper>
+            <S.ResetButton onClick={() => setEventTicketData(undefined)}>
               Reset
-            </button>
-          </S.Wrapper>
-
-          <div style={{ width: "50%", margin: "auto", marginTop: "1rem" }}>
-            Below is your Ticket Details
-            <pre>
-              {JSON.stringify(
-                dataRequest?.response?.verifiablePresentation,
-                null,
-                2
-              )}
-            </pre>
-          </div>
-        </>
-      )}
+            </S.ResetButton>
+          </>
+        )}
+      </S.BodyWrapper>
     </>
   );
 };

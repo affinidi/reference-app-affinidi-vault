@@ -21,6 +21,7 @@ import { VaultUtils } from "@affinidi-tdk/common";
 import { useRouter } from "next/router";
 import { GeoContext } from "src/lib/context/GeoContext";
 import { getGeoSpecificPrice } from "src/lib/utils/shop-utils";
+import { eventTicketVCTypeID } from "src/lib/variables";
 
 type handleResponse = {
   credentialOfferUri: string;
@@ -104,92 +105,18 @@ const Checkout = () => {
     router.push("/");
   };
 
-  const handleCheck = () => {
-    if (checkDeliveryAddress) {
-      setDeliveryAddress("");
-      setCheckDeliveryAddress(false);
-    } else {
-      if (consumer.user?.address) {
-        setDeliveryAddress(
-          consumer.user?.address +
-            ", " +
-            consumer.user?.city +
-            ", " +
-            consumer.user?.country +
-            ", " +
-            consumer.user?.postalCode
-        );
-      }
-      setCheckDeliveryAddress(true);
-    }
-  };
+  //Issue a Event Verifiable Credentail by calling Application Backend API
 
+
+  //Event handler on successful payment
   const handlePay = () => {
+    //Payment logic here
     console.log("check" + consumer.user?.verified);
     date.setDate(date.getDate() + 3);
     setShowOrderConfirmation(true);
-    IssueDigitalInvoice();
-  };
 
-  // Issue a Event Verifiable Credentail by calling Application Backend API
-  const IssueDigitalInvoice = async () => {
-    setIsLoading(true);
+    // Call Issuance service 
 
-    const orderCrendentialData = {
-      event: items.map((item: any) => {
-        return {
-          eventId: item.product.itemid?.toString(),
-          name: item.product.name,
-          location: item.product.location,
-          startDate: item.product.startDate,
-          endDate: item.product.endDate,
-        };
-      })[0],
-      ticket: items.map((item: any) => {
-        return {
-          ticketId: item.product.itemid?.toString(),
-          ticketType: item.product.name,
-          seat: item.product.description,
-        };
-      })[0],
-      createdAt: date,
-      attendeeAtrributes: {
-        email: consumer.user.email,
-        firstName: consumer.user.givenName,
-        lastName: consumer.user.familyName,
-        dateOfBirth: consumer.user.birthdate,
-      },
-      secrete: date,
-    };
-
-    const response = await fetch("/api/issuance/start", {
-      method: "POST",
-      body: JSON.stringify({
-        credentialData: orderCrendentialData,
-        credentialTypeId: "EventTicketVC",
-        claimMode: StartIssuanceInputClaimModeEnum.FixedHolder,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      console.log("Error in issuing credential");
-      return;
-    }
-
-    let dataResponse = await response.json();
-    console.log("dataResponse", dataResponse);
-
-    setIsLoading(false);
-    if (dataResponse.credentialOfferUri) {
-      const vaultLink = VaultUtils.buildClaimLink(
-        dataResponse.credentialOfferUri
-      );
-      setVaultLink(vaultLink);
-      setIssuanceResponse(dataResponse);
-    }
-    console.log("issuanceResponse", issuanceResponse);
   };
 
   return (

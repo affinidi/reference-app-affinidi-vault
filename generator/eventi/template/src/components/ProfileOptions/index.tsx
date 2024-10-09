@@ -26,9 +26,8 @@ const Profile = () => {
 
   const {
     isInitializing,
-    statusMessage,
     handleInitiate,
-    errorMessage: errorMessage,
+    errorMessage,
     data: iotaRequestData,
   } = useIotaQuery({ configurationId: iotaConfigId });
 

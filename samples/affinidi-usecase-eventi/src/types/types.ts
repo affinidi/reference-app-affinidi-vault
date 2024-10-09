@@ -29,6 +29,11 @@ export type ResponseError = {
   message: string;
 };
 
+export type IotaRequestRedirectType = {
+  configurationId: string
+  redirectUrl?: string
+};
+
 export type IotaRequestType = {
   configurationId: string
   openMode?: OpenMode

@@ -89,12 +89,8 @@ export default function IotaRedirectFlowPage({
 
     localStorage.setItem("iotaRedirect", JSON.stringify(toStore));
 
-    const vaultLink = getShareLink(data.jwt, "client_id");
+    const vaultLink = VaultUtils.buildShareLink(data.jwt, "client_id");
     router.push(vaultLink);
-  }
-
-  function getShareLink(jwt: string, clientId: string) {
-    return VaultUtils.buildShareLink(jwt, clientId);
   }
 
   async function clearSession() {
@@ -153,7 +149,7 @@ export default function IotaRedirectFlowPage({
           {selectedConfigId && (
             <Select
               id="redirectUrlSelect"
-              label="Redirect Url (❗️expected: /iota-callback)"
+              label="Redirect URL (expecting URL with /iota-callback)"
               value={selectedRedirectUri}
               options={
                 selectedConfiguration?.redirectUris?.map((uri) => ({

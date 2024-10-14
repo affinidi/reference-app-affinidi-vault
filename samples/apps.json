@@ -359,7 +359,9 @@
                         "cis:getIssuanceConfigList",
                         "cis:getIssuanceConfigById",
                         "ais:listIotaConfigurations",
-                        "ais:listPexQueries"
+                        "ais:listPexQueries",
+                        "ais:initiateDataSharingRequest",
+                        "ais:fetchIotaVpResponse"
                     ]
                 }
             }
@@ -404,7 +406,9 @@
                         "cis.operation.getIssuanceConfigList",
                         "cis.operation.getIssuanceConfigById",
                         "ais.operation.listIotaConfigurations",
-                        "ais.operation.listPexQueries"
+                        "ais.operation.listPexQueries",
+                        "ais.operation.initiateDataSharingRequest",
+                        "ais.operation.fetchIotaVpResponse"
                     ]
                 }
             }

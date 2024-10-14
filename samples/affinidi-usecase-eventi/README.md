@@ -1,16 +1,42 @@
 # Event Management with Affinidi Trust Network
 
-In this workshop, you'll build [Next.js](https://nextjs.org/) application bootstrapped with [Affinidi CLI](https://docs.affinidi.com/dev-tools/affinidi-cli/generate-app/) using the Affinidi Trust Network (ATN) that feature passwordless authentication flows, verifiable credential issuance, and consent-driven data access powered by the Iota framework. You'll also implement open standards-based workflows for collecting, storing, and sharing data securely, creating privacy-centric digital identity solutions.
+In this workshop, you'll build [Next.js](https://nextjs.org/) application bootstrapped with [Affinidi CLI](https://docs.affinidi.com/dev-tools/affinidi-cli/generate-app/) using the Affinidi Trust Network (ATN) that feature passwordless authentication flows, verifiable credential issuance, and consent-driven data access powered by the Affinidi Iota Framework. You'll also implement industry leading open standards-based workflows for collecting, storing, and securely sharing portable trusted data, creating privacy-centric digital identity solutions - literally putting user at the centre of data access management!
+
+## Objective
+
+Gain a fundamental understanding of building next-gen applications through Holistic user identity implemented via decentralised identity and verifiable credentials. These open standards enable user-controlled, portable data exchange that enhances trust, while helping you:
+
+- Protect user privacy
+- Enhance data minimization practices
+- Reduce trust establishment costs
+- Foster long-term trusted relationships with users
+- Improve efficiency in entitlement and eligibility checks
+
+## What you will learn?
+
+- How to build a React application with a decentralized, user-controlled personal data store (Affinidi Vault) leveraging open standards for data models and secure data exchange enabling user-centric innovation where the application logs into the user—not the other way around.
+
+- How to use the [Affinidi Trust Development Kit](https://docs.affinidi.com/dev-tools/affinidi-tdk/) (TDK) to build applications using open standards for decentralized identity and verifiable credentials, enabling digital credential issuance and verification creating portable trusted data that avoids phone home scenario.
+
+- How to implement platform-agnostic verification process that can instantly confirm the credentials’ authenticity to enable dynamic eligibility checks
+
+- How Affinidi Dev tools make it easy to manage and integrate open standards based managed Affinidi services like Credential Issuance, Credential Verification among others, efficiently into your application to create interoperable data ecosystem.
+
+  - Three (3) simple steps to issue attested credentials to users of your application that are reusable, verifiable and secure against fraud.
+
+  - Three (3) simple steps to create Verification Requests for your users to share the attested digital credentials
+
+  - Three (3) simple steps to request attested credentials for your users to prove their entitlements
 
 ## What you will build?
 
 The workshop is structured into different key modules
 
-- [**Module 1: Generating Event Management Application from Affinidi CLI With Affinidi Login**](/docs/generate-app.md): Use the [Affinidi CLI](https://docs.affinidi.com/dev-tools/affinidi-cli/generate-app/) (generate app command) to kickstart your journey with Affinidi Trust Network by generating reference codes for different use-cases using different programming languages, frameworks, and IAM solutions.
+- [**Module 1: Generating Event Management Application(Eventi) from Affinidi CLI With Affinidi Login**](/docs/generate-app.md): Use the [Affinidi CLI](https://docs.affinidi.com/dev-tools/affinidi-cli/generate-app/) (generate app command) to kickstart your journey with Affinidi Trust Network by generating reference codes for different use-cases using different programming languages, frameworks, and IAM solutions.
 
   Learn to create secure and user-friendly authentication flows without relying on traditional passwords using [Affinidi Login](https://docs.affinidi.com/docs/affinidi-login/how-affinidi-login-works/)
 
-- Estimated time to complete the module: **5 min**
+  - Estimated time to complete the module: **5 min**
 
 - [**Module 2: Issue Event Ticket as Verifiable Credential**](/docs/credentials-issuance.md) Dive into the Credentials Issuance feature to issue tamper-evident digital credentials, enabling trust in digital interactions through the flow of portable trusted data using [Affinidi Credential Issuance Service](/docs/credentials-issuance.md)
 
@@ -20,10 +46,13 @@ The workshop is structured into different key modules
 
   - Estimated time to complete the module: **10 min**
 
-- [**Module 4: (Optional) Building Consent-Driven Data Access for Recommendation**](/docs/iota-framework-recommendation.md): Implement workflows that ensure users have full control over their data, with emphasis on secure and transparent data sharing practices using [Affinidi Iota Framework](/docs/iota-framework-verification.md)
-  - Estimated time to complete the module: **10 min**
+- [**Module 4: (Optional) Building Consent-Driven Data Access for Recommendations**](/docs/iota-framework-recommendation.md): Implement workflows that ensure users have full control over their data, with emphasis on secure and transparent data sharing practices using [Affinidi Iota Framework](/docs/iota-framework-verification.md)
+  - Estimated time to complete the module: **5 min**
 
 By the end of these modules, you'll have a comprehensive understanding of how to leverage the Affinidi Trust Network (ATN) to build robust, user-centric interoperable applications.
+
+> [!WARNING]
+> This sample application are provided only as a guide to quickly explore and learn how to integrate the components of Affinidi Trust Network into your application. This is NOT a Production-ready implementation. **Please don't deploy this to a production environment.**
 
 ![Affinidi ATN Workshop](/docs/images/workshop.gif)
 
@@ -37,7 +66,7 @@ Affinidi collects usage data to improve our products and services. For informati
 
 ## Feedback, Support, and Community
 
-[Click here](https://github.com/affinidi/atn-workshop-nextjs/issues) to create a ticket and we will get on it right away. If you are facing technical or other issues, you can [Contact Support](https://share.hsforms.com/1i-4HKZRXSsmENzXtPdIG4g8oa2v).
+[Click here](https://github.com/affinidi/eventi-workshop/issues) to create a ticket and we will get on it right away. If you are facing technical or other issues, you can [Contact Support](https://share.hsforms.com/1i-4HKZRXSsmENzXtPdIG4g8oa2v).
 
 ## FAQ
 

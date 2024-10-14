@@ -34,7 +34,6 @@ export async function getIssuanceConfigurationById(configurationId: string) {
   const api = new ConfigurationApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
-      basePath: `${apiGatewayUrl}/cis`,
     }),
   );
   const { data } = await api.getIssuanceConfigById(configurationId);

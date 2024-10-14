@@ -2,18 +2,16 @@ import { useState, useEffect } from "react";
 import * as S from "./index.styled";
 import { iotaConfigId, eventTicketQuery } from "src/lib/variables";
 import useIotaQuery from "src/lib/hooks/useIotaQuery";
-import { OpenMode } from "@affinidi-tdk/iota-browser";
 
 const Verification = () => {
   const [eventTicketData, setEventTicketData] = useState();
 
   //React Custom Hook
 
+
   //Event Handler
   const handleShareTicket = () => {
-    
-      //Initiate Affinidi Iota request
-
+    //Initiate Affinidi Iota request
   };
 
   return (

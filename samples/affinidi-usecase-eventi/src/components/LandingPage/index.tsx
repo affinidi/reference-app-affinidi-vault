@@ -19,33 +19,13 @@ const Home = () => {
   const [hasItem, setHasItem] = useState(false);
 
   //Start of Iota Request
-  const { handleInitiate, data: iotaRequestData } = useIotaQuery({
-    configurationId: iotaConfigId,
-  });
 
-  useEffect(() => {
-    if (!iotaRequestData) return;
-
-    //data for recommendations
-    const musicData = iotaRequestData[recommendationIota];
-    if (musicData) {
-      const obj = "" + localStorage.getItem("consumerCurrentState");
-      let userUpd: ConsumerInfoProps = JSON.parse(obj);
-      const usernew = {
-        ...userUpd?.user,
-        interest: musicData.categories?.behaviors.interests[0].interest,
-        genre: musicData.categories?.music.favoriteGenres[0].favoriteGenre,
-      };
-      filterProducts(usernew.genre);
-
-      storeConsumerInfo((prev) => ({ ...prev, user: usernew }));
-      setHasItem(true);
-    }
-  }, [iotaRequestData]);
   //EOD of Iota Request
 
+  //Event Handler
   const handleInitiateRecommendations = () => {
-    handleInitiate(recommendationIota);
+    //Initiate Affinidi Iota request
+
   };
 
   useEffect(() => {

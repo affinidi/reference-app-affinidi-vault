@@ -33,8 +33,6 @@ type handleResponse = {
 const Checkout = () => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showDeliveryAddress, setShowDeliveryAddress] = useState(false);
-  const [checkDeliveryAddress, setCheckDeliveryAddress] = useState(false);
-  const [deliveryAddress, setDeliveryAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [consumer, storeConsumerInfo] = useContext(ConsumerContext);
   const router = useRouter();
@@ -107,7 +105,6 @@ const Checkout = () => {
 
   //Issue a Event Verifiable Credentail by calling Application Backend API
 
-
   //Event handler on successful payment
   const handlePay = () => {
     //Payment logic here
@@ -115,8 +112,7 @@ const Checkout = () => {
     date.setDate(date.getDate() + 3);
     setShowOrderConfirmation(true);
 
-    // Call Issuance service 
-
+    // Call Issuance service
   };
 
   return (
@@ -133,14 +129,7 @@ const Checkout = () => {
                     type="text"
                     name="firstName"
                     id="firstName"
-                    value={
-                      consumer.user?.givenName +
-                      " " +
-                      consumer.user?.familyName +
-                      " ( " +
-                      consumer.user?.email +
-                      ")"
-                    }
+                    value={consumer.user?.email}
                     placeholder="First and Last Name"
                   />
                 </form>
@@ -373,7 +362,7 @@ const Checkout = () => {
                       <p style={{ fontSize: "14px" }}>
                         Offer URL:
                         <a style={{ color: "blue" }} href={vaultLink}>
-                          {vaultLink}
+                          {decodeURIComponent(vaultLink)}
                         </a>
                       </p>
                       <S.AffinidiVaultClaimButtonContainer>

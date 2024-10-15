@@ -1,0 +1,47 @@
+{
+  "name": "reference-app-affinidi-usecase-eventi",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@affinidi-tdk/auth-provider": "^1.29.0",
+    "@affinidi-tdk/credential-issuance-client": "^1.29.0",
+    "@affinidi-tdk/iota-browser": "^1.19.0",
+    "@affinidi-tdk/iota-client": "^1.26.0",
+    "@affinidi-tdk/iota-core": "^1.20.0",
+    "@fontsource/lato": "^4.5.10",
+    "@fontsource/lora": "^5.0.8",
+    "@fontsource/playfair-display": "^4.5.13",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@tanstack/react-query": "^4.24.4",
+    "next": "^14.2.11",
+    "next-api-middleware": "^2.0.1",
+    "next-auth": "^4.22.0",
+    "qrcode.react": "^4.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.1",
+    "string-similarity": "^4.0.4",
+    "styled-components": "^5.3.6",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.11.18",
+    "@types/react": "18.0.27",
+    "@types/react-dom": "18.0.10",
+    "@types/string-similarity": "^4.0.2",
+    "@types/styled-components": "^5.1.26",
+    "autoprefixer": "^10.4.13",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.50.0",
+    "eslint-config-next": "^13.5.3",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "overrides": [
+    {
+      "files": ["generate.mjs", "confirm.mjs"],
+      "options": {
+        "printWidth": 120,
+        "semi": false,
+        "singleQuote": true,
+        "trailingComma": "all"
+      }
+    }
+  ]
+}

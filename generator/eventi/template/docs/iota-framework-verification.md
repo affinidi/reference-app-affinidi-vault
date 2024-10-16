@@ -10,42 +10,31 @@ We will use the same `Eventi App` which we worked on in modules 1 & module 2 and
 
 ## Architecture
 
-To enable your website to request data from the user, you must create an Affinidi Iota Framework configuration to set up the Signing Wallet, JWT Expiration, and the Presentation Definitions required to query the data from the Affinidi Vault.
+![Module 3 Architecture](./images/module3-architecture.png)
 
-After creating a configuration, you can integrate the Affinidi Iota Framework into your website with Affinidi TDK. This allows you to request and receive user data from their Affinidi Vault.
+## What you will experience
 
-![Affinidi Iota Framework](./images/Iota.svg)
+## Steps to complete application setup
 
-## What you will build?
-
-![Affinidi Iota Framework](./images/iota.gif)
-
-## Table of content
-
-| Content                           | Description                                                                                                             |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `Install dependencies`            | Install [dependencies](#install-dependencies)                                                                           |
-| `Affinidi Iota Framework config`  | Configure [Affinidi Iota Framework](#configure-affinidi-iota-configuration)                                             |
-| `Update .env files`               | Update [.env](#update-environment-variables) files                                                                      |
-| `Use useIotaQuery Hook`           | Initiate Iota Request using [custom hook](#use-react-custom-hook-useiotaquery-to-request-event-ticket-vc)               |
-| `Invoke Request on Event handler` | Invoke Iota initiation request inside the [handleShareTicket](#apply-action-on-button-click-handleshareticket-handler)  |
-| `Create API for Iota Request`     | Create API to initiate [Iota request](#create-api-endpoint-apiiotastart-redirect-flow---initiate-request)               |
-| `Create API for Iota Callback`    | Create API to get data from the [Iota Initiate request](#create-api-endpoint-apiiotaiota-response---get-requested-data) |
-| `Run Application`                 | Try the App with [Affinidi Login & Affinidi Iota Framework](#run-the-application-to-experience-affinidi-iota-framework) |
+| S.No | Content                                                                     | Description                                                     |
+| ---- | --------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 1.   | [Setup development environment](#1-setup-development-environment)           | Install dependencies                                            |
+| 2.   | [Affinidi Iota Framework config](#2-affinidi-iota-framework-config)         | Configure Affinidi Iota Framework                               |
+| 3.   | [Update .env files](#3-update-env-files)                                    | Update `.env` files                                             |
+| 4.   | [Use useIotaQuery React Custom Hook](#4-use-useiotaquery-react-custom-hook) | Initiate Iota Request using react custom hook                   |
+| 5.   | [Invoke Request on Event handler](#5-invoke-request-on-event-handler)       | Invoke Iota initiation request inside the `handleShareTicket()` |
+| 6.   | [Create API for Iota Request](#6-create-api-for-iota-request)               | Create API to initiate Iota request                             |
+| 7.   | [Create API for Iota Callback](#7-create-api-for-iota-callback)             | Create API to get data from the Iota Initiate request           |
+| 8.   | [Run Application](#8-run-application)                                       | Try the App with Affinidi Login & Affinidi Iota Framework       |
 
 > [!IMPORTANT]
-> This Module is an extension of the same Eventi App that we worked on for [**Module 1**](/docs/generate-app.md) & [**Module 2**](/docs/credentials-issuance.md).
+> This Module is an extension of the same Eventi App that we worked on for [**Module 1**](/docs/generate-app.md).
 
-## Step-by-Step Guide to enable Affinidi Iota Framework
+<hr/>
 
-Before proceeding with the steps below
+### 1. Setup development environment
 
-> [!WARNING]
-> The steps showcased in this sample application are provided only as a guide to quickly explore and learn how to integrate the components of Affinidi Trust Network into your application. This is NOT a Production-ready implementation. Please don't deploy this to a production environment.
-
-Now, let's continue with the step-by-step guide to enable the Affinidi Iota framework in the sample App.
-
-### Install Dependencies
+Let's continue with the step-by-step guide to enable the Affinidi Iota framework in the sample App.
 
 Install below Affinidi TDK packages as dependencies on this `Eventi` application for `Affinidi Iota framework` which is `iota-browser`, `iota-core` & `iota-client`
 
@@ -56,7 +45,7 @@ npm install @affinidi-tdk/iota-browser @affinidi-tdk/iota-core @affinidi-tdk/iot
 > [!IMPORTANT]
 > Personal Access Token (PAT) is like a machine user that acts on your behalf to the Affinidi services, which was automatically generated in previous module. If the automatic generation option was not selected in previous module, PAT can be generated manually using [Affinidi CLI](https://docs.affinidi.com/dev-tools/affinidi-cli/manage-token/#affinidi-token-create-token) command.
 
-### Configure Affinidi Iota Configuration
+### 2. Affinidi Iota Framework config
 
 Create Affinidi Iota framework configuration by using the [Affinidi Portal](https://portal.affinidi.com)
 
@@ -118,7 +107,7 @@ Create Affinidi Iota framework configuration by using the [Affinidi Portal](http
 > [!IMPORTANT]
 > The above PEX query responds only in case Affinidi Vault has claimed credentials using Affinidi Credential Issuance enabled from the previous workshop steps.
 
-### Update environment variables
+### 3. Update .env files
 
 Update `.env` file with the `ConfigurationId` and `QueryId` obtained in previous step
 
@@ -127,9 +116,9 @@ NEXT_PUBLIC_IOTA_CONFIG_ID=""
 NEXT_PUBLIC_IOTA_EVENT_TICKET_QUERY=""
 ```
 
-### Implement Application Code Changes
+### 4. Use useIotaQuery React Custom Hook
 
-#### Use React Custom Hook `useIotaQuery` to Request Event Ticket VC
+Use React Custom Hook `useIotaQuery` to Request Event Ticket VC
 
 Open the verification component `src\components\Verification\index.tsx`, and add the below code snippet which uses react custom hook to initiate the Affinidi Iota Request.
 
@@ -153,7 +142,9 @@ useEffect(() => {
 }, [iotaRequestData]);
 ```
 
-#### Apply Action on Button Click `handleShareTicket` handler
+### 5. Invoke Request on Event handler
+
+Apply Action on Button Click `handleShareTicket` handler
 
 Invoke `handleInitiate` function on click on the share ticket button handler `handleShareTicket`
 
@@ -165,7 +156,9 @@ const handleShareTicket = () => {
 };
 ```
 
-#### Create API Endpoint `/api/iota/start-redirect-flow` - Initiate Request
+### 6. Create API for Iota Request
+
+Create API Endpoint `/api/iota/start-redirect-flow` - Initiate Request
 
 Open the API Handler `src\pages\api\iota\start-redirect-flow.ts`, and add the Affinidi Iota Redirect flow logic which uses Affinidi TDK
 
@@ -213,7 +206,9 @@ Open the API Handler `src\pages\api\iota\start-redirect-flow.ts`, and add the Af
     res.status(200).json({ correlationId, transactionId, jwt });
 ```
 
-#### Create API Endpoint `/api/iota/iota-response` - Get Requested Data
+### 7. Create API for Iota Callback
+
+Create API Endpoint `/api/iota/iota-response` - Get Requested Data
 
 Open the API Handler `src\pages\api\iota\iota-response.ts`, and add the logic for getting the data from the initiated request using Affinidi TDK.
 
@@ -254,9 +249,9 @@ Note: This API is called in React Custom Hook `useIotaQuery` to get the requeste
     res.status(200).json({ vp: vp, nonce: iotaVpResponse.data.nonce });
 ```
 
-### Run The application to experience the Affinidi Iota framework
+### 8. Run Application
 
-Try the App with Affinidi Iota Framework
+Run The application to experience the Affinidi Iota framework, try the App with Affinidi Iota Framework.
 
 ```sh
 npm run dev

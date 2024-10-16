@@ -1,8 +1,8 @@
-# Event Management with Affinidi Trust Network
+# Workshop Guide: Master Decentralised User Profiles
 
-In this workshop, you'll build [Next.js](https://nextjs.org/) application bootstrapped with [Affinidi CLI](https://docs.affinidi.com/dev-tools/affinidi-cli/generate-app/) using the Affinidi Trust Network (ATN) that feature passwordless authentication flows, verifiable credential issuance, and consent-driven data access powered by the Affinidi Iota Framework. You'll also implement industry leading open standards-based workflows for collecting, storing, and securely sharing portable trusted data, creating privacy-centric digital identity solutions - literally putting user at the centre of data access management!
+In this hands-on workshop, React developers will build secure, consent-driven React applications with Open Identity Protocols like OpenID for Verifiable Presentations (OID4VP) to transform how applications access and verify user data.
 
-## Objective
+## Workshop Objective
 
 Gain a fundamental understanding of building next-gen applications through Holistic user identity implemented via decentralised identity and verifiable credentials. These open standards enable user-controlled, portable data exchange that enhances trust, while helping you:
 
@@ -12,23 +12,61 @@ Gain a fundamental understanding of building next-gen applications through Holis
 - Foster long-term trusted relationships with users
 - Improve efficiency in entitlement and eligibility checks
 
+## Workshop Introduction
+
+Digital identity is a combination of identifiers like usernames, emails, or phone numbers and attributes about a person, such as demographics, interests, or purchase history. Together, these form a holistic view of the user’s identity in digital systems. Traditionally, companies store and manage this information in centralized databases, but this setup often leads to challenges with privacy, consent, and security.
+
+<details>
+<summary>Read more</summary>
+In the physical world, we build trust through simple actions—showing ID cards or sharing documents to verify who we are. Decentralized digital identity brings this human connection to the digital space, enabling users to control when and how their information is shared. Technologies like Decentralized Identifiers (DIDs) and Verifiable Credentials (VCs) let users share data securely with consent, while businesses can instantly verify it, reducing complexity and building trust.
+
+Imagine as a consumer, knowing that the delivery person at your door or the financial consultant on the phone is who they claim to be, verified by their company with a single click. Or as a business, increasing conversions by building trust with users who feel secure enough to share their data for a personalized experience.
+
+If these scenarios resonate, this workshop is for you. Today, you’ll learn how cryptographic proof-based data exchanges can create new, secure ways to do familiar things. This isn’t just another API—it’s an entirely new set of Open Identity Protocols. Think about how SMTP or HTTP unlocked a world of innovation by creating unified ways to communicate. Now, imagine a protocol that allows users to seamlessly share their data with you and from you, securely and with full consent. Instead of managing multiple APIs to gather fragmented data, these emerging Open Identity protocols let developers access a user’s full digital identity in one seamless interaction, improving both user experience and efficiency.
+
+This workshop will introduce you to the tools and concepts that make this possible. You’ll learn how to integrate these decentralized technologies into your applications with really low effort, offering your users a smoother, more trusted experience. The future of managing and accessing user data is here. Let’s dive into how you can lead this new wave of digital identity.
+
+</details>
+
+## Workshop Overview: Event Management with Affinidi Trust Network
+
+You’ll build a simple event ticket management app with Next.js in under 90 minutes, integrating it with new Open Identity protocols. Using the generate-app feature of Affinidi CLI, you’ll quickly set up the app’s baseline code, complete with the ticket management workflow and scaffolding for passwordless authentication using W3C Verifiable Credentials (VCs) — an open standard for secure, portable, digitally signed data that helps to establish transitive trust - verify once and use it anywhere. No more repeated OTPs or centralised password managers!
+
+<details>
+<summary>Read more</summary>
+You’ll manage user profiles with Affinidi Vault, a secure, user-friendly, confidential storage solution for digital identity data. Think of it as the user's personal safe, built on open standards similar to JWT, XML, and JSON—so it doesn’t rely on any proprietary tech for the shape of the data. The Vault lets users collect, store, and share cryptographically signed data (Verifiable Credentials) in a way that machines can trust. Not only that, the mechanisms for how the data is collected in the Vault and shared from the Vault is built on Open Identity protocols adding additional flexibility and implementation choice of the information is exchanged between applications and the User's Vault.
+
+For this workshop, Affinidi Vault acts as a decentralized personal data store, allowing users to control and share their identity information seamlessly. As a developer, you can focus on building your app while relying on the Vault for secure, flexible data storage and easy sharing. You’ll issue and verify event tickets as Verifiable Credentials, giving users control over their data—no need for complex systems.
+
+With Affinidi Dev Tools and the Affinidi Trust Network, you’ll be able to integrate Decentralized Identifiers (DID), VCs, OpenId for Verifiable Credentials (OID4VCI), and OpenID for Verifiable Presentations (OID4VP) easily with few lines of code and low effort. These tools simplify credential management, and the Affinidi Iota Framework ensures secure, consent-driven data sharing between ticket holders and verifiers—all with minimal code.
+
+The Affinidi Trust Network handles the complex trust infrastructure built with open standards, so you can focus on building and refining your app, adapting it as needed. This flexibility makes scaling easier and gives you the freedom to evolve your implementation over time.
+
+</details>
+
 ## What you will learn?
 
-- How to build a React application with a decentralized, user-controlled personal data store (Affinidi Vault) leveraging open standards for data models and secure data exchange enabling user-centric innovation where the application logs into the user—not the other way around.
+- How to build a **React application with a decentralized, user-controlled personal data store** (Affinidi Vault) leveraging open standards for data models and secure data exchange enabling user-centric innovation where the application logs into the user—not the other way around.
 
-- How to use the [Affinidi Trust Development Kit](https://docs.affinidi.com/dev-tools/affinidi-tdk/) (TDK) to build applications using open standards for decentralized identity and verifiable credentials, enabling digital credential issuance and verification creating portable trusted data that avoids phone home scenario.
+- How to use the **Affinidi Trust Development Kit** (TDK) to build applications using **open standards for decentralized identity and verifiable credentials**, enabling digital credential issuance and verification creating portable trusted data that avoids phone home scenario.
 
-- How to implement platform-agnostic verification process that can instantly confirm the credentials’ authenticity to enable dynamic eligibility checks
+- How to implement **platform-agnostic verification process** that can instantly confirm the credentials’ authenticity to enable dynamic eligibility checks.
 
-- How Affinidi Dev tools make it easy to manage and integrate open standards based managed Affinidi services like Credential Issuance, Credential Verification among others, efficiently into your application to create interoperable data ecosystem.
+- How **Affinidi Dev tools** make it easy to manage and integrate **open standards** based managed Affinidi services like Credential Issuance, Credential Verification among others, efficiently into your application to create interoperable data ecosystem.
 
-  - Three (3) simple steps to issue attested credentials to users of your application that are reusable, verifiable and secure against fraud.
+  - Three (3) simple steps to **issue attested credentials** to users of your application that are reusable, verifiable and secure against fraud.
 
-  - Three (3) simple steps to create Verification Requests for your users to share the attested digital credentials
+  - Three (3) simple steps to **create Verification Requests** for your users to share the attested digital credentials.
 
-  - Three (3) simple steps to request attested credentials for your users to prove their entitlements
+  - Three (3) simple steps to **request attested credentials** for your users to prove their entitlements.
+
+By the end of the workshop, you’ll gain practical experience in building user-centric applications leveraging open identity protocols that foster more resilient architectures—free from intermediaries. With Affinidi’s open standards-based tech stack, you can establish trusted relationships through the exchange of tamper-evident data backed by cryptographic proofs. This approach enhances user engagement while defending against misinformation and fraud. Designed to meet modern compliance standards like GDPR and DPDPA, this architecture ensures user control and data security, putting the user at the center.
 
 ## What you will build?
+
+In this workshop, we’re starting with a [Next.js](https://nextjs.org/) app—so if you’re already familiar with React, you’ll feel right at home. We chose Next.js because it builds on React’s strengths, offering things like server-side rendering, static site generation, and file-based routing. This helps us speed up the development of a real-world-like application for the workshop, which we'll use as the baseline to learn how to integrate open identity protocols. That said, the core learnings here are framework-agnostic. So whether you’re using Next.js or another framework, these concepts about user-centric digital identity, machine-readable data, implementing transitive trust, and working with portable, cryptographically attested data to enhance security and user experience will be just as relevant.
+
+> Next.js is simply used to expedite the workshop learning process, but if you have any suggestions or preferences for other frameworks, we’d love to hear your thoughts in the session feedback!
 
 The workshop is structured into different key modules
 

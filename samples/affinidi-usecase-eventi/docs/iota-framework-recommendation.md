@@ -1,28 +1,36 @@
 ## Module 4: (Optional) Building Consent-Driven Data Access for Recommendations
 
-We will use the same `Eventi App` which we worked on in modules 1 & module 2 and enable the Affinidi Iota framework for **requesting music preferences and show the personalised experience** for events happening. It implements workflows that ensure users have full control over their data, emphasizing secure and transparent data-sharing practices using OID4VP & PEX.
+A framework that provides a secured and simplified data-sharing process from Affinidi Vault with user consent for enhanced user experience. The Affinidi Iota Framework leverages the OID4VP (OpenID for Verifiable Presentation) standard to request and receive data from Affinidi Vault. The OID4VP is built with the OAuth 2.0 authorisation framework, providing developers with a simple and secure presentation of credentials.
 
 More Details on Affinidi Iota Framework is available on [Affinidi Documentation](https://docs.affinidi.com/frameworks/iota-framework/)
 
-## What you will build?
+## Introduction
 
-![Music Recommendations Sneak Peak](./images/iota-recoomendations.gif)
+We will use the same `Eventi App` which we worked on in modules 1 & module 2 and enable the Affinidi Iota framework for **requesting music preferences and show the personalised experience** for events happening. It implements workflows that ensure users have full control over their data, emphasizing secure and transparent data-sharing practices using OID4VP & PEX.
 
-## Table of content
+## Architecture
 
-| Content                           | Description                                                                                                                                    |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Pre-Requisite`                   | Complete the [pre-requisite](#pre-requisite) for Affinidi Iota Framework                                                                       |
-| `Add Recommendations PEX`         | Update [Affinidi Iota Framework](#add-recommendations-pex-in-affinidi-iota-configuration) to request music preferences                         |
-| `Update .env files`               | Update [.env](#update-environment-variables) files                                                                                             |
-| `Use useIotaQuery Hook`           | Initiate Iota Request using [custom hook](#use-react-custom-hook-useiotaquery-to-request-event-ticket-vc)                                      |
-| `Invoke Request on Event handler` | Invoke Iota initiation request inside the [handleInitiateRecommendations](#apply-action-on-button-click-handleinitiaterecommendations-handler) |
-| `Run Application`                 | Try the App with [Affinidi Login & Affinidi Iota Framework](#run-the-application-to-experience-affinidi-iota-framework)                        |
+![Module 4 Architecture](./images/module3-architecture.png)
+
+## What you will experience
+
+## Steps to complete application setup
+
+| S.No | Content                                                                     | Description                                                                 |
+| ---- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| 1.   | [Pre-Requisite](#1-pre-requisite)                                           | Complete the pre-requisite for Affinidi Iota Framework                      |
+| 2.   | [Add Recommendations PEX](#2-add-recommendations-pex)                       | Update Affinidi Iota Framework to request music preferences                 |
+| 3.   | [Update .env files](#3-update-env-files)                                    | Update `.env` files                                                         |
+| 4.   | [Use useIotaQuery React Custom Hook](#4-use-useiotaquery-react-custom-hook) | Initiate Iota Request using react custom hook                               |
+| 5.   | [Invoke Request on Event handler](#5-invoke-request-on-event-handler)       | Invoke Iota initiation request inside the `handleInitiateRecommendations()` |
+| 6.   | [Run Application](#6-run-application)                                       | Try the App with Affinidi Login & Affinidi Iota Framework                   |
 
 > [!IMPORTANT]
-> This Module is an extension of the same Eventi App that we worked on for [**Module 1**](/docs/generate-app.md) & [**Module 2**](/docs/credentials-issuance.md).
+> This Module is an extension of the same Eventi App that we worked on for [**Module 1**](/docs/generate-app.md).
 
-## Pre-Requisite
+<hr/>
+
+### 1. Pre-Requisite
 
 If you have completed [Module 3](./iota-framework-verification.md) go to next step, otherwise would require to complete the steps listed below.
 
@@ -31,16 +39,9 @@ If you have completed [Module 3](./iota-framework-verification.md) go to next st
 - Create API to initiate [Iota request](./iota-framework-verification.md#create-api-endpoint-apiiotastart-redirect-flow---initiate-request)
 - Create API to get data from the [Iota Initiate request](./iota-framework-verification.md#create-api-endpoint-apiiotaiota-response---get-requested-data)
 
-## Step-by-Step Guide to enable Affinidi Iota Framework
+### 2. Add Recommendations PEX
 
-Before proceeding with the steps below, make sure you have completed the prerequisites mentioned above.
-
-> [!WARNING]
-> The steps showcased in this sample application are provided only as a guide to quickly explore and learn how to integrate the components of Affinidi Trust Network into your application. This is NOT a Production-ready implementation. Please don't deploy this to a production environment.
-
-Now, let's continue with the step-by-step guide to enable the Affinidi Iota framework in the sample App.
-
-### Add Recommendations PEX in Affinidi Iota Configuration
+Now, let's continue with the step-by-step guide to enable the Affinidi Iota framework in the sample App by adding Recommendations PEX in Affinidi Iota Configuration.
 
 Add New Presentation Definition for requesting music preferences in Affinidi Iota framework configuration by using the [Affinidi Portal](https://portal.affinidi.com)
 
@@ -109,7 +110,7 @@ Add New Presentation Definition for requesting music preferences in Affinidi Iot
 
 7. Click on `Create` button, `QueryId` for requesting Event Ticket VC is generated.
 
-### Update environment variables
+### 3. Update .env files
 
 Update `.env` file with the `ConfigurationId` and `QueryId` obtained in previous step
 
@@ -118,9 +119,9 @@ NEXT_PUBLIC_IOTA_CONFIG_ID=""
 NEXT_PUBLIC_IOTA_MUSIC_RECOMMEND_QUERY=""
 ```
 
-### Implement Application Code Changes
+### 4. Use useIotaQuery React Custom Hook
 
-#### Use React Custom Hook `useIotaQuery` to Request Event Ticket VC
+Use React Custom Hook `useIotaQuery` to Request Event Ticket VC
 
 Open the Landing Page component `src\components\LandingPage\index.tsx` which displays list of events, and add the below code snippet which uses react custom hook to initiate the Affinidi Iota Request.
 
@@ -152,7 +153,9 @@ useEffect(() => {
 //EOD of Iota Request
 ```
 
-#### Apply Action on Button Click `handleInitiateRecommendations` handler
+### 5. Invoke Request on Event handler
+
+Apply Action on Button Click `handleInitiateRecommendations` handler
 
 Invoke `handleInitiate` function on click on the share ticket button handler `handleInitiateRecommendations`
 
@@ -164,8 +167,9 @@ const handleInitiateRecommendations = () => {
 };
 ```
 
-### Run The application to experience the Affinidi Iota framework
+### 6. Run Application
 
+Run The application to experience the Affinidi Iota framework.
 Try the App with Affinidi Iota Framework and click on `Give Me Recommendations` button on the landing page.
 
 > [!NOTE]

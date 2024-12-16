@@ -1,5 +1,5 @@
 import {
-  IssuanceConfigDtoCredentialSupportedInner,
+  CredentialSupportedObject,
   StartIssuanceInputClaimModeEnum,
 } from "@affinidi-tdk/credential-issuance-client";
 import { useQuery } from "@tanstack/react-query";
@@ -30,7 +30,7 @@ const fetchCredentialSchema = async (jsonSchemaUrl: string) => {
 
 const fetchCredentialTypes = async (
   issuanceConfigurationId: string,
-): Promise<IssuanceConfigDtoCredentialSupportedInner[]> => {
+): Promise<CredentialSupportedObject[]> => {
   const response = await fetch(
     "/api/issuance/credential-types?" +
       new URLSearchParams({ issuanceConfigurationId }),
@@ -276,7 +276,7 @@ export default function CredentialIssuance({
                     label="Credential Type (Schema)"
                     options={
                       credentialTypesQuery.data?.map(
-                        (type: IssuanceConfigDtoCredentialSupportedInner) => ({
+                        (type: CredentialSupportedObject) => ({
                           label: type.credentialTypeId,
                           value: type.credentialTypeId,
                         }),

@@ -1,5 +1,5 @@
 import {
-  IssuanceConfigDtoCredentialSupportedInner,
+  CredentialSupportedObject,
   StartIssuanceInputClaimModeEnum,
 } from "@affinidi-tdk/credential-issuance-client";
 import { useQuery } from "@tanstack/react-query";
@@ -29,19 +29,19 @@ const fetchCredentialSchema = async (jsonSchemaUrl: string) => {
 };
 
 const fetchCredentialTypes = async (
-  issuanceConfigurationId: string,
-): Promise<IssuanceConfigDtoCredentialSupportedInner[]> => {
+  issuanceConfigurationId: string
+): Promise<CredentialSupportedObject[]> => {
   const response = await fetch(
     "/api/issuance/credential-types?" +
       new URLSearchParams({ issuanceConfigurationId }),
-    { method: "GET" },
+    { method: "GET" }
   );
   return await response.json();
 };
 
 const fetchIssuanceConfigurations = (): Promise<SelectOption[]> =>
   fetch("/api/issuance/configuration-options", { method: "GET" }).then((res) =>
-    res.json(),
+    res.json()
   );
 
 export const getServerSideProps = (async () => {
@@ -60,7 +60,7 @@ export default function CredentialIssuance({
   const [offer, setOffer] = useState<OfferPayload>();
   const [message, setMessage] = useState<MessagePayload>();
   const [claimMode, setClaimMode] = useState<string>(
-    StartIssuanceInputClaimModeEnum.FixedHolder,
+    StartIssuanceInputClaimModeEnum.FixedHolder
   );
 
   // Prefill did from session
@@ -92,7 +92,7 @@ export default function CredentialIssuance({
     queryKey: ["schema", selectedTypeId],
     queryFn: () => {
       const credentialType = credentialTypesQuery.data?.find(
-        (type) => type.credentialTypeId === selectedTypeId,
+        (type) => type.credentialTypeId === selectedTypeId
       );
       if (!credentialType) {
         setMessage({
@@ -276,10 +276,10 @@ export default function CredentialIssuance({
                     label="Credential Type (Schema)"
                     options={
                       credentialTypesQuery.data?.map(
-                        (type: IssuanceConfigDtoCredentialSupportedInner) => ({
+                        (type: CredentialSupportedObject) => ({
                           label: type.credentialTypeId,
                           value: type.credentialTypeId,
-                        }),
+                        })
                       ) || []
                     }
                     value={selectedTypeId}

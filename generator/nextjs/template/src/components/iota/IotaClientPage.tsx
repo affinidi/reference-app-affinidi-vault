@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Button from "../core/Button";
 import Select, { SelectOption } from "../core/Select";
+import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
 
 const openModeOptions = [
   {
@@ -31,9 +32,9 @@ type DataRequests = {
   };
 };
 
-const fetchIotaConfigurations = (): Promise<SelectOption[]> =>
-  fetch("/api/iota/configuration-options", { method: "GET" }).then((res) =>
-    res.json(),
+const fetchIotaConfigurations = (): Promise<IotaConfigurationDto[]> =>
+  fetch("/api/iota/configurations", { method: "GET" }).then((res) =>
+    res.json()
   );
 
 const getQueryOptions = async (configurationId: string) => {
@@ -44,7 +45,7 @@ const getQueryOptions = async (configurationId: string) => {
       }),
     {
       method: "GET",
-    },
+    }
   );
   return (await response.json()) as SelectOption[];
 };
@@ -57,7 +58,7 @@ const getIotaCredentials = async (configurationId: string) => {
       }),
     {
       method: "GET",
-    },
+    }
   );
   return (await response.json()) as IotaCredentials;
 };
@@ -216,7 +217,10 @@ export default function IotaSessionMultipleRequestsPage({
               <Select
                 id="configurationIdSelect"
                 label="Configuration"
-                options={configurationsQuery.data || []}
+                options={configurationsQuery.data.map((configuration) => ({
+                  label: configuration.name,
+                  value: configuration.configurationId,
+                }))}
                 value={selectedConfigId}
                 disabled={isFormDisabled}
                 onChange={handleConfigurationChange}
@@ -295,7 +299,7 @@ export default function IotaSessionMultipleRequestsPage({
                             {JSON.stringify(
                               dataRequests[id].error,
                               undefined,
-                              2,
+                              2
                             )}
                           </pre>
                         </>
@@ -309,7 +313,7 @@ export default function IotaSessionMultipleRequestsPage({
                             {JSON.stringify(
                               dataRequests[id].response,
                               undefined,
-                              2,
+                              2
                             )}
                           </pre>
                         </>

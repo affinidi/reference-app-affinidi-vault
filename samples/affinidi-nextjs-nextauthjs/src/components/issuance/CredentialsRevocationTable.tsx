@@ -53,7 +53,7 @@ const CredentialsRevocationTable: React.FC<PaginatedCredentialsTableProps> = ({
       try {
         await handleRevoke(
           selectedFlowDataRecord.configurationId!,
-          'selectedFlowDataRecord.id',
+          selectedFlowDataRecord.id,
           selectedReason,
           flowDataRecordsQuery
         );

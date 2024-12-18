@@ -1,4 +1,7 @@
-import { FlowData } from '@affinidi-tdk/credential-issuance-client';
+import {
+  ChangeCredentialStatusInputChangeReasonEnum,
+  FlowData,
+} from '@affinidi-tdk/credential-issuance-client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import { authOptions } from 'src/lib/auth/next-auth-options';
@@ -7,7 +10,7 @@ import { ResponseError } from 'src/types/types';
 import { z } from 'zod';
 
 const changeCredentialStatusSchema = z.object({
-  issuanceFlowDataId: z.string(),
+  issuanceRecordId: z.string(),
   changeReason: z.string(),
 });
 
@@ -22,13 +25,17 @@ export default async function handler(
       return;
     }
     const { issuanceConfigurationId } = req.query;
-    const { issuanceFlowDataId, changeReason } =
+    const { issuanceRecordId, changeReason } =
       changeCredentialStatusSchema.parse(JSON.parse(req.body));
     const flowData = await changeCredentialStatus(
       issuanceConfigurationId as string,
-      { issuanceFlowDataId, changeReason }
+      {
+        issuanceRecordId,
+        changeReason:
+          changeReason as ChangeCredentialStatusInputChangeReasonEnum,
+      }
     );
-    console.log(flowData);
+
     res.status(200).json(flowData);
   } catch (error: any) {
     res

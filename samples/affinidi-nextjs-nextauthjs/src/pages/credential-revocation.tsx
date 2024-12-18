@@ -1,14 +1,13 @@
 import {
-  CredentialSupportedObject,
   FlowData,
   ListIssuanceRecordResponse,
 } from '@affinidi-tdk/credential-issuance-client';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SelectOption } from 'src/components/core/Select';
-import PaginatedCredentialsTable from 'src/components/issuance/PaginatedCredentialTable';
+import CredentialsRevocationTable from 'src/components/issuance/CredentialsRevocationTable';
 import { personalAccessTokenConfigured } from 'src/lib/env';
 
 const fetchIssuanceDataRecords = async (
@@ -27,21 +26,26 @@ const fetchIssuanceDataRecords = async (
 
 const changeCredentialStatus = async (
   issuanceConfigurationId: string,
-  issuanceFlowDataId: string,
+  issuanceRecordId: string,
   changeReason: string,
   flowDataRecordsQuery: UseQueryResult<ListIssuanceRecordResponse, Error>
-): Promise<CredentialSupportedObject[]> => {
+): Promise<FlowData> => {
   const response = await fetch(
     '/api/issuance/change-credential-status?' +
       new URLSearchParams({ issuanceConfigurationId }),
     {
       method: 'POST',
-      body: JSON.stringify({ issuanceFlowDataId, changeReason }),
+      body: JSON.stringify({ issuanceRecordId, changeReason }),
     }
   );
-  const res = await response.json();
-  flowDataRecordsQuery.refetch();
-  return res;
+
+  if (response.status === 200) {
+    const res = await response.json();
+    flowDataRecordsQuery.refetch();
+    return res;
+  } else {
+    throw Error(await response.text());
+  }
 };
 
 const fetchIssuanceConfigurations = (): Promise<SelectOption[]> =>
@@ -83,7 +87,6 @@ export default function CredentialRevocation({
   });
 
   const handleNextClick = async () => {
-    console.log('LastEcal', flowDataRecordsQuery.data?.lastEvaluatedKey);
     if (flowDataRecordsQuery.data?.lastEvaluatedKey) {
       setNextToken(flowDataRecordsQuery.data?.lastEvaluatedKey);
       setTokenStack((prevStack) => [
@@ -91,12 +94,8 @@ export default function CredentialRevocation({
         flowDataRecordsQuery.data?.lastEvaluatedKey as string,
       ]);
     }
-
-    console.log(
-      'LastEval after state change',
-      flowDataRecordsQuery.data?.lastEvaluatedKey
-    );
   };
+
   const handlePreviousClick = async () => {
     if (tokenStack.length > 1) {
       const previousToken = tokenStack[tokenStack.length - 2];
@@ -137,26 +136,32 @@ export default function CredentialRevocation({
           {flowDataRecordsQuery.isSuccess &&
             flowDataRecordsQuery.data &&
             flowDataRecordsQuery.data.flowData && (
-              <PaginatedCredentialsTable
+              <CredentialsRevocationTable
                 handleRevoke={changeCredentialStatus}
                 flowDataRecordsQuery={flowDataRecordsQuery}
-              ></PaginatedCredentialsTable>
+              ></CredentialsRevocationTable>
             )}
           {
             <div className="flex justify-between mt-4">
               <button
                 onClick={handlePreviousClick}
                 disabled={tokenStack.length < 1}
-                className={`px-4 py-2 rounded ${'bg-blue-500 text-white hover:bg-blue-600'}`}
+                className={`px-4 py-2 rounded ${
+                  tokenStack.length < 1
+                    ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                    : 'bg-blue-500 text-white hover:bg-blue-600'
+                }`}
               >
                 Previous
               </button>
               <button
                 onClick={handleNextClick}
-                disabled={
-                  flowDataRecordsQuery.data?.lastEvaluatedKey === undefined
-                }
-                className={`px-4 py-2 rounded ${'bg-blue-500 text-white hover:bg-blue-600'}`}
+                disabled={!flowDataRecordsQuery.data?.lastEvaluatedKey}
+                className={`px-4 py-2 rounded ${
+                  !flowDataRecordsQuery.data?.lastEvaluatedKey
+                    ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                    : 'bg-blue-500 text-white hover:bg-blue-600'
+                }`}
               >
                 Next
               </button>

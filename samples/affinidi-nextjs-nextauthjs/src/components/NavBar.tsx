@@ -1,9 +1,9 @@
-import { Session } from "next-auth";
-import { getSession, signOut } from "next-auth/react";
-import Link from "next/link";
-import { FC, useEffect, useState } from "react";
-import Button from "./core/Button";
-import { clientLogin } from "src/lib/auth/client-login";
+import { Session } from 'next-auth';
+import { getSession, signOut } from 'next-auth/react';
+import Link from 'next/link';
+import { FC, useEffect, useState } from 'react';
+import Button from './core/Button';
+import { clientLogin } from 'src/lib/auth/client-login';
 
 const NavBar: FC = () => {
   const [session, setSession] = useState<Session>();
@@ -12,7 +12,7 @@ const NavBar: FC = () => {
     async function fetchSession() {
       const mySession = await getSession();
       if (!mySession) {
-        console.log("Not authenticated");
+        console.log('Not authenticated');
         return;
       }
       setSession(mySession);
@@ -58,6 +58,13 @@ const NavBar: FC = () => {
             prefetch={false}
           >
             Issue Credentials
+          </Link>
+          <Link
+            href="/credential-revocation"
+            className="py-4 font-medium transition-colors hover:text-blue-500"
+            prefetch={false}
+          >
+            Revoke Credentials
           </Link>
           <Link
             href="/iota"

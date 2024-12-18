@@ -28,7 +28,7 @@ export default async function handler(
       issuanceConfigurationId as string,
       { issuanceFlowDataId, changeReason }
     );
-
+    console.log(flowData);
     res.status(200).json(flowData);
   } catch (error: any) {
     res

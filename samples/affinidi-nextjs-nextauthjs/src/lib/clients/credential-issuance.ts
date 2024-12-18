@@ -75,10 +75,16 @@ export async function listIssuanceDataRecords(
       basePath: `${apiGatewayUrl}/cis`,
     })
   );
-  const { data } = await api.listIssuanceDataRecords(
-    projectId,
-    configurationId,
-    10
-  );
-  return data;
+  let res;
+  if (exclusiveStartKey != 'undefined') {
+    res = await api.listIssuanceDataRecords(
+      projectId,
+      configurationId,
+      10,
+      exclusiveStartKey
+    );
+  } else {
+    res = await api.listIssuanceDataRecords(projectId, configurationId, 10);
+  }
+  return res.data;
 }

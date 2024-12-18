@@ -3,7 +3,7 @@ import {
   FlowData,
   ListIssuanceRecordResponse,
 } from '@affinidi-tdk/credential-issuance-client';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -28,10 +28,9 @@ const fetchIssuanceDataRecords = async (
 const changeCredentialStatus = async (
   issuanceConfigurationId: string,
   issuanceFlowDataId: string,
-  changeReason: string
+  changeReason: string,
+  flowDataRecordsQuery: UseQueryResult<ListIssuanceRecordResponse, Error>
 ): Promise<CredentialSupportedObject[]> => {
-  console.log('INPUT');
-  console.log({ issuanceConfigurationId, issuanceFlowDataId, changeReason });
   const response = await fetch(
     '/api/issuance/change-credential-status?' +
       new URLSearchParams({ issuanceConfigurationId }),
@@ -40,7 +39,9 @@ const changeCredentialStatus = async (
       body: JSON.stringify({ issuanceFlowDataId, changeReason }),
     }
   );
-  return await response.json();
+  const res = await response.json();
+  flowDataRecordsQuery.refetch();
+  return res;
 };
 
 const fetchIssuanceConfigurations = (): Promise<SelectOption[]> =>
@@ -82,6 +83,7 @@ export default function CredentialRevocation({
   });
 
   const handleNextClick = async () => {
+    console.log('LastEcal', flowDataRecordsQuery.data?.lastEvaluatedKey);
     if (flowDataRecordsQuery.data?.lastEvaluatedKey) {
       setNextToken(flowDataRecordsQuery.data?.lastEvaluatedKey);
       setTokenStack((prevStack) => [
@@ -89,12 +91,19 @@ export default function CredentialRevocation({
         flowDataRecordsQuery.data?.lastEvaluatedKey as string,
       ]);
     }
+
+    console.log(
+      'LastEval after state change',
+      flowDataRecordsQuery.data?.lastEvaluatedKey
+    );
   };
   const handlePreviousClick = async () => {
-    if (tokenStack.length > 0) {
-      const previousToken = tokenStack[tokenStack.length - 1];
+    if (tokenStack.length > 1) {
+      const previousToken = tokenStack[tokenStack.length - 2];
       setTokenStack((prevStack) => prevStack.slice(0, -1)); // Remove the last token
       setNextToken(previousToken);
+    } else {
+      setNextToken(undefined);
     }
   };
   const hasErrors = !featureAvailable || !session || !session.userId;
@@ -129,20 +138,24 @@ export default function CredentialRevocation({
             flowDataRecordsQuery.data &&
             flowDataRecordsQuery.data.flowData && (
               <PaginatedCredentialsTable
-                flowDataRecords={flowDataRecordsQuery.data.flowData}
                 handleRevoke={changeCredentialStatus}
+                flowDataRecordsQuery={flowDataRecordsQuery}
               ></PaginatedCredentialsTable>
             )}
           {
             <div className="flex justify-between mt-4">
               <button
                 onClick={handlePreviousClick}
+                disabled={tokenStack.length < 1}
                 className={`px-4 py-2 rounded ${'bg-blue-500 text-white hover:bg-blue-600'}`}
               >
                 Previous
               </button>
               <button
                 onClick={handleNextClick}
+                disabled={
+                  flowDataRecordsQuery.data?.lastEvaluatedKey === undefined
+                }
                 className={`px-4 py-2 rounded ${'bg-blue-500 text-white hover:bg-blue-600'}`}
               >
                 Next

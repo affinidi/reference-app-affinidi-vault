@@ -1,6 +1,7 @@
-import { GetServerSideProps } from "next";
-import { personalAccessTokenConfigured } from "src/lib/env";
+"use client";
+
 import { useQuery } from "@tanstack/react-query";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 interface GetIotaResponseParams {
   configurationId: string;
@@ -26,7 +27,7 @@ const IotaCallbackContent = ({
 }: {
   responseCode: string | null;
 }) => {
-  const iotaRedirectString = "{}".toString();
+  const [iotaRedirectString] = useLocalStorage("iotaRedirect", "{}");
   const iotaRedirect = JSON.parse(iotaRedirectString);
 
   const iotaResponseQuery = useQuery({

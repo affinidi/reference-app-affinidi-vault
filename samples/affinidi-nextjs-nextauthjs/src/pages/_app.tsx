@@ -14,8 +14,8 @@ export default function App({
       queries: {
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
-      }
-    }
+      },
+    },
   });
 
   return (

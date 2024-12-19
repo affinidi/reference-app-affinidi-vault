@@ -32,6 +32,7 @@ export async function listIotaRedirectConfigurations() {
   const api = new ConfigurationsApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/ais`,
     })
   );
   const { data } = await api.listIotaConfigurations();

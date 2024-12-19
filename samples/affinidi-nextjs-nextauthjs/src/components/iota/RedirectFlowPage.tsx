@@ -9,7 +9,7 @@ import Select, { SelectOption } from "../core/Select";
 
 const fetchIotaConfigurations = (): Promise<IotaConfigurationDto[]> =>
   fetch("/api/iota/redirect-configurations", { method: "GET" }).then((res) =>
-    res.json(),
+    res.json()
   );
 
 const getQueryOptions = async (configurationId: string) => {
@@ -20,7 +20,7 @@ const getQueryOptions = async (configurationId: string) => {
       }),
     {
       method: "GET",
-    },
+    }
   );
   return (await response.json()) as SelectOption[];
 };
@@ -58,7 +58,7 @@ export default function IotaRedirectFlowPage({
   }
 
   const selectedConfiguration = configurationsQuery?.data?.find(
-    (query) => query.configurationId === selectedConfigId,
+    (query) => query.configurationId === selectedConfigId
   );
 
   async function handleRedirectFlowShare(queryId: string) {

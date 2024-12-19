@@ -226,11 +226,7 @@ export default function CredentialIssuance({
               />
               <div className="mb-4">
                 <label className="flex items-center space-x-3 cursor-pointer">
-                  <p>
-                    {" "}
-                    Check box to make credential revocable (non-revocable by
-                    default)
-                  </p>
+                  <p> Make credential revocable (non-revocable by default)</p>
                   <input
                     className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200"
                     type="checkbox"

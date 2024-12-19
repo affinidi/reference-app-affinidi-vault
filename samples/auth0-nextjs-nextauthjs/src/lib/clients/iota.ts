@@ -19,11 +19,11 @@ export async function listIotaWebsocketConfigurations() {
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
       basePath: `${apiGatewayUrl}/ais`,
-    })
+    }),
   );
   const { data } = await api.listIotaConfigurations();
   return data.configurations.filter(
-    (config) => config.mode === IotaConfigurationDtoModeEnum.Websocket
+    (config) => config.mode === IotaConfigurationDtoModeEnum.Websocket,
   );
 }
 
@@ -32,11 +32,12 @@ export async function listIotaRedirectConfigurations() {
   const api = new ConfigurationsApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
-    })
+      basePath: `${apiGatewayUrl}/ais`,
+    }),
   );
   const { data } = await api.listIotaConfigurations();
   return data.configurations.filter(
-    (config) => config.mode === IotaConfigurationDtoModeEnum.Redirect
+    (config) => config.mode === IotaConfigurationDtoModeEnum.Redirect,
   );
 }
 
@@ -46,7 +47,7 @@ export async function listPexQueriesByConfigurationId(configurationId: string) {
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
       basePath: `${apiGatewayUrl}/ais`,
-    })
+    }),
   );
   const { data } = await api.listPexQueries(configurationId);
   return data.pexQueries;
@@ -56,13 +57,13 @@ export async function initiateDataSharingRequest(
   configurationId: string,
   queryId: string,
   redirectUri: string,
-  nonce: string
+  nonce: string,
 ) {
   const authProvider = getAuthProvider();
   const api = new IotaApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
-    })
+    }),
   );
 
   const { data: dataSharingRequestResponse } =
@@ -84,13 +85,13 @@ export async function fetchIotaVpResponse(
   configurationId: string,
   correlationId: string,
   transactionId: string,
-  responseCode: string
+  responseCode: string,
 ) {
   const authProvider = getAuthProvider();
   const api = new IotaApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
-    })
+    }),
   );
 
   const iotaVpResponse: FetchIOTAVPResponseOK = await api.fetchIotaVpResponse({

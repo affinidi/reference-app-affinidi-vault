@@ -12,6 +12,8 @@ export default async function handler(
     res.status(200).json(configurations);
   } catch (error: any) {
     console.log(error);
-    res.status(500).json({ message: "Unable to get Affinidi Iota Framework configurations" });
+    res.status(500).json({
+      message: "Unable to get Affinidi Iota Framework configurations",
+    });
   }
 }

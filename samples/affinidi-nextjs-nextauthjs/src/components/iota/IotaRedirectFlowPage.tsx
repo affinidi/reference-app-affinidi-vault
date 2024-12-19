@@ -1,5 +1,3 @@
-"use client";
-
 import { useRouter } from "next/navigation";
 import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
 import { VaultUtils } from "@affinidi-tdk/common";

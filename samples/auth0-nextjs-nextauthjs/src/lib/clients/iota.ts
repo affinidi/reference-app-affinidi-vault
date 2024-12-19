@@ -32,6 +32,7 @@ export async function listIotaRedirectConfigurations() {
   const api = new ConfigurationsApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/ais`,
     })
   );
   const { data } = await api.listIotaConfigurations();
@@ -62,6 +63,7 @@ export async function initiateDataSharingRequest(
   const api = new IotaApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/ais`,
     })
   );
 
@@ -90,6 +92,7 @@ export async function fetchIotaVpResponse(
   const api = new IotaApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/ais`,
     })
   );
 

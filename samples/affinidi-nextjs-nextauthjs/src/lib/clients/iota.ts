@@ -19,10 +19,12 @@ export async function listIotaWebsocketConfigurations() {
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
       basePath: `${apiGatewayUrl}/ais`,
-    }),
+    })
   );
   const { data } = await api.listIotaConfigurations();
-  return data.configurations.filter((config) => config.mode === IotaConfigurationDtoModeEnum.Websocket);
+  return data.configurations.filter(
+    (config) => config.mode === IotaConfigurationDtoModeEnum.Websocket
+  );
 }
 
 export async function listIotaRedirectConfigurations() {
@@ -30,10 +32,13 @@ export async function listIotaRedirectConfigurations() {
   const api = new ConfigurationsApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/ais`,
     })
   );
   const { data } = await api.listIotaConfigurations();
-  return data.configurations.filter((config) => config.mode === IotaConfigurationDtoModeEnum.Redirect);
+  return data.configurations.filter(
+    (config) => config.mode === IotaConfigurationDtoModeEnum.Redirect
+  );
 }
 
 export async function listPexQueriesByConfigurationId(configurationId: string) {
@@ -42,7 +47,7 @@ export async function listPexQueriesByConfigurationId(configurationId: string) {
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
       basePath: `${apiGatewayUrl}/ais`,
-    }),
+    })
   );
   const { data } = await api.listPexQueries(configurationId);
   return data.pexQueries;
@@ -58,6 +63,7 @@ export async function initiateDataSharingRequest(
   const api = new IotaApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/ais`,
     })
   );
 
@@ -69,7 +75,7 @@ export async function initiateDataSharingRequest(
       correlationId: uuidv4(),
       nonce,
       redirectUri,
-  });
+    });
 
   const { correlationId, transactionId, jwt } =
     dataSharingRequestResponse.data as InitiateDataSharingRequestOKData;
@@ -86,6 +92,7 @@ export async function fetchIotaVpResponse(
   const api = new IotaApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/ais`,
     })
   );
 

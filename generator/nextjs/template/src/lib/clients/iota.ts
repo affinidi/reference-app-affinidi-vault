@@ -92,6 +92,7 @@ export async function fetchIotaVpResponse(
   const api = new IotaApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/ais`,
     })
   );
 

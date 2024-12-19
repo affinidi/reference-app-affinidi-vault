@@ -1,7 +1,14 @@
 import { GetServerSideProps } from "next";
 import { personalAccessTokenConfigured } from "src/lib/env";
-import IotaRedirectFlowPage from "./iota-redirect-flow-page";
+import dynamic from "next/dynamic";
 import { useIsClient } from "@uidotdev/usehooks";
+
+const IotaRedirectFlowPage = dynamic(
+  () => import("../../components/iota/IotaRedirectFlowPage"),
+  {
+    ssr: false,
+  }
+);
 
 export const getServerSideProps = (async () => {
   return { props: { featureAvailable: personalAccessTokenConfigured() } };
@@ -12,11 +19,5 @@ export default function Page({
 }: {
   featureAvailable: boolean;
 }) {
-  const isClient = useIsClient();
-
-  if (!isClient) {
-    return null;
-  }
-
   return <IotaRedirectFlowPage featureAvailable={featureAvailable} />;
 }

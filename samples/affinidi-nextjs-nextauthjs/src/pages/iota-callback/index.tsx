@@ -2,8 +2,15 @@ import { GetStaticProps } from "next";
 import { personalAccessTokenConfigured } from "src/lib/env";
 import { useSearchParams } from "next/navigation";
 import IotaCallbackPageError from "./iota-callback-error";
-import IotaCallbackContent from "./iota-callback-content";
 import { useIsClient } from "@uidotdev/usehooks";
+import dynamic from "next/dynamic";
+
+const IotaCallbackContent = dynamic(
+  () => import("../../components/iota/IotaCallbackContent"),
+  {
+    ssr: false,
+  }
+);
 
 export const getStaticProps = (async () => {
   return { props: { featureAvailable: personalAccessTokenConfigured() } };
@@ -17,7 +24,6 @@ export default function IotaCallbackPage({
   const searchParams = useSearchParams();
   const responseCode = searchParams.get("response_code");
   const errorMessage = searchParams.get("error");
-  const isClient = useIsClient();
 
   const hasErrors = !featureAvailable || errorMessage;
 
@@ -28,10 +34,6 @@ export default function IotaCallbackPage({
         errorMessage={errorMessage}
       />
     );
-  }
-
-  if (!isClient) {
-    return null;
   }
 
   return <IotaCallbackContent responseCode={responseCode} />;

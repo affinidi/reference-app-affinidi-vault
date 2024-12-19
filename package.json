@@ -93,6 +93,7 @@
     "ext": "js,mjs,ts,tsx,json,css,scss,.env,md"
   },
   "dependencies": {
+    "@affinidi-tdk/credential-issuance-client": "^1.37.0",
     "path-sanitizer": "^2.0.0"
   }
 }

@@ -62,6 +62,7 @@ export default function CredentialIssuance({
   const [claimMode, setClaimMode] = useState<string>(
     StartIssuanceInputClaimModeEnum.FixedHolder
   );
+  const [isRevocable, setRevocable] = useState(false);
 
   // Prefill did from session
   const { data: session } = useSession();
@@ -127,6 +128,7 @@ export default function CredentialIssuance({
         credentialData,
         credentialTypeId: selectedTypeId,
         claimMode,
+        isRevocable,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -157,6 +159,7 @@ export default function CredentialIssuance({
       selectedConfigId: "",
       selectedTypeId: "",
     });
+    setRevocable(false);
   }
 
   const hasErrors = !featureAvailable || !session || !session.userId;
@@ -221,6 +224,21 @@ export default function CredentialIssuance({
                 }
                 onChange={(e) => setHolderDid(e.target.value)}
               />
+              <div className="mb-4">
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <p>
+                    {" "}
+                    Check box to make credential revocable (non-revocable by
+                    default)
+                  </p>
+                  <input
+                    className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200"
+                    type="checkbox"
+                    checked={isRevocable}
+                    onChange={(e) => setRevocable(!isRevocable)}
+                  />
+                </label>
+              </div>
               {configurationsQuery.isPending && (
                 <div className="py-3">Loading configurations...</div>
               )}

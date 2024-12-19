@@ -1,5 +1,5 @@
-import { GetServerSideProps } from "next";
-import { personalAccessTokenConfigured } from "src/lib/env";
+"use client";
+
 import { useRouter } from "next/navigation";
 import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
 import { VaultUtils } from "@affinidi-tdk/common";
@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Select, { SelectOption } from "src/components/core/Select";
 import Button from "src/components/core/Button";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 const fetchIotaConfigurations = (): Promise<IotaConfigurationDto[]> =>
   fetch("/api/iota/redirect-configurations", { method: "GET" }).then((res) =>
@@ -27,10 +28,6 @@ const getQueryOptions = async (configurationId: string) => {
   return (await response.json()) as SelectOption[];
 };
 
-export const getServerSideProps = (async () => {
-  return { props: { featureAvailable: personalAccessTokenConfigured() } };
-}) satisfies GetServerSideProps<{ featureAvailable: boolean }>;
-
 export default function IotaRedirectFlowPage({
   featureAvailable,
 }: {
@@ -43,6 +40,7 @@ export default function IotaRedirectFlowPage({
   const [nonce, setNonce] = useState<string>("");
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [selectedRedirectUri, setSelectedRedirectUri] = useState<string>("");
+  const [_, setIotaRedirect] = useLocalStorage("iotaRedirect", "{}");
 
   const configurationsQuery = useQuery({
     queryKey: ["iotaConfigurations"],
@@ -93,7 +91,7 @@ export default function IotaRedirectFlowPage({
       transactionId: data.transactionId,
     };
 
-    localStorage.setItem("iotaRedirect", JSON.stringify(toStore));
+    setIotaRedirect(JSON.stringify(toStore));
 
     const vaultLink = VaultUtils.buildShareLink(data.jwt, "client_id");
     router.push(vaultLink);

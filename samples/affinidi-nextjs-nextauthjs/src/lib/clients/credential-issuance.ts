@@ -5,9 +5,9 @@ import {
   DefaultApi,
   IssuanceApi,
   StartIssuanceInput,
-} from '@affinidi-tdk/credential-issuance-client';
-import { apiGatewayUrl, projectId } from '../env';
-import { getAuthProvider } from './auth-provider';
+} from "@affinidi-tdk/credential-issuance-client";
+import { apiGatewayUrl, projectId } from "../env";
+import { getAuthProvider } from "./auth-provider";
 
 export async function startIssuance(apiData: StartIssuanceInput) {
   const authProvider = getAuthProvider();
@@ -76,7 +76,7 @@ export async function listIssuanceDataRecords(
     })
   );
   let res;
-  if (exclusiveStartKey != 'undefined') {
+  if (exclusiveStartKey != "undefined") {
     res = await api.listIssuanceDataRecords(
       projectId,
       configurationId,

@@ -102,6 +102,7 @@ export default function CredentialRevocation({
       setTokenStack((prevStack) => prevStack.slice(0, -1)); // Remove the last token
       setNextToken(previousToken);
     } else {
+      setTokenStack((prevStack) => prevStack.slice(0, -1));
       setNextToken(undefined);
     }
   };

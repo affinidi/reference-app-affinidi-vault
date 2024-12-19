@@ -73,7 +73,9 @@ const CredentialsRevocationTable: React.FC<PaginatedCredentialsTableProps> = ({
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
         <div className="bg-white p-6 rounded-md shadow-lg w-1/3">
-          <h2 className="text-xl mb-4">Select a reason for revocation</h2>
+          {!isLoading && (
+            <h2 className="text-xl mb-4">Select a reason for revocation</h2>
+          )}
           {isLoading ? (
             hasError ? (
               <div className="flex items-center justify-center text-center text-red-500">
@@ -105,26 +107,27 @@ const CredentialsRevocationTable: React.FC<PaginatedCredentialsTableProps> = ({
               )}
             </select>
           )}
-          <div className="flex justify-between">
-            <button
-              className="px-4 py-2 bg-gray-500 text-white rounded"
-              onClick={() => {
-                setIsModalOpen(false);
-                setHasError(undefined);
-                setIsLoading(false);
-              }}
-              disabled={isLoading && !hasError}
-            >
-              Cancel
-            </button>
-            <button
-              className="px-4 py-2 bg-blue-500 text-white rounded"
-              onClick={handleSubmit}
-              disabled={isLoading}
-            >
-              Revoke
-            </button>
-          </div>
+          {(!isLoading || hasError) && (
+            <div className="flex justify-between">
+              <button
+                className="px-4 py-2 bg-gray-500 text-white rounded"
+                onClick={() => {
+                  setIsModalOpen(false);
+                  setHasError(undefined);
+                  setIsLoading(false);
+                }}
+              >
+                X
+              </button>
+              <button
+                className="px-4 py-2 bg-blue-500 text-white rounded"
+                onClick={handleSubmit}
+                disabled={hasError ? true : false}
+              >
+                Revoke
+              </button>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -137,7 +140,7 @@ const CredentialsRevocationTable: React.FC<PaginatedCredentialsTableProps> = ({
           <tr>
             <th className="border px-4 py-2 text-center">Credential Type</th>
             <th className="border px-4 py-2 text-center">Issuance Date</th>
-            <th className="border px-4 py-2 text-center">Actions</th>
+            <th className="border px-4 py-2 text-center">Actions/Status</th>
           </tr>
         </thead>
         <tbody>

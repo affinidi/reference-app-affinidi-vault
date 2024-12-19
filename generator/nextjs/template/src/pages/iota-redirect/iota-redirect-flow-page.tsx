@@ -1,5 +1,5 @@
-"use client";
-
+import { GetServerSideProps } from "next";
+import { personalAccessTokenConfigured } from "src/lib/env";
 import { useRouter } from "next/navigation";
 import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
 import { VaultUtils } from "@affinidi-tdk/common";
@@ -40,7 +40,6 @@ export default function IotaRedirectFlowPage({
   const [nonce, setNonce] = useState<string>("");
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [selectedRedirectUri, setSelectedRedirectUri] = useState<string>("");
-  const [_, setIotaRedirect] = useLocalStorage("iotaRedirect", "{}");
 
   const configurationsQuery = useQuery({
     queryKey: ["iotaConfigurations"],
@@ -91,7 +90,7 @@ export default function IotaRedirectFlowPage({
       transactionId: data.transactionId,
     };
 
-    setIotaRedirect(JSON.stringify(toStore));
+    localStorage.setItem("iotaRedirect", JSON.stringify(toStore));
 
     const vaultLink = VaultUtils.buildShareLink(data.jwt, "client_id");
     router.push(vaultLink);

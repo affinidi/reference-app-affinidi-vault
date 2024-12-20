@@ -7,6 +7,7 @@ import { useState } from "react";
 import Select, { SelectOption } from "src/components/core/Select";
 import Button from "src/components/core/Button";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import GenericError from "../core/GenericErrors";
 
 const fetchIotaConfigurations = (): Promise<IotaConfigurationDto[]> =>
   fetch("/api/iota/redirect-configurations", { method: "GET" }).then((res) =>
@@ -102,22 +103,11 @@ export default function IotaRedirectFlowPage({
 
   const hasErrors = !featureAvailable;
 
-  const renderErrors = () => {
-    if (!featureAvailable) {
-      return (
-        <div>
-          Feature not available. Please set your Personal Access Token in your
-          environment secrets.
-        </div>
-      );
-    }
-  };
-
   return (
     <>
       <h1 className="text-2xl font-semibold pb-6">Receive Credentials</h1>
 
-      {renderErrors()}
+      {<GenericError featureAvailable={featureAvailable} />}
 
       {!hasErrors && (
         <>

@@ -102,7 +102,11 @@ const CredentialsRevocationTable: React.FC<PaginatedCredentialsTableProps> = ({
             </select>
           )}
           {(!isLoading || hasError) && (
-            <div className="flex justify-between">
+            <div
+              className={`${
+                hasError ? "flex justify-center" : "flex justify-between"
+              }`}
+            >
               <button
                 className="px-4 py-2 bg-gray-500 text-white rounded"
                 onClick={() => {

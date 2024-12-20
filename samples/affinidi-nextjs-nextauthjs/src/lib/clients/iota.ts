@@ -9,16 +9,13 @@ import {
   FetchIOTAVPResponseOK,
 } from "@affinidi-tdk/iota-client";
 import { v4 as uuidv4 } from "uuid";
-import * as jose from "jose";
 import { getAuthProvider } from "./auth-provider";
-import { apiGatewayUrl } from "../env";
 
 export async function listIotaWebsocketConfigurations() {
   const authProvider = getAuthProvider();
   const api = new ConfigurationsApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
-      basePath: `${apiGatewayUrl}/ais`,
     })
   );
   const { data } = await api.listIotaConfigurations();
@@ -32,7 +29,6 @@ export async function listIotaRedirectConfigurations() {
   const api = new ConfigurationsApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
-      basePath: `${apiGatewayUrl}/ais`,
     })
   );
   const { data } = await api.listIotaConfigurations();
@@ -46,7 +42,6 @@ export async function listPexQueriesByConfigurationId(configurationId: string) {
   const api = new PexQueryApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
-      basePath: `${apiGatewayUrl}/ais`,
     })
   );
   const { data } = await api.listPexQueries(configurationId);
@@ -63,7 +58,6 @@ export async function initiateDataSharingRequest(
   const api = new IotaApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
-      basePath: `${apiGatewayUrl}/ais`,
     })
   );
 
@@ -92,7 +86,6 @@ export async function fetchIotaVpResponse(
   const api = new IotaApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
-      basePath: `${apiGatewayUrl}/ais`,
     })
   );
 

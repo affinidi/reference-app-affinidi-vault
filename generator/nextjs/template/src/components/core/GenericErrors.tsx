@@ -14,11 +14,7 @@ const GenericError: React.FC<{
   }
 
   if (session === null || session?.userId === undefined) {
-    return (
-      <div>
-        You must be logged in to issue credentials to your Affinidi Vault
-      </div>
-    );
+    return <div>You must be logged in to use Affinidi services</div>;
   }
 };
 

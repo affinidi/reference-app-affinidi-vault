@@ -1,7 +1,6 @@
 import { GetServerSideProps } from "next";
 import { personalAccessTokenConfigured } from "src/lib/env";
 import dynamic from "next/dynamic";
-import { useIsClient } from "@uidotdev/usehooks";
 
 const IotaRedirectFlowPage = dynamic(
   () => import("../../components/iota/IotaRedirectFlowPage"),

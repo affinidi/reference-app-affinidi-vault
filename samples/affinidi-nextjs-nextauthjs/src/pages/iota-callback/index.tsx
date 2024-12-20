@@ -2,7 +2,6 @@ import { GetStaticProps } from "next";
 import { personalAccessTokenConfigured } from "src/lib/env";
 import { useSearchParams } from "next/navigation";
 import IotaCallbackPageError from "./iota-callback-error";
-import { useIsClient } from "@uidotdev/usehooks";
 import dynamic from "next/dynamic";
 
 const IotaCallbackContent = dynamic(

@@ -10,8 +10,8 @@ const missingEnvs = requiredEnvs.filter((name) => !process.env[name]);
 if (missingEnvs.length !== 0) {
   throw new Error(
     `Required environment secrets are not provided: ${missingEnvs.join(
-      ", ",
-    )}. Please check README file.`,
+      ", "
+    )}. Please check README file.`
   );
 }
 

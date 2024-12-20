@@ -9,7 +9,6 @@ import {
   FetchIOTAVPResponseOK,
 } from "@affinidi-tdk/iota-client";
 import { v4 as uuidv4 } from "uuid";
-import * as jose from "jose";
 import { getAuthProvider } from "./auth-provider";
 
 export async function listIotaWebsocketConfigurations() {
@@ -20,7 +19,9 @@ export async function listIotaWebsocketConfigurations() {
     })
   );
   const { data } = await api.listIotaConfigurations();
-  return data.configurations.filter((config) => config.mode === IotaConfigurationDtoModeEnum.Websocket);
+  return data.configurations.filter(
+    (config) => config.mode === IotaConfigurationDtoModeEnum.Websocket
+  );
 }
 
 export async function listIotaRedirectConfigurations() {
@@ -31,7 +32,9 @@ export async function listIotaRedirectConfigurations() {
     })
   );
   const { data } = await api.listIotaConfigurations();
-  return data.configurations.filter((config) => config.mode === IotaConfigurationDtoModeEnum.Redirect);
+  return data.configurations.filter(
+    (config) => config.mode === IotaConfigurationDtoModeEnum.Redirect
+  );
 }
 
 export async function listPexQueriesByConfigurationId(configurationId: string) {
@@ -66,7 +69,7 @@ export async function initiateDataSharingRequest(
       correlationId: uuidv4(),
       nonce,
       redirectUri,
-  });
+    });
 
   const { correlationId, transactionId, jwt } =
     dataSharingRequestResponse.data as InitiateDataSharingRequestOKData;

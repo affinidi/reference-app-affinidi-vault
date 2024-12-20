@@ -29,19 +29,19 @@ const fetchCredentialSchema = async (jsonSchemaUrl: string) => {
 };
 
 const fetchCredentialTypes = async (
-  issuanceConfigurationId: string,
+  issuanceConfigurationId: string
 ): Promise<CredentialSupportedObject[]> => {
   const response = await fetch(
     "/api/issuance/credential-types?" +
       new URLSearchParams({ issuanceConfigurationId }),
-    { method: "GET" },
+    { method: "GET" }
   );
   return await response.json();
 };
 
 const fetchIssuanceConfigurations = (): Promise<SelectOption[]> =>
   fetch("/api/issuance/configuration-options", { method: "GET" }).then((res) =>
-    res.json(),
+    res.json()
   );
 
 export const getServerSideProps = (async () => {
@@ -60,8 +60,9 @@ export default function CredentialIssuance({
   const [offer, setOffer] = useState<OfferPayload>();
   const [message, setMessage] = useState<MessagePayload>();
   const [claimMode, setClaimMode] = useState<string>(
-    StartIssuanceInputClaimModeEnum.FixedHolder,
+    StartIssuanceInputClaimModeEnum.FixedHolder
   );
+  const [isRevocable, setRevocable] = useState(false);
 
   // Prefill did from session
   const { data: session } = useSession();
@@ -92,7 +93,7 @@ export default function CredentialIssuance({
     queryKey: ["schema", selectedTypeId],
     queryFn: () => {
       const credentialType = credentialTypesQuery.data?.find(
-        (type) => type.credentialTypeId === selectedTypeId,
+        (type) => type.credentialTypeId === selectedTypeId
       );
       if (!credentialType) {
         setMessage({
@@ -127,6 +128,7 @@ export default function CredentialIssuance({
         credentialData,
         credentialTypeId: selectedTypeId,
         claimMode,
+        isRevocable,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -157,6 +159,7 @@ export default function CredentialIssuance({
       selectedConfigId: "",
       selectedTypeId: "",
     });
+    setRevocable(false);
   }
 
   const hasErrors = !featureAvailable || !session || !session.userId;
@@ -221,6 +224,17 @@ export default function CredentialIssuance({
                 }
                 onChange={(e) => setHolderDid(e.target.value)}
               />
+              <div className="mb-4">
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <p> Make credential revocable (non-revocable by default)</p>
+                  <input
+                    className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200"
+                    type="checkbox"
+                    checked={isRevocable}
+                    onChange={(e) => setRevocable(!isRevocable)}
+                  />
+                </label>
+              </div>
               {configurationsQuery.isPending && (
                 <div className="py-3">Loading configurations...</div>
               )}
@@ -279,7 +293,7 @@ export default function CredentialIssuance({
                         (type: CredentialSupportedObject) => ({
                           label: type.credentialTypeId,
                           value: type.credentialTypeId,
-                        }),
+                        })
                       ) || []
                     }
                     value={selectedTypeId}

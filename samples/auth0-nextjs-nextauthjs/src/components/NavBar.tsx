@@ -60,6 +60,13 @@ const NavBar: FC = () => {
             Issue Credentials
           </Link>
           <Link
+            href="/credential-revocation"
+            className="py-4 font-medium transition-colors hover:text-blue-500"
+            prefetch={false}
+          >
+            Revoke Credentials
+          </Link>
+          <Link
             href="/iota"
             className="py-4 font-medium transition-colors hover:text-blue-500"
             prefetch={false}

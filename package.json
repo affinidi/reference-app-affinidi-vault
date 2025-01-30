@@ -94,6 +94,6 @@
   },
   "dependencies": {
     "@affinidi-tdk/credential-issuance-client": "^1.37.0",
-    "path-sanitizer": "^2.0.0"
+    "path-sanitizer": "^3.1.0"
   }
 }

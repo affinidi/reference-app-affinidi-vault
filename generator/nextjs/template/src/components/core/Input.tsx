@@ -40,7 +40,7 @@ const Input: React.FC<InputProps> = ({
   return (
     <div className="mb-4">
       {label && (
-        <label className="block mb-1">
+        <label className="block mb-1 font-bold">
           {label} {required && <span className="text-red-500">*</span>}
         </label>
       )}

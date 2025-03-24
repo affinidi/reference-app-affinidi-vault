@@ -30,7 +30,7 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <div className="mb-4">
-      {label && <label className="block mb-1 ">{label}</label>}
+      {label && <label className="block mb-1 font-bold ">{label}</label>}
       <select
         id={id}
         value={value}

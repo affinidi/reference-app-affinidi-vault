@@ -1,10 +1,10 @@
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { CredentialSupportedObject } from "@affinidi-tdk/credential-issuance-client";
-import { useEffect, useState } from "react";
-import DynamicForm from "./DynamicForm";
 import Select from "../core/Select";
-import { NeutralIcon } from "../core/icons/NeutralIcon";
-// import { Trash2 } from "react-feather";
+import Button from "../core/Button";
+import DynamicForm from "./DynamicForm";
+import { CredentialSupportedObject } from "@affinidi-tdk/credential-issuance-client";
+import { Trash, XCircle } from "lucide-react";
 
 interface CredentialEntryProps {
   index: number;
@@ -15,9 +15,9 @@ interface CredentialEntryProps {
 }
 
 const fetchCredentialSchema = async (jsonSchemaUrl: string) => {
-  const response = await fetch(jsonSchemaUrl);
-  const schema = await response.json();
-  return schema;
+  const res = await fetch(jsonSchemaUrl);
+  if (!res.ok) throw new Error("Failed to fetch schema");
+  return res.json();
 };
 
 export default function CredentialEntry({
@@ -27,61 +27,71 @@ export default function CredentialEntry({
   onUpdate,
   disabled,
 }: CredentialEntryProps) {
-  const [selectedTypeId, setSelectedTypeId] = useState<string>("");
+  const [typeId, setTypeId] = useState("");
+  const [formData, setFormData] = useState<any>(null);
 
-  const selectedCredentialType = credentialTypes.find(
-    (type) => type.credentialTypeId === selectedTypeId
+  const credentialType = credentialTypes.find(
+    (c) => c.credentialTypeId === typeId
   );
-
   const schemaQuery = useQuery({
-    queryKey: ["schema", selectedTypeId],
-    queryFn: () =>
-      selectedCredentialType
-        ? fetchCredentialSchema(selectedCredentialType.jsonSchemaUrl)
-        : Promise.resolve(undefined),
-    enabled: !!selectedTypeId,
+    queryKey: ["schema", typeId],
+    queryFn: () => fetchCredentialSchema(credentialType?.jsonSchemaUrl!),
+    enabled: !!credentialType,
   });
 
-  const handleFormSubmit = (formData: any) => {
-    onUpdate({ typeId: selectedTypeId, formData });
+  const handleTypeChange = (value: string) => {
+    setTypeId(value);
+    setFormData(null);
+    onUpdate({ typeId: value, formData: null });
+  };
+
+  const handleFormSubmit = (data: any) => {
+    setFormData(data);
+    onUpdate({ typeId, formData: data });
   };
 
   return (
-    <div className="border border-gray-300 rounded-lg p-6 mb-6 relative">
+    <div className="mb-8 bg-white">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Credential {index + 1}</h2>
         <button
-          type="button"
           onClick={onRemove}
-          disabled={disabled}
-          className="text-gray-500 hover:text-red-600"
+          type="button"
+          className="text-black-500 hover:text-red-500"
         >
-          <NeutralIcon />
+          <Trash className="w-5 h-5 " />
         </button>
       </div>
 
-      <Select
-        id={`credentialType-${index}`}
-        label="Credential Type (Schema)"
-        options={credentialTypes.map((type) => ({
-          label: type.credentialTypeId,
-          value: type.credentialTypeId,
-        }))}
-        value={selectedTypeId}
-        disabled={disabled}
-        onChange={(val) => setSelectedTypeId(val as string)}
-      />
+      <div className="mb-6">
+        <Select
+          id={`credential-type-${index}`}
+          label="Credential Type (schema)"
+          options={credentialTypes.map((type) => ({
+            label: type.credentialTypeId,
+            value: type.credentialTypeId,
+          }))}
+          value={typeId}
+          onChange={(value) => handleTypeChange(value as string)}
+          disabled={disabled}
+        />
+      </div>
 
-      {selectedTypeId && schemaQuery.data?.properties?.credentialSubject && (
-        <div className="pt-4">
-          <p className="text-lg font-medium mb-2">Credential data</p>
-          <DynamicForm
-            schema={schemaQuery.data.properties.credentialSubject}
-            onSubmit={handleFormSubmit}
-            disabled={disabled}
-          />
-        </div>
+      {schemaQuery.isFetching && (
+        <p className="text-gray-500">Loading schema...</p>
       )}
+
+      {schemaQuery.isSuccess &&
+        schemaQuery.data?.properties?.credentialSubject && (
+          <div>
+            <p className="text-lg mb-4">Credential data</p>
+            <DynamicForm
+              schema={schemaQuery.data.properties.credentialSubject}
+              onSubmit={handleFormSubmit}
+              disabled={disabled}
+            />
+          </div>
+        )}
     </div>
   );
 }

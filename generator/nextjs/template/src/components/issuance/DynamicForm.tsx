@@ -20,12 +20,14 @@ interface DynamicFormProps {
   schema: FormSchema;
   onSubmit: (formData: any) => void;
   disabled?: boolean;
+  hideSubmitButton?: boolean;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
   schema,
   onSubmit,
   disabled,
+  hideSubmitButton = true,
 }) => {
   const initializeFormData = (schema: FormSchema): any => {
     const initialState: any = {};
@@ -148,14 +150,16 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   return (
     <form id="dynamicForm" onSubmit={handleSubmit}>
       {renderFields(schema)}
-      <Button
-        id="dynamicFormSubmit"
-        disabled={disabled}
-        type="submit"
-        className="mt-4"
-      >
-        Submit
-      </Button>
+      {!hideSubmitButton && (
+        <Button
+          id="dynamicFormSubmit"
+          disabled={disabled}
+          type="submit"
+          className="mt-4"
+        >
+          Submit
+        </Button>
+      )}
     </form>
   );
 };

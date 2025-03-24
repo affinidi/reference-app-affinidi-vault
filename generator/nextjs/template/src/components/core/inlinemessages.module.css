@@ -1,15 +1,3 @@
-:root {
-  --text-color-100: #ffffff;
-  --neutral-background: #e6e6e9;
-  --info-background: #d9eefd;
-  --success-background: #d9f1ee;
-  --warning-background: #fff9d9;
-  --error-background: #fddbe7;
-  --utility-success-05: #f2faf9;
-  --utility-warning-05: #fffdf2;
-  --utility-danger-05: #fef3f7;
-}
-
 .container {
   min-width: 44px;
   width: 100%;
@@ -20,6 +8,7 @@
   align-items: flex-start;
   padding: 0;
   margin: 0;
+  margin-bottom: 24px;
 }
 
 .title-style {

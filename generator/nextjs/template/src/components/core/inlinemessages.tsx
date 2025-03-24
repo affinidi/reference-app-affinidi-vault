@@ -1,10 +1,6 @@
 import * as React from "react";
-import "./inlinemessages.css";
+import styles from "./inlinemessages.module.css";
 import { NeutralIcon } from "./icons/NeutralIcon";
-// import { InfoIcon } from './icons/InfoIcon'
-// import { ErrorIcon } from './icons/ErrorIcon'
-// import { SuccessIcon } from './icons/SuccessIcon'
-// import { WarningIcon } from './icons/WarningIcon'
 import { cn } from "../../lib/utils";
 
 interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -14,11 +10,11 @@ interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   ({ className, state = "info", children, ...props }, ref) => {
     const typeClassMap = {
-      info: "info-style",
-      success: "success-style",
-      warning: "warning-style",
-      error: "error-style",
-      neutral: "neutral-style",
+      info: styles["info-style"],
+      success: styles["success-style"],
+      warning: styles["warning-style"],
+      error: styles["error-style"],
+      neutral: styles["neutral-style"],
     };
     const iconMap = {
       info: <NeutralIcon />,
@@ -37,14 +33,17 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
     );
 
     return (
-      <div ref={ref} className={cn("container", className)} {...props}>
-        <div id="asdasd" className={cn("title-style", typeClassMap[state])}>
+      <div ref={ref} className={cn(styles.container, className)} {...props}>
+        <div className={cn(styles["title-style"], typeClassMap[state])}>
           <div>{iconMap[state]}</div>
           <div>{titleChildren}</div>
         </div>
         {descriptionChildren && (
           <div
-            className={cn("description", `${typeClassMap[state]}-description`)}
+            className={cn(
+              styles.description,
+              styles[`${state}-style-description`]
+            )}
           >
             <span>{descriptionChildren}</span>
           </div>
@@ -59,7 +58,7 @@ const AlertTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
-  <h5 ref={ref} className={cn("message", className)} {...props} />
+  <h5 ref={ref} className={cn(styles.message, className)} {...props} />
 ));
 AlertTitle.displayName = "AlertTitle";
 
@@ -67,7 +66,7 @@ const AlertDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("message", className)} {...props} />
+  <div ref={ref} className={cn(styles.message, className)} {...props} />
 ));
 AlertDescription.displayName = "AlertDescription";
 

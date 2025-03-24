@@ -14,6 +14,7 @@ import DynamicForm from "src/components/issuance/DynamicForm";
 import Offer from "src/components/issuance/Offer";
 import { personalAccessTokenConfigured } from "src/lib/env";
 import { MessagePayload, OfferPayload } from "src/types/types";
+import { Alert, AlertTitle } from "src/components/core/inlinemessages";
 
 const claimModeOptions = [
   { value: StartIssuanceInputClaimModeEnum.FixedHolder },
@@ -226,13 +227,13 @@ export default function CredentialIssuance({
               />
               <div className="mb-4">
                 <label className="flex items-center space-x-3 cursor-pointer">
-                  <p> Make credential revocable (non-revocable by default)</p>
                   <input
                     className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200"
                     type="checkbox"
                     checked={isRevocable}
                     onChange={(e) => setRevocable(!isRevocable)}
                   />
+                  <p> Make credential revocable (non-revocable by default)</p>
                 </label>
               </div>
               {configurationsQuery.isPending && (
@@ -283,40 +284,49 @@ export default function CredentialIssuance({
                     to create one.
                   </div>
                 )}
+              <hr className="my-10 border-t border-gray-300" />
+              <Alert state="neutral" className="mb-6">
+                <AlertTitle>
+                  Please note that you can issue up to 10 credentials at one
+                  time.
+                </AlertTitle>
+              </Alert>
               {credentialTypesQuery.isSuccess &&
                 !credentialTypesQuery.isFetching && (
-                  <Select
-                    id="credentialTypeId"
-                    label="Credential Type (Schema)"
-                    options={
-                      credentialTypesQuery.data?.map(
-                        (type: CredentialSupportedObject) => ({
-                          label: type.credentialTypeId,
-                          value: type.credentialTypeId,
+                  <>
+                    <h2 className="text-xl font-semibold pb-6">Credential n</h2>
+                    <Select
+                      id="credentialTypeId"
+                      label="Credential Type (Schema)"
+                      options={
+                        credentialTypesQuery.data?.map(
+                          (type: CredentialSupportedObject) => ({
+                            label: type.credentialTypeId,
+                            value: type.credentialTypeId,
+                          })
+                        ) || []
+                      }
+                      value={selectedTypeId}
+                      disabled={isFormDisabled}
+                      onChange={(value) =>
+                        setFormData({
+                          ...formData,
+                          selectedTypeId: value as string,
                         })
-                      ) || []
-                    }
-                    value={selectedTypeId}
-                    disabled={isFormDisabled}
-                    onChange={(value) =>
-                      setFormData({
-                        ...formData,
-                        selectedTypeId: value as string,
-                      })
-                    }
-                  />
+                      }
+                    />
+                  </>
                 )}
               {message && (
                 <div className="pt-4">
                   <Message payload={message} />
                 </div>
               )}
+
               {selectedConfigId &&
                 schemaQuery.data?.properties.credentialSubject && (
                   <div>
-                    <h1 className="text-xl font-semibold pb-6 pt-4">
-                      Credential data
-                    </h1>
+                    <p className="text-l pb-6 pt-4">Credential data</p>
                     <DynamicForm
                       schema={schemaQuery.data?.properties.credentialSubject}
                       onSubmit={handleSubmit}

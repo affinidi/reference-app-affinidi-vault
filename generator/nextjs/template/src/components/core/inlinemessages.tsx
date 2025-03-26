@@ -2,6 +2,7 @@ import * as React from "react";
 import styles from "./inlinemessages.module.css";
 import { NeutralIcon } from "./icons/NeutralIcon";
 import { cn } from "../../lib/utils";
+import { ErrorIcon } from "./icons/ErrorIcon";
 
 interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   state?: "info" | "success" | "warning" | "error" | "neutral";
@@ -20,7 +21,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
       info: <NeutralIcon />,
       success: <NeutralIcon />,
       warning: <NeutralIcon />,
-      error: <NeutralIcon />,
+      error: <ErrorIcon />,
       neutral: <NeutralIcon />,
     };
 

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Select from "../core/Select";
-import Button from "../core/Button";
 import DynamicForm from "./DynamicForm";
 import { CredentialSupportedObject } from "@affinidi-tdk/credential-issuance-client";
-import { Trash, XCircle } from "lucide-react";
+import { Trash } from "lucide-react";
 
 interface CredentialEntryProps {
   index: number;
@@ -15,9 +14,11 @@ interface CredentialEntryProps {
 }
 
 const fetchCredentialSchema = async (jsonSchemaUrl: string) => {
-  const res = await fetch(jsonSchemaUrl);
-  if (!res.ok) throw new Error("Failed to fetch schema");
-  return res.json();
+  const response = await fetch(jsonSchemaUrl, {
+    method: "GET",
+  });
+  const schema = await response.json();
+  return schema;
 };
 
 export default function CredentialEntry({

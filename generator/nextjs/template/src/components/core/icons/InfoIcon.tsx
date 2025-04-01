@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-export const NeutralIcon: React.FC = () => (
+export const InfoIcon: React.FC = () => (
   <svg
     width="20"
     height="20"

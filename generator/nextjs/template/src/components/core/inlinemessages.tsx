@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from "./inlinemessages.module.css";
-import { NeutralIcon } from "./icons/NeutralIcon";
+import { InfoIcon } from "./icons/InfoIcon";
 import { cn } from "../../lib/utils";
 import { ErrorIcon } from "./icons/ErrorIcon";
 
@@ -18,11 +18,11 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
       neutral: styles["neutral-style"],
     };
     const iconMap = {
-      info: <NeutralIcon />,
-      success: <NeutralIcon />,
-      warning: <NeutralIcon />,
+      info: <InfoIcon />,
+      success: <InfoIcon />,
+      warning: <InfoIcon />,
       error: <ErrorIcon />,
-      neutral: <NeutralIcon />,
+      neutral: <InfoIcon />,
     };
 
     const titleChildren = React.Children.toArray(children).find(

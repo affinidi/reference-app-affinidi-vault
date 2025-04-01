@@ -90,7 +90,7 @@ const NavBar: FC = () => {
             <Button
               id="logout"
               onClick={handleLogOut}
-              className="TypeSecondary-AppearanceOutlined-Contenttext-Statedefault"
+              className="button-secondary_outlined"
             >
               Logout
             </Button>

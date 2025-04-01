@@ -119,7 +119,6 @@ export default function CredentialIssuance({
   };
 
   const handleSubmit = async (credentialData: any) => {
-    console.log("credentialData:", credentialData);
     if (
       !holderDid &&
       claimMode == StartIssuanceInputClaimModeEnum.FixedHolder
@@ -158,10 +157,8 @@ export default function CredentialIssuance({
     if (dataResponse.credentialOfferUri) {
       setOffer(dataResponse);
     }
-    console.log("Offer", offer);
   };
   const handleSubmitAll = async (credentialData: any) => {
-    console.log("credentialData:", credentialData);
     if (
       !holderDid &&
       claimMode === StartIssuanceInputClaimModeEnum.FixedHolder
@@ -210,7 +207,6 @@ export default function CredentialIssuance({
       if (dataResponse.credentialOfferUri) {
         setOffer(dataResponse);
       }
-      console.log("Offer", offer);
     }
     setMessage({ message: "Credentials issued successfully", type: "success" });
     setCredentials([]);
@@ -376,11 +372,9 @@ export default function CredentialIssuance({
                         onClick={addCredential}
                         disabled={credentials.length >= 10}
                         type="button"
-                        // className="inline-flex items-center gap-2"
-                        // className="flex flex-row justify-center items-center gap-4 px-6 py-3 rounded-full border-2 border-secondary-brand-10 hover:bg-secondary-brand-10 disabled:opacity-50 disabled:cursor-not-allowed"
-                        className="TypeQuaternary-AppearanceOutlined-Contenttext-Statedefault"
+                        className="button-quaternary_outlined"
                       >
-                        <Plus> </Plus> Add new credential
+                        <Plus /> Add new credential
                       </Button>
                     </div>
                     {message && (
@@ -392,7 +386,7 @@ export default function CredentialIssuance({
                       <Button
                         onClick={handleSubmitAll}
                         disabled={isFormDisabled || credentials.length === 0}
-                        className="TypePrimary-AppearanceOutlined-Contenttext-Statedefault"
+                        className="button-primary_outlined"
                       >
                         Submit
                       </Button>

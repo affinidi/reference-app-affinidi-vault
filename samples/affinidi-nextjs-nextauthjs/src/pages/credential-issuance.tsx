@@ -5,28 +5,26 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import Message from "src/components/Message";
+import { useEffect, useState, useLayoutEffect } from "react";
 import Button from "src/components/core/Button";
 import Input from "src/components/core/Input";
 import Select, { SelectOption } from "src/components/core/Select";
-import DynamicForm from "src/components/issuance/DynamicForm";
 import Offer from "src/components/issuance/Offer";
 import { personalAccessTokenConfigured } from "src/lib/env";
 import { MessagePayload, OfferPayload } from "src/types/types";
+import { Alert, AlertTitle } from "src/components/core/inlinemessages";
+import CredentialEntry from "src/components/issuance/CredentialEntry";
+import { useRef } from "react";
+import { Plus } from "lucide-react";
 
+type CredentialEntryData = {
+  typeId: string;
+  formData: any;
+};
 const claimModeOptions = [
   { value: StartIssuanceInputClaimModeEnum.FixedHolder },
   { value: StartIssuanceInputClaimModeEnum.TxCode },
 ];
-
-const fetchCredentialSchema = async (jsonSchemaUrl: string) => {
-  const response = await fetch(jsonSchemaUrl, {
-    method: "GET",
-  });
-  const schema = await response.json();
-  return schema;
-};
 
 const fetchCredentialTypes = async (
   issuanceConfigurationId: string
@@ -63,6 +61,9 @@ export default function CredentialIssuance({
     StartIssuanceInputClaimModeEnum.FixedHolder
   );
   const [isRevocable, setRevocable] = useState(false);
+  const [credentials, setCredentials] = useState<CredentialEntryData[]>([]);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const [shouldScroll, setShouldScroll] = useState(false);
 
   // Prefill did from session
   const { data: session } = useSession();
@@ -76,40 +77,48 @@ export default function CredentialIssuance({
   }, [session]);
 
   const { selectedConfigId, selectedTypeId } = formData;
+  useEffect(() => {
+    if (selectedConfigId && credentials.length === 0) {
+      addCredential();
+      setShouldScroll(true);
+    }
+  }, [selectedConfigId]);
 
   const configurationsQuery = useQuery({
     queryKey: ["issuanceConfigurations"],
     queryFn: fetchIssuanceConfigurations,
     enabled: !!featureAvailable,
   });
-
   const credentialTypesQuery = useQuery({
     queryKey: ["types", selectedConfigId],
     queryFn: ({ queryKey }) => fetchCredentialTypes(queryKey[1]),
     enabled: !!selectedConfigId,
   });
+  useLayoutEffect(() => {
+    if (shouldScroll && bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+      setShouldScroll(false);
+    }
+  }, [credentials, shouldScroll]);
 
-  const schemaQuery = useQuery({
-    queryKey: ["schema", selectedTypeId],
-    queryFn: () => {
-      const credentialType = credentialTypesQuery.data?.find(
-        (type) => type.credentialTypeId === selectedTypeId
-      );
-      if (!credentialType) {
-        setMessage({
-          message: "Unable to fetch credential schema to build the form",
-          type: "error",
-        });
-        return;
-      }
-
-      return fetchCredentialSchema(credentialType.jsonSchemaUrl);
-    },
-    enabled: !!selectedTypeId,
-  });
+  const addCredential = () => {
+    if (credentials.length < 10) {
+      setCredentials([...credentials, { typeId: "", formData: null }]);
+      setShouldScroll(true);
+    }
+  };
+  const removeCredential = (index: number) => {
+    const updated = [...credentials];
+    updated.splice(index, 1);
+    setCredentials(updated);
+  };
+  const updateCredential = (index: number, data: CredentialEntryData) => {
+    const updated = [...credentials];
+    updated[index] = data;
+    setCredentials(updated);
+  };
 
   const handleSubmit = async (credentialData: any) => {
-    console.log("credentialData:", credentialData);
     if (
       !holderDid &&
       claimMode == StartIssuanceInputClaimModeEnum.FixedHolder
@@ -120,6 +129,7 @@ export default function CredentialIssuance({
       });
       return;
     }
+
     setIsFormDisabled(true);
     const response = await fetch("/api/issuance/start", {
       method: "POST",
@@ -147,7 +157,60 @@ export default function CredentialIssuance({
     if (dataResponse.credentialOfferUri) {
       setOffer(dataResponse);
     }
-    console.log("Offer", offer);
+  };
+  const handleSubmitAll = async (credentialData: any) => {
+    if (
+      !holderDid &&
+      claimMode === StartIssuanceInputClaimModeEnum.FixedHolder
+    ) {
+      setMessage({
+        message: "Holder DID is required in FIXED_DID claim mode",
+        type: "error",
+      });
+      return;
+    }
+
+    const filled = credentials.filter((c) => c.typeId && c.formData);
+    if (filled.length === 0) {
+      setMessage({
+        message: "Please fill at least one credential before submitting",
+        type: "error",
+      });
+      return;
+    }
+
+    setIsFormDisabled(true);
+    for (const cred of filled) {
+      const res = await fetch("/api/issuance/start", {
+        method: "POST",
+        body: JSON.stringify({
+          holderDid,
+          credentialData: cred.formData,
+          credentialTypeId: cred.typeId,
+          claimMode,
+          isRevocable,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) {
+        clearIssuance();
+        setMessage({
+          message: "Error creating one of the offers",
+          type: "error",
+        });
+        setIsFormDisabled(false);
+        return;
+      }
+      let dataResponse = await res.json();
+      if (dataResponse.credentialOfferUri) {
+        setOffer(dataResponse);
+      }
+    }
+    setMessage({ message: "Credentials issued successfully", type: "success" });
+    setCredentials([]);
+    setIsFormDisabled(false);
   };
 
   function clearIssuance() {
@@ -226,13 +289,13 @@ export default function CredentialIssuance({
               />
               <div className="mb-4">
                 <label className="flex items-center space-x-3 cursor-pointer">
-                  <p> Make credential revocable (non-revocable by default)</p>
                   <input
                     className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-200"
                     type="checkbox"
                     checked={isRevocable}
                     onChange={(e) => setRevocable(!isRevocable)}
                   />
+                  <p> Make credential revocable (non-revocable by default)</p>
                 </label>
               </div>
               {configurationsQuery.isPending && (
@@ -283,48 +346,52 @@ export default function CredentialIssuance({
                     to create one.
                   </div>
                 )}
+              <hr className="my-10 border-t border-gray-300" />
+              <Alert state="neutral" className="mb-6">
+                <AlertTitle>
+                  Please note that you can issue up to 10 credentials at one
+                  time.
+                </AlertTitle>
+              </Alert>
               {credentialTypesQuery.isSuccess &&
                 !credentialTypesQuery.isFetching && (
-                  <Select
-                    id="credentialTypeId"
-                    label="Credential Type (Schema)"
-                    options={
-                      credentialTypesQuery.data?.map(
-                        (type: CredentialSupportedObject) => ({
-                          label: type.credentialTypeId,
-                          value: type.credentialTypeId,
-                        })
-                      ) || []
-                    }
-                    value={selectedTypeId}
-                    disabled={isFormDisabled}
-                    onChange={(value) =>
-                      setFormData({
-                        ...formData,
-                        selectedTypeId: value as string,
-                      })
-                    }
-                  />
-                )}
-              {message && (
-                <div className="pt-4">
-                  <Message payload={message} />
-                </div>
-              )}
-              {selectedConfigId &&
-                schemaQuery.data?.properties.credentialSubject && (
-                  <div>
-                    <h1 className="text-xl font-semibold pb-6 pt-4">
-                      Credential data
-                    </h1>
-                    <DynamicForm
-                      schema={schemaQuery.data?.properties.credentialSubject}
-                      onSubmit={handleSubmit}
-                      disabled={
-                        !selectedConfigId || !selectedTypeId || isFormDisabled
-                      }
-                    />
-                  </div>
+                  <>
+                    {credentials.map((cred, idx) => (
+                      <CredentialEntry
+                        key={idx}
+                        index={idx}
+                        credentialTypes={credentialTypesQuery.data}
+                        onRemove={() => removeCredential(idx)}
+                        onUpdate={(data) => updateCredential(idx, data)}
+                        disabled={isFormDisabled}
+                      />
+                    ))}
+                    <div ref={bottomRef} />
+                    <div className="flex justify-start gap-4 items-center mt-6 mb-4 ">
+                      <Button
+                        onClick={addCredential}
+                        disabled={credentials.length >= 10}
+                        type="button"
+                        className="button-quaternary_outlined"
+                      >
+                        <Plus /> Add new credential
+                      </Button>
+                    </div>
+                    {message && (
+                      <Alert state={message.type} className="mb-6">
+                        <AlertTitle>{message.message}</AlertTitle>
+                      </Alert>
+                    )}
+                    <div className="flex justify-start gap-4 items-center mt-6 mb-4 ">
+                      <Button
+                        onClick={handleSubmitAll}
+                        disabled={isFormDisabled || credentials.length === 0}
+                        className="button-primary_outlined"
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  </>
                 )}
             </div>
           )}

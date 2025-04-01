@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const baseClasses =
     "px-4 py-2 text-base font-medium border border-gray-300 rounded-md shadow-sm";
-  const primaryClasses = `${baseClasses} bg-white text-gray-700 hover:bg-gray-50 focus:ring-blue-500`;
+  const primaryClasses = `${baseClasses} bg-white text-gray-700 focus:ring-blue-500`;
   const secondaryClasses = `${baseClasses} bg-gray-200 text-gray-400 focus:ring-gray-400`;
 
   return (

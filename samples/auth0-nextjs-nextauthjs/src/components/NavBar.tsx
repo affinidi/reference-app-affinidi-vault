@@ -83,11 +83,15 @@ const NavBar: FC = () => {
         </nav>
         {session && (
           <div className="flex">
-            <div className="flex flex-col justify-center px-4">
+            <div className="flex flex-col justify-center px-4 font-bold">
               <p>{session.user?.email}</p>
               {session.user?.country && <p>From: {session.user?.country}</p>}
             </div>
-            <Button id="logout" onClick={handleLogOut}>
+            <Button
+              id="logout"
+              onClick={handleLogOut}
+              className="button-secondary_outlined"
+            >
               Logout
             </Button>
           </div>

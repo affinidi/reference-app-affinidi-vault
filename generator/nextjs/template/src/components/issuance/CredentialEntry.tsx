@@ -4,12 +4,13 @@ import Select from "../core/Select";
 import DynamicForm from "./DynamicForm";
 import { CredentialSupportedObject } from "@affinidi-tdk/credential-issuance-client";
 import { Trash } from "lucide-react";
+import { CredentialEntryData } from "src/pages/credential-issuance";
 
 interface CredentialEntryProps {
   index: number;
   credentialTypes: CredentialSupportedObject[];
   onRemove: () => void;
-  onUpdate: (data: { typeId: string; formData: any }) => void;
+  onUpdate: (data: CredentialEntryData) => void;
   disabled: boolean;
 }
 
@@ -43,17 +44,24 @@ export default function CredentialEntry({
   const handleTypeChange = (value: string) => {
     setTypeId(value);
     setFormData(null);
-    onUpdate({ typeId: value, formData: null });
+    onUpdate({
+      credentialTypeId: value,
+      credentialData: {},
+    } as CredentialEntryData);
   };
 
   const handleFormSubmit = (data: any) => {
     setFormData(data);
-    onUpdate({ typeId, formData: data });
+    onUpdate({
+      credentialTypeId: typeId,
+      credentialData: data,
+    } as CredentialEntryData);
   };
 
   return (
     <div className="mb-8 bg-white">
       <div className="flex justify-between items-center mb-4">
+        {/* TODO: use schema title here */}
         <h2 className="text-xl font-semibold">Credential {index + 1}</h2>
         <button
           onClick={onRemove}

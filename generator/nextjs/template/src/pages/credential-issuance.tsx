@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 
 export type CredentialEntryData = {
   credentialTypeId: string;
-  credentialData: any;
+  credentialData: { [key: string]: any };
   statusListDetails?: [
     {
       purpose: string;
@@ -136,7 +136,7 @@ export default function CredentialIssuance({
     setCredentials(updated);
   };
 
-  const handleSubmit = async (credentialData: any) => {
+  const handleSubmit = async () => {
     if (
       !holderDid &&
       claimMode == StartIssuanceInputClaimModeEnum.FixedHolder
@@ -149,12 +149,13 @@ export default function CredentialIssuance({
     }
 
     setIsFormDisabled(true);
+
     const response = await fetch("/api/issuance/start", {
       method: "POST",
       body: JSON.stringify({
         claimMode,
         holderDid,
-        data: credentials.map(({ credentialData, credentialTypeId }) => {
+        credentials: credentials.map(({ credentialData, credentialTypeId }) => {
           return {
             credentialTypeId,
             credentialData,

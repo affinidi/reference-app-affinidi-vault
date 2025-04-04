@@ -21,6 +21,7 @@ interface DynamicFormProps {
   onSubmit: (formData: any) => void;
   disabled?: boolean;
   hideSubmitButton?: boolean;
+  onChange?: (formData: any) => void;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
@@ -28,6 +29,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   onSubmit,
   disabled,
   hideSubmitButton = true,
+  onChange,
 }) => {
   const initializeFormData = (schema: FormSchema): any => {
     const initialState: any = {};
@@ -49,7 +51,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   const [formData, setFormData] = useState<any>(() =>
     initializeFormData(schema)
   );
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     path: string
@@ -67,6 +68,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
           current = current[key];
         }
       });
+      const cleaned = removeEmptyFields(updatedState);
+      if (onChange) {
+        onChange(cleaned);
+      }
       return updatedState;
     });
   };

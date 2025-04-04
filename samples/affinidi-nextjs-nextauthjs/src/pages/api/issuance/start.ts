@@ -1,6 +1,8 @@
 import {
   StartIssuanceInput,
   StartIssuanceInputClaimModeEnum,
+  StartIssuanceInputDataInnerStatusListDetailsInnerPurposeEnum,
+  StartIssuanceInputDataInnerStatusListDetailsInnerStandardEnum,
   StartIssuanceResponse,
 } from "@affinidi-tdk/credential-issuance-client";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -8,12 +10,30 @@ import { startIssuance } from "src/lib/clients/credential-issuance";
 import { ResponseError } from "src/types/types";
 import { z } from "zod";
 
-const issuanceStartSchema = z.object({
+export const StatusListDetailsInnerSchema = z.object({
+  purpose: z.nativeEnum(
+    StartIssuanceInputDataInnerStatusListDetailsInnerPurposeEnum
+  ),
+  standard: z.nativeEnum(
+    StartIssuanceInputDataInnerStatusListDetailsInnerStandardEnum
+  ),
+});
+
+export const MetaDataSchema = z.object({
+  expirationDate: z.string().datetime({ offset: true }),
+});
+
+export const StartIssuanceInputDataInnerSchema = z.object({
   credentialTypeId: z.string(),
-  credentialData: z.any(),
+  credentialData: z.record(z.any()),
+  statusListDetails: z.array(StatusListDetailsInnerSchema).optional(),
+  metaData: MetaDataSchema.optional(),
+});
+
+const issuanceStartSchema = z.object({
   claimMode: z.nativeEnum(StartIssuanceInputClaimModeEnum),
   holderDid: z.string().optional(),
-  isRevocable: z.boolean(),
+  credentials: z.array(StartIssuanceInputDataInnerSchema),
 });
 
 export default async function handler(
@@ -30,13 +50,9 @@ export default async function handler(
     //   res.status(401).json({ message: "You must be logged in." });
     //   return;
     // }
-    const {
-      credentialTypeId,
-      credentialData,
-      claimMode,
-      holderDid,
-      isRevocable,
-    } = issuanceStartSchema.parse(req.body);
+    const { claimMode, holderDid, credentials } = issuanceStartSchema.parse(
+      req.body
+    );
 
     if (
       !holderDid &&
@@ -51,23 +67,7 @@ export default async function handler(
     const apiData: StartIssuanceInput = {
       claimMode,
       ...(holderDid && { holderDid }),
-      data: [
-        {
-          credentialTypeId,
-          credentialData: {
-            ...credentialData,
-            // Add any additional data here
-          },
-          ...(isRevocable && {
-            statusListDetails: [
-              {
-                purpose: "REVOCABLE",
-                standard: "RevocationList2020",
-              },
-            ],
-          }),
-        },
-      ],
+      data: credentials,
     };
 
     const issuanceResult = await startIssuance(apiData);

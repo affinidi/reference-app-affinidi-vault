@@ -16,10 +16,20 @@ import { Alert, AlertTitle } from "src/components/core/inlinemessages";
 import CredentialEntry from "src/components/issuance/CredentialEntry";
 import { useRef } from "react";
 import { Plus } from "lucide-react";
+import dayjs from "dayjs";
 
-type CredentialEntryData = {
-  typeId: string;
-  formData: any;
+export type CredentialEntryData = {
+  credentialTypeId: string;
+  credentialData: { [key: string]: any };
+  statusListDetails?: [
+    {
+      purpose: string;
+      standard: string;
+    }
+  ];
+  metaData?: {
+    expirationDate: string;
+  };
 };
 const claimModeOptions = [
   { value: StartIssuanceInputClaimModeEnum.FixedHolder },
@@ -46,6 +56,10 @@ export const getServerSideProps = (async () => {
   return { props: { featureAvailable: personalAccessTokenConfigured() } };
 }) satisfies GetServerSideProps<{ featureAvailable: boolean }>;
 
+export function addMinutesFromNow(minutes: number): string {
+  return dayjs().add(minutes, "minute").toISOString();
+}
+
 export default function CredentialIssuance({
   featureAvailable,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -61,6 +75,7 @@ export default function CredentialIssuance({
     StartIssuanceInputClaimModeEnum.FixedHolder
   );
   const [isRevocable, setRevocable] = useState(false);
+  const [expirationInMinutes, setExpirationInMinutes] = useState(30);
   const [credentials, setCredentials] = useState<CredentialEntryData[]>([]);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const [shouldScroll, setShouldScroll] = useState(false);
@@ -103,7 +118,10 @@ export default function CredentialIssuance({
 
   const addCredential = () => {
     if (credentials.length < 10) {
-      setCredentials([...credentials, { typeId: "", formData: null }]);
+      setCredentials([
+        ...credentials,
+        { credentialTypeId: "", credentialData: {} },
+      ]);
       setShouldScroll(true);
     }
   };
@@ -118,7 +136,7 @@ export default function CredentialIssuance({
     setCredentials(updated);
   };
 
-  const handleSubmit = async (credentialData: any) => {
+  const handleSubmit = async () => {
     if (
       !holderDid &&
       claimMode == StartIssuanceInputClaimModeEnum.FixedHolder
@@ -129,16 +147,42 @@ export default function CredentialIssuance({
       });
       return;
     }
+    const filled = credentials.filter(
+      (c) => c.credentialTypeId && c.credentialData
+    );
+
+    if (credentials.length === 0 || filled.length !== credentials.length) {
+      setMessage({
+        message: "Please complete all credential entries before submitting.",
+        type: "error",
+      });
+      return;
+    }
 
     setIsFormDisabled(true);
+
     const response = await fetch("/api/issuance/start", {
       method: "POST",
       body: JSON.stringify({
-        holderDid,
-        credentialData,
-        credentialTypeId: selectedTypeId,
         claimMode,
-        isRevocable,
+        holderDid,
+        credentials: credentials.map(({ credentialData, credentialTypeId }) => {
+          return {
+            credentialTypeId,
+            credentialData,
+            metaData: {
+              expirationDate: addMinutesFromNow(expirationInMinutes),
+            },
+            ...(isRevocable && {
+              statusListDetails: [
+                {
+                  purpose: "REVOCABLE",
+                  standard: "RevocationList2020",
+                },
+              ],
+            }),
+          };
+        }),
       }),
       headers: {
         "Content-Type": "application/json",
@@ -157,60 +201,6 @@ export default function CredentialIssuance({
     if (dataResponse.credentialOfferUri) {
       setOffer(dataResponse);
     }
-  };
-  const handleSubmitAll = async (credentialData: any) => {
-    if (
-      !holderDid &&
-      claimMode === StartIssuanceInputClaimModeEnum.FixedHolder
-    ) {
-      setMessage({
-        message: "Holder DID is required in FIXED_DID claim mode",
-        type: "error",
-      });
-      return;
-    }
-
-    const filled = credentials.filter((c) => c.typeId && c.formData);
-    if (filled.length === 0) {
-      setMessage({
-        message: "Please fill at least one credential before submitting",
-        type: "error",
-      });
-      return;
-    }
-
-    setIsFormDisabled(true);
-    for (const cred of filled) {
-      const res = await fetch("/api/issuance/start", {
-        method: "POST",
-        body: JSON.stringify({
-          holderDid,
-          credentialData: cred.formData,
-          credentialTypeId: cred.typeId,
-          claimMode,
-          isRevocable,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!res.ok) {
-        clearIssuance();
-        setMessage({
-          message: "Error creating one of the offers",
-          type: "error",
-        });
-        setIsFormDisabled(false);
-        return;
-      }
-      let dataResponse = await res.json();
-      if (dataResponse.credentialOfferUri) {
-        setOffer(dataResponse);
-      }
-    }
-    setMessage({ message: "Credentials issued successfully", type: "success" });
-    setCredentials([]);
-    setIsFormDisabled(false);
   };
 
   function clearIssuance() {
@@ -384,7 +374,7 @@ export default function CredentialIssuance({
                     )}
                     <div className="flex justify-start gap-4 items-center mt-6 mb-4 ">
                       <Button
-                        onClick={handleSubmitAll}
+                        onClick={handleSubmit}
                         disabled={isFormDisabled || credentials.length === 0}
                         className="button-primary_outlined"
                       >

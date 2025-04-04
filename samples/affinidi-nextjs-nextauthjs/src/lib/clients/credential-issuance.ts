@@ -7,6 +7,7 @@ import {
   StartIssuanceInput,
 } from "@affinidi-tdk/credential-issuance-client";
 import { projectId } from "../env";
+import { apiGatewayUrl } from "../env";
 import { getAuthProvider } from "./auth-provider";
 
 export async function startIssuance(apiData: StartIssuanceInput) {
@@ -14,6 +15,7 @@ export async function startIssuance(apiData: StartIssuanceInput) {
   const api = new IssuanceApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/cis`,
     })
   );
   const { data } = await api.startIssuance(projectId, apiData);
@@ -25,6 +27,7 @@ export async function listIssuanceConfigurations() {
   const api = new ConfigurationApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/cis`,
     })
   );
   const { data } = await api.getIssuanceConfigList();
@@ -36,6 +39,7 @@ export async function getIssuanceConfigurationById(configurationId: string) {
   const api = new ConfigurationApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/cis`,
     })
   );
   const { data } = await api.getIssuanceConfigById(configurationId);
@@ -50,6 +54,7 @@ export async function changeCredentialStatus(
   const api = new DefaultApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/cis`,
     })
   );
   const { data } = await api.changeCredentialStatus(

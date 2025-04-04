@@ -1,0 +1,136 @@
+.container {
+  min-width: 44px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 24px;
+}
+
+.title-style {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  border-radius: 4px;
+  padding: 12px 24px;
+}
+
+.description {
+  margin: 24px;
+}
+
+/* Styles per each state */
+.neutral-style {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  background-color: var(--neutral-background);
+}
+.info-style {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  background-color: var(--info-background);
+}
+.success-style {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  background-color: var(--success-background);
+}
+.warning-style {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  background-color: var(--warning-background);
+}
+.error-style {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  background-color: var(--error-background);
+}
+.message {
+  flex-grow: 1;
+  font-family: Figtree;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.29;
+  letter-spacing: 0.2px;
+  text-align: left;
+  color: var(--secondary-brand-90);
+}
+.description {
+  width: 100%;
+  margin: 0;
+}
+.icon_info-filled {
+  width: 20px;
+  height: 20px;
+  flex-grow: 0;
+  object-fit: contain;
+}
+/* Description Containers */
+
+.neutral-style-description {
+  height: auto;
+  background-color: var(--secondary-brand-05);
+  margin: 0;
+  padding: 12px 24px;
+}
+
+.info-style-description {
+  height: auto;
+  background-color: var(--utility-info-05);
+  margin: 0;
+  padding: 12px 24px;
+}
+
+.success-style-description {
+  height: auto;
+  background-color: var(--utility-success-05);
+  margin: 0;
+  padding: 12px 24px;
+}
+.warning-style-description {
+  height: auto;
+  background-color: var(--utility-warning-05);
+  margin: 0;
+  padding: 12px 24px;
+}
+
+.error-style-description {
+  height: auto;
+  background-color: var(--utility-danger-05);
+  margin: 0;
+  padding: 12px 24px;
+}

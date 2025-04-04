@@ -35,6 +35,7 @@ export default function CredentialEntry({
   const credentialType = credentialTypes.find(
     (c) => c.credentialTypeId === typeId
   );
+  const credentialLabel = credentialType?.credentialTypeId || "";
   const schemaQuery = useQuery({
     queryKey: ["schema", typeId],
     queryFn: () => fetchCredentialSchema(credentialType?.jsonSchemaUrl!),
@@ -61,8 +62,9 @@ export default function CredentialEntry({
   return (
     <div className="mb-8 bg-white">
       <div className="flex justify-between items-center mb-4">
-        {/* TODO: use schema title here */}
-        <h2 className="text-xl font-semibold">Credential {index + 1}</h2>
+        <h2 className="text-xl font-semibold">
+          Credential {index + 1} {credentialLabel && `- ${credentialLabel}`}
+        </h2>
         <button
           onClick={onRemove}
           type="button"
@@ -98,6 +100,7 @@ export default function CredentialEntry({
               schema={schemaQuery.data.properties.credentialSubject}
               onSubmit={handleFormSubmit}
               disabled={disabled}
+              onChange={handleFormSubmit}
             />
           </div>
         )}

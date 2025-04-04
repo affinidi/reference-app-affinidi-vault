@@ -147,6 +147,17 @@ export default function CredentialIssuance({
       });
       return;
     }
+    const filled = credentials.filter(
+      (c) => c.credentialTypeId && c.credentialData
+    );
+
+    if (credentials.length === 0 || filled.length !== credentials.length) {
+      setMessage({
+        message: "Please complete all credential entries before submitting.",
+        type: "error",
+      });
+      return;
+    }
 
     setIsFormDisabled(true);
 
@@ -190,62 +201,6 @@ export default function CredentialIssuance({
     if (dataResponse.credentialOfferUri) {
       setOffer(dataResponse);
     }
-  };
-  const handleSubmitAll = async (credentialData: any) => {
-    if (
-      !holderDid &&
-      claimMode === StartIssuanceInputClaimModeEnum.FixedHolder
-    ) {
-      setMessage({
-        message: "Holder DID is required in FIXED_DID claim mode",
-        type: "error",
-      });
-      return;
-    }
-
-    const filled = credentials.filter(
-      (c) => c.credentialTypeId && c.credentialData
-    );
-    if (filled.length === 0) {
-      setMessage({
-        message: "Please fill at least one credential before submitting",
-        type: "error",
-      });
-      return;
-    }
-
-    setIsFormDisabled(true);
-    for (const cred of filled) {
-      const res = await fetch("/api/issuance/start", {
-        method: "POST",
-        body: JSON.stringify({
-          holderDid,
-          credentialData: cred.credentialData,
-          credentialTypeId: cred.credentialTypeId,
-          claimMode,
-          isRevocable,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!res.ok) {
-        clearIssuance();
-        setMessage({
-          message: "Error creating one of the offers",
-          type: "error",
-        });
-        setIsFormDisabled(false);
-        return;
-      }
-      let dataResponse = await res.json();
-      if (dataResponse.credentialOfferUri) {
-        setOffer(dataResponse);
-      }
-    }
-    setMessage({ message: "Credentials issued successfully", type: "success" });
-    setCredentials([]);
-    setIsFormDisabled(false);
   };
 
   function clearIssuance() {

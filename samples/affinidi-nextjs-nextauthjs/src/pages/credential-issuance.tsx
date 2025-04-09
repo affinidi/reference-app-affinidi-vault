@@ -135,7 +135,14 @@ export default function CredentialIssuance({
     updated[index] = data;
     setCredentials(updated);
   };
-
+  const isAllCredentialsValid =
+    credentials.length > 0 &&
+    credentials.every(
+      (cred) =>
+        cred.credentialTypeId &&
+        cred.credentialData &&
+        Object.keys(cred.credentialData).length > 0
+    );
   const handleSubmit = async () => {
     if (
       !holderDid &&
@@ -239,7 +246,12 @@ export default function CredentialIssuance({
     return (
       <div>
         <Offer offer={offerTorender}></Offer>
-        <Button id="newIssuance" onClick={clearIssuance}>
+        <Button
+          id="newIssuance"
+          onClick={clearIssuance}
+          type="button"
+          className="button-quaternary_outlined"
+        >
           New issuance
         </Button>
       </div>
@@ -375,7 +387,7 @@ export default function CredentialIssuance({
                     <div className="flex justify-start gap-4 items-center mt-6 mb-4 ">
                       <Button
                         onClick={handleSubmit}
-                        disabled={isFormDisabled || credentials.length === 0}
+                        disabled={isFormDisabled || !isAllCredentialsValid}
                         className="button-primary_outlined"
                       >
                         Submit

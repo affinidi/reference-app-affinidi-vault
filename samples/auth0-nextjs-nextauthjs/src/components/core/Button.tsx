@@ -28,7 +28,11 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`${className} ${disabled ? secondaryClasses : primaryClasses}`}
+      className={
+        disabled
+          ? `${className}-disabled ${secondaryClasses}`
+          : `${className} ${primaryClasses}`
+      }
     >
       {children}
     </button>

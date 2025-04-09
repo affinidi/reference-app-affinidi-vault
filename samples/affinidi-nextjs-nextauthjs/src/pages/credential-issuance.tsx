@@ -50,7 +50,7 @@ const fetchCredentialTypes = async (
 
 const fetchIssuanceConfigurations = (): Promise<SelectOption[]> =>
   fetch("/api/issuance/configuration-options", { method: "GET" }).then((res) =>
-    res.json(),
+    res.json()
   );
 
 export const getServerSideProps = (async () => {
@@ -172,8 +172,8 @@ export default function CredentialIssuance({
     const response = await fetch("/api/issuance/start", {
       method: "POST",
       body: JSON.stringify({
-        claimMode,
         holderDid,
+        claimMode,
         credentials: credentials.map(({ credentialData, credentialTypeId }) => {
           return {
             credentialTypeId,

@@ -25,7 +25,7 @@ export const tokenId = process.env.TOKEN_ID!;
 export const privateKey = process.env.PRIVATE_KEY!;
 export const passphrase = process.env.PASSPHRASE!;
 export const keyId = process.env.KEY_ID!;
-export const apiGatewayUrl = process.env.API_GATEWAY_URL!;
+
 export function personalAccessTokenConfigured(): boolean {
   return (
     projectId !== undefined && tokenId !== undefined && privateKey !== undefined

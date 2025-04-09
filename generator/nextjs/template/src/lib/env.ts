@@ -31,3 +31,5 @@ export function personalAccessTokenConfigured(): boolean {
     projectId !== undefined && tokenId !== undefined && privateKey !== undefined
   );
 }
+
+export const apiGatewayUrl = process.env.API_GATEWAY_URL!;

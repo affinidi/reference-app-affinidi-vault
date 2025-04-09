@@ -222,7 +222,7 @@ export default function CredentialIssuance({
     setRevocable(false);
   }
 
-  const hasErrors = !featureAvailable;
+  const hasErrors = !featureAvailable || !session || !session.userId;
   const renderErrors = () => {
     if (!featureAvailable) {
       return (

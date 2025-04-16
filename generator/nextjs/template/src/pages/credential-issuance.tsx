@@ -220,6 +220,10 @@ export default function CredentialIssuance({
       selectedTypeId: "",
     });
     setRevocable(false);
+    setClaimMode(StartIssuanceInputClaimModeEnum.FixedHolder);
+    setHolderDid(session?.userId || "");
+    setCredentials([]);
+    setExpirationInMinutes(30);
   }
 
   const hasErrors = !featureAvailable || !session || !session.userId;

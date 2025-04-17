@@ -21,6 +21,7 @@ import dayjs from "dayjs";
 export type CredentialEntryData = {
   credentialTypeId: string;
   credentialData: { [key: string]: any };
+  schema?: any;
   statusListDetails?: [
     {
       purpose: string;
@@ -59,7 +60,13 @@ export const getServerSideProps = (async () => {
 export function addMinutesFromNow(minutes: number): string {
   return dayjs().add(minutes, "minute").toISOString();
 }
-
+function isCredentialDataComplete(credentialData: any, schema: any): boolean {
+  if (!schema || !schema.required || !credentialData) return false;
+  return schema.required.every((field: string) => {
+    const value = credentialData[field];
+    return value !== undefined && value !== null && value !== "";
+  });
+}
 export default function CredentialIssuance({
   featureAvailable,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -109,7 +116,7 @@ export default function CredentialIssuance({
     queryFn: ({ queryKey }) => fetchCredentialTypes(queryKey[1]),
     enabled: !!selectedConfigId,
   });
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (shouldScroll && bottomRef.current) {
       bottomRef.current.scrollIntoView({ behavior: "smooth" });
       setShouldScroll(false);
@@ -141,7 +148,7 @@ export default function CredentialIssuance({
       (cred) =>
         cred.credentialTypeId &&
         cred.credentialData &&
-        Object.keys(cred.credentialData).length > 0
+        isCredentialDataComplete(cred.credentialData, cred.schema)
     );
   const handleSubmit = async () => {
     if (

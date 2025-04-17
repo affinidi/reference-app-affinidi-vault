@@ -3,29 +3,8 @@ import QRCode from "qrcode.react";
 import { FC } from "react";
 import { OfferPayload } from "src/types/types";
 
-function buildClaimLinkInternal(
-  vaultUrl: string,
-  credentialOfferUri: string
-): string {
-  const params = new URLSearchParams();
-  params.append("credential_offer_uri", credentialOfferUri);
-  const queryString = params.toString();
-  return `${vaultUrl}/claim?${queryString}`;
-}
-
-function getClaimLink(credentialOfferUri: string) {
-  if (typeof window !== "undefined" && window.localStorage) {
-    const vaultUrl = window.localStorage.getItem("affinidiVaultUrl");
-    if (vaultUrl) {
-      return buildClaimLinkInternal(vaultUrl, credentialOfferUri);
-    }
-  }
-  return VaultUtils.buildClaimLink(credentialOfferUri);
-}
-
 const Offer: FC<{ offer: OfferPayload }> = ({ offer }) => {
-  // const vaultLink = VaultUtils.buildClaimLink(offer.credentialOfferUri);
-  const vaultLink = getClaimLink(offer.credentialOfferUri);
+  const vaultLink = VaultUtils.buildClaimLink(offer.credentialOfferUri);
 
   return (
     <div>

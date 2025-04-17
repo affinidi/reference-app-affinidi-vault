@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../core/Button";
 import Input from "../core/Input";
 
@@ -51,6 +51,19 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   const [formData, setFormData] = useState<any>(() =>
     initializeFormData(schema)
   );
+
+  const hasMounted = useRef(false);
+  useEffect(() => {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
+    }
+    if (onChange) {
+      const cleaned = removeEmptyFields(formData);
+      onChange(cleaned);
+    }
+  }, [formData]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     path: string
@@ -68,10 +81,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
           current = current[key];
         }
       });
-      const cleaned = removeEmptyFields(updatedState);
-      if (onChange) {
-        onChange(cleaned);
-      }
       return updatedState;
     });
   };

@@ -75,7 +75,7 @@ export default function CredentialIssuance({
     selectedTypeId: string;
   }>({ selectedConfigId: "", selectedTypeId: "" });
   const [isFormDisabled, setIsFormDisabled] = useState(false);
-  const [holderDid, setHolderDid] = useState<string>();
+  const [holderDid, setHolderDid] = useState<string>("");
   const [offer, setOffer] = useState<OfferPayload>();
   const [message, setMessage] = useState<MessagePayload>();
   const [claimMode, setClaimMode] = useState<string>(
@@ -205,7 +205,7 @@ export default function CredentialIssuance({
     if (!response.ok) {
       clearIssuance();
       setMessage({
-        message: "Error creating offer",
+        message: "Error in creating offer",
         type: "error",
       });
       return;
@@ -366,6 +366,11 @@ export default function CredentialIssuance({
                   time.
                 </AlertTitle>
               </Alert>
+              {message && (
+                <Alert state={message.type} className="mb-6">
+                  <AlertTitle>{message.message}</AlertTitle>
+                </Alert>
+              )}
               {credentialTypesQuery.isSuccess &&
                 !credentialTypesQuery.isFetching && (
                   <>
@@ -390,11 +395,6 @@ export default function CredentialIssuance({
                         <Plus /> Add new credential
                       </Button>
                     </div>
-                    {message && (
-                      <Alert state={message.type} className="mb-6">
-                        <AlertTitle>{message.message}</AlertTitle>
-                      </Alert>
-                    )}
                     <div className="flex justify-start gap-4 items-center mt-6 mb-4 ">
                       <Button
                         onClick={handleSubmit}

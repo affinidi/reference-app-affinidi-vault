@@ -21,6 +21,7 @@ import dayjs from "dayjs";
 export type CredentialEntryData = {
   credentialTypeId: string;
   credentialData: { [key: string]: any };
+  schema?: any;
   statusListDetails?: [
     {
       purpose: string;
@@ -59,7 +60,13 @@ export const getServerSideProps = (async () => {
 export function addMinutesFromNow(minutes: number): string {
   return dayjs().add(minutes, "minute").toISOString();
 }
-
+function isCredentialDataComplete(credentialData: any, schema: any): boolean {
+  if (!schema || !schema.required || !credentialData) return false;
+  return schema.required.every((field: string) => {
+    const value = credentialData[field];
+    return value !== undefined && value !== null && value !== "";
+  });
+}
 export default function CredentialIssuance({
   featureAvailable,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -68,7 +75,7 @@ export default function CredentialIssuance({
     selectedTypeId: string;
   }>({ selectedConfigId: "", selectedTypeId: "" });
   const [isFormDisabled, setIsFormDisabled] = useState(false);
-  const [holderDid, setHolderDid] = useState<string>();
+  const [holderDid, setHolderDid] = useState<string>("");
   const [offer, setOffer] = useState<OfferPayload>();
   const [message, setMessage] = useState<MessagePayload>();
   const [claimMode, setClaimMode] = useState<string>(
@@ -109,7 +116,7 @@ export default function CredentialIssuance({
     queryFn: ({ queryKey }) => fetchCredentialTypes(queryKey[1]),
     enabled: !!selectedConfigId,
   });
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (shouldScroll && bottomRef.current) {
       bottomRef.current.scrollIntoView({ behavior: "smooth" });
       setShouldScroll(false);
@@ -141,7 +148,7 @@ export default function CredentialIssuance({
       (cred) =>
         cred.credentialTypeId &&
         cred.credentialData &&
-        Object.keys(cred.credentialData).length > 0
+        isCredentialDataComplete(cred.credentialData, cred.schema)
     );
   const handleSubmit = async () => {
     if (
@@ -198,7 +205,7 @@ export default function CredentialIssuance({
     if (!response.ok) {
       clearIssuance();
       setMessage({
-        message: "Error creating offer",
+        message: "Error in creating offer",
         type: "error",
       });
       return;
@@ -359,6 +366,11 @@ export default function CredentialIssuance({
                   time.
                 </AlertTitle>
               </Alert>
+              {message && (
+                <Alert state={message.type} className="mb-6">
+                  <AlertTitle>{message.message}</AlertTitle>
+                </Alert>
+              )}
               {credentialTypesQuery.isSuccess &&
                 !credentialTypesQuery.isFetching && (
                   <>
@@ -383,11 +395,6 @@ export default function CredentialIssuance({
                         <Plus /> Add new credential
                       </Button>
                     </div>
-                    {message && (
-                      <Alert state={message.type} className="mb-6">
-                        <AlertTitle>{message.message}</AlertTitle>
-                      </Alert>
-                    )}
                     <div className="flex justify-start gap-4 items-center mt-6 mb-4 ">
                       <Button
                         onClick={handleSubmit}

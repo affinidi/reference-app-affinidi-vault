@@ -56,6 +56,7 @@ export default function CredentialEntry({
     onUpdate({
       credentialTypeId: typeId,
       credentialData: data,
+      schema: schemaQuery.data?.properties?.credentialSubject,
     } as CredentialEntryData);
   };
 

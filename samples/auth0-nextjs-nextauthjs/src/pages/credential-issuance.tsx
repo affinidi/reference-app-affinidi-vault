@@ -50,7 +50,7 @@ const fetchCredentialTypes = async (
 
 const fetchIssuanceConfigurations = (): Promise<SelectOption[]> =>
   fetch("/api/issuance/configuration-options", { method: "GET" }).then((res) =>
-    res.json()
+    res.json(),
   );
 
 export const getServerSideProps = (async () => {
@@ -233,7 +233,7 @@ export default function CredentialIssuance({
     setExpirationInMinutes(30);
   }
 
-  const hasErrors = !featureAvailable || !session || !session.userId;
+  const hasErrors = !featureAvailable;
   const renderErrors = () => {
     if (!featureAvailable) {
       return (

@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, useLayoutEffect } from "react";
+import Message from "src/components/Message";
 import Button from "src/components/core/Button";
 import Input from "src/components/core/Input";
 import Select, { SelectOption } from "src/components/core/Select";
@@ -50,7 +51,7 @@ const fetchCredentialTypes = async (
 
 const fetchIssuanceConfigurations = (): Promise<SelectOption[]> =>
   fetch("/api/issuance/configuration-options", { method: "GET" }).then((res) =>
-    res.json()
+    res.json(),
   );
 
 export const getServerSideProps = (async () => {
@@ -233,7 +234,7 @@ export default function CredentialIssuance({
     setExpirationInMinutes(30);
   }
 
-  const hasErrors = !featureAvailable || !session || !session.userId;
+  const hasErrors = !featureAvailable;
   const renderErrors = () => {
     if (!featureAvailable) {
       return (

@@ -45,7 +45,7 @@ const getQueryOptions = async (configurationId: string) => {
       }),
     {
       method: "GET",
-    }
+    },
   );
   return (await response.json()) as SelectOption[];
 };
@@ -58,7 +58,7 @@ const getIotaCredentials = async (configurationId: string) => {
       }),
     {
       method: "GET",
-    }
+    },
   );
   return (await response.json()) as IotaCredentials;
 };

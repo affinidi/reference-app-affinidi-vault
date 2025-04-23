@@ -233,7 +233,7 @@ export default function CredentialIssuance({
     setExpirationInMinutes(30);
   }
 
-  const hasErrors = !featureAvailable;
+  const hasErrors = !featureAvailable || !session || !session.userId;
   const renderErrors = () => {
     if (!featureAvailable) {
       return (

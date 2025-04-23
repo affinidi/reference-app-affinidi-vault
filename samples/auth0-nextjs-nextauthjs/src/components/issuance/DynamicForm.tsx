@@ -42,7 +42,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
           required: field.required,
         });
       } else {
-        initialState[key] = "";
+        initialState[key] = field.type === "boolean" ? false : "";
       }
     });
     return initialState;
@@ -68,8 +68,13 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     e: React.ChangeEvent<HTMLInputElement>,
     path: string
   ) => {
-    const { name, value, type } = e.target;
-    const newValue = type === "number" ? parseFloat(value) : value;
+    const { value, type, checked } = e.target;
+    const newValue =
+      type === "checkbox"
+        ? checked
+        : type === "number"
+        ? parseFloat(value)
+        : value;
     setFormData((prevState: any) => {
       const updatedState = { ...prevState };
       const keys = path.split(".");
@@ -119,15 +124,27 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
       } else {
         return (
           <div key={fieldPath}>
-            <Input
-              type={field.type}
-              label={field.description ? field.description : key}
-              id={fieldPath}
-              value={getValue(formData, fieldPath)}
-              onChange={(e) => handleChange(e, fieldPath)}
-              required={isRequired}
-              disabled={disabled}
-            />
+            {field.type === "boolean" ? (
+              <label className="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={getValue(formData, fieldPath)}
+                  onChange={(e) => handleChange(e, fieldPath)}
+                  disabled={disabled}
+                />
+                <p>{field.description ? field.description : key}</p>
+              </label>
+            ) : (
+              <Input
+                type={field.type}
+                label={field.description ? field.description : key}
+                id={fieldPath}
+                value={getValue(formData, fieldPath)}
+                onChange={(e) => handleChange(e, fieldPath)}
+                required={isRequired}
+                disabled={disabled}
+              />
+            )}
           </div>
         );
       }

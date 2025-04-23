@@ -62,7 +62,8 @@ export async function initiateDataSharingRequest(
   const api = new IotaApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
-    }),
+      basePath: `${apiGatewayUrl}/ais`,
+    })
   );
 
   const { data: dataSharingRequestResponse } =
@@ -90,7 +91,8 @@ export async function fetchIotaVpResponse(
   const api = new IotaApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
-    }),
+      basePath: `${apiGatewayUrl}/ais`,
+    })
   );
 
   const iotaVpResponse: FetchIOTAVPResponseOK = await api.fetchIotaVpResponse({

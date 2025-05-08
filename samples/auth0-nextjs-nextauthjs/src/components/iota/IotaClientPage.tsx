@@ -12,6 +12,7 @@ import { useState } from "react";
 import Button from "../core/Button";
 import Select, { SelectOption } from "../core/Select";
 import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
+import GenericError from "../core/GenericErrors";
 
 const openModeOptions = [
   {
@@ -171,30 +172,12 @@ export default function IotaSessionMultipleRequestsPage({
   };
 
   const hasErrors = !featureAvailable || !session || !session.userId;
-  const renderErrors = () => {
-    if (!featureAvailable) {
-      return (
-        <div>
-          Feature not available. Please set your Personal Access Token in your
-          environment secrets.
-        </div>
-      );
-    }
-
-    if (!session || !session.userId) {
-      return (
-        <div>
-          You must be logged in to request credentials from your Affinidi Vault
-        </div>
-      );
-    }
-  };
 
   return (
     <>
       <h1 className="text-2xl font-semibold pb-6">Receive Credentials</h1>
 
-      {renderErrors()}
+      {<GenericError featureAvailable={featureAvailable} session={session} />}
       {!hasErrors && (
         <>
           {renderVerifiedHolder(session.userId)}

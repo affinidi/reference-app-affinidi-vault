@@ -7,6 +7,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, useLayoutEffect } from "react";
 import Button from "src/components/core/Button";
+import GenericError from "src/components/core/GenericErrors";
 import Input from "src/components/core/Input";
 import Select, { SelectOption } from "src/components/core/Select";
 import Offer from "src/components/issuance/Offer";
@@ -234,24 +235,6 @@ export default function CredentialIssuance({
   }
 
   const hasErrors = !featureAvailable || !session || !session.userId;
-  const renderErrors = () => {
-    if (!featureAvailable) {
-      return (
-        <div>
-          Feature not available. Please set your Personal Access Token in your
-          environment secrets.
-        </div>
-      );
-    }
-
-    if (!session || !session.userId) {
-      return (
-        <div>
-          You must be logged in to issue credentials to your Affinidi Vault
-        </div>
-      );
-    }
-  };
 
   const renderOffer = (offerTorender: OfferPayload) => {
     return (
@@ -272,7 +255,7 @@ export default function CredentialIssuance({
   return (
     <>
       <h1 className="text-2xl font-semibold pb-6">Issue Credentials</h1>
-      {renderErrors()}
+      {<GenericError featureAvailable={featureAvailable} session={session} />}
       {!hasErrors && (
         <div>
           {offer ? (

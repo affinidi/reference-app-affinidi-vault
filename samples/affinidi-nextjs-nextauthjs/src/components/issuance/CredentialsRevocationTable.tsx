@@ -4,7 +4,7 @@ import {
   ListIssuanceRecordResponse,
 } from "@affinidi-tdk/credential-issuance-client";
 import React, { useState } from "react";
-
+import ChangeReasonModal from "./ChangeReasonModal";
 import { UseQueryResult } from "@tanstack/react-query";
 import Button from "../core/Button";
 
@@ -63,76 +63,6 @@ const CredentialsRevocationTable: React.FC<PaginatedCredentialsTableProps> = ({
     }
   };
 
-  const renderModal = () => {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div className="bg-white p-6 rounded-md shadow-lg w-1/3">
-          {!isLoading && (
-            <h2 className="text-xl mb-4">Select a reason for revocation</h2>
-          )}
-          {isLoading ? (
-            hasError ? (
-              <div className="flex items-center justify-center text-center text-red-500">
-                <span>Error: {hasError}</span>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center">
-                <div className="spinner-border animate-spin inline-block w-6 h-6 border-4 rounded-full border-blue-500 border-t-transparent mr-2"></div>
-                <span>Revoking...</span>
-              </div>
-            )
-          ) : (
-            <select
-              className="border border-gray-300 p-2 w-full mb-4"
-              value={selectedReason}
-              onChange={(e) =>
-                setSelectedReason(
-                  e.target.value as ChangeCredentialStatusInputChangeReasonEnum
-                )
-              }
-            >
-              <option value="">Select Reason</option>
-              {Object.values(ChangeCredentialStatusInputChangeReasonEnum).map(
-                (reason) => (
-                  <option key={reason} value={reason}>
-                    {reason}
-                  </option>
-                )
-              )}
-            </select>
-          )}
-          {(!isLoading || hasError) && (
-            <div
-              className={`${
-                hasError ? "flex justify-center" : "flex justify-between"
-              }`}
-            >
-              <button
-                className="px-4 py-2 bg-gray-500 text-white rounded"
-                onClick={() => {
-                  setIsModalOpen(false);
-                  setHasError(undefined);
-                  setIsLoading(false);
-                }}
-              >
-                Cancel
-              </button>
-              {!hasError && (
-                <button
-                  className="px-4 py-2 bg-blue-500 text-white rounded"
-                  onClick={handleSubmit}
-                  disabled={hasError ? true : false}
-                >
-                  Revoke
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  };
-
   return (
     <>
       <table className="table-auto w-full border-collapse border border-gray-300">
@@ -174,7 +104,20 @@ const CredentialsRevocationTable: React.FC<PaginatedCredentialsTableProps> = ({
           )}
         </tbody>
       </table>
-      {isModalOpen && renderModal()}
+      {isModalOpen && (
+        <ChangeReasonModal
+          isLoading={isLoading}
+          hasError={hasError}
+          selectedReason={selectedReason}
+          setSelectedReason={setSelectedReason}
+          onSubmit={handleSubmit}
+          onClose={() => {
+            setIsModalOpen(false);
+            setHasError(undefined);
+            setIsLoading(false);
+          }}
+        />
+      )}
     </>
   );
 };

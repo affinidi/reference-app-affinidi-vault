@@ -6,6 +6,7 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import GenericError from "src/components/core/GenericErrors";
 import { SelectOption } from "src/components/core/Select";
 import CredentialsRevocationTable from "src/components/issuance/CredentialsRevocationTable";
 import { personalAccessTokenConfigured } from "src/lib/env";
@@ -106,29 +107,11 @@ export default function CredentialRevocation({
     }
   };
   const hasErrors = !featureAvailable || !session || !session.userId;
-  const renderErrors = () => {
-    if (!featureAvailable) {
-      return (
-        <div>
-          Feature not available. Please set your Personal Access Token in your
-          environment secrets.
-        </div>
-      );
-    }
-
-    if (!session || !session.userId) {
-      return (
-        <div>
-          You must be logged in to issue credentials to your Affinidi Vault
-        </div>
-      );
-    }
-  };
 
   return (
     <>
       <h1 className="text-2xl font-semibold pb-6">Revoke Credentials</h1>
-      {renderErrors()}
+      {<GenericError featureAvailable={featureAvailable} session={session} />}
       {!hasErrors && (
         <div className="p-4">
           <h1 className="text-lg font-bold mb-4">Credentials</h1>

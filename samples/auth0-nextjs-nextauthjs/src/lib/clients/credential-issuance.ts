@@ -53,6 +53,7 @@ export async function changeCredentialStatus(
   const api = new DefaultApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/cis`,
     })
   );
   const { data } = await api.changeCredentialStatus(
@@ -71,6 +72,7 @@ export async function listIssuanceDataRecords(
   const api = new DefaultApi(
     new Configuration({
       apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/cis`,
     })
   );
   let res;

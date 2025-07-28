@@ -19,6 +19,8 @@ import { useRef } from "react";
 import { Plus } from "lucide-react";
 import dayjs from "dayjs";
 
+const defaultExpirationTimeMinutes = 30;
+
 export type CredentialEntryData = {
   credentialTypeId: string;
   credentialData: { [key: string]: any };
@@ -27,7 +29,7 @@ export type CredentialEntryData = {
     {
       purpose: string;
       standard: string;
-    }
+    },
   ];
   metaData?: {
     expirationDate: string;
@@ -39,19 +41,19 @@ const claimModeOptions = [
 ];
 
 const fetchCredentialTypes = async (
-  issuanceConfigurationId: string
+  issuanceConfigurationId: string,
 ): Promise<CredentialSupportedObject[]> => {
   const response = await fetch(
     "/api/issuance/credential-types?" +
       new URLSearchParams({ issuanceConfigurationId }),
-    { method: "GET" }
+    { method: "GET" },
   );
   return await response.json();
 };
 
 const fetchIssuanceConfigurations = (): Promise<SelectOption[]> =>
   fetch("/api/issuance/configuration-options", { method: "GET" }).then((res) =>
-    res.json()
+    res.json(),
   );
 
 export const getServerSideProps = (async () => {
@@ -80,10 +82,12 @@ export default function CredentialIssuance({
   const [offer, setOffer] = useState<OfferPayload>();
   const [message, setMessage] = useState<MessagePayload>();
   const [claimMode, setClaimMode] = useState<string>(
-    StartIssuanceInputClaimModeEnum.FixedHolder
+    StartIssuanceInputClaimModeEnum.FixedHolder,
   );
   const [isRevocable, setRevocable] = useState(false);
-  const [expirationInMinutes, setExpirationInMinutes] = useState(30);
+  const [expirationInMinutes, setExpirationInMinutes] = useState(
+    defaultExpirationTimeMinutes,
+  );
   const [credentials, setCredentials] = useState<CredentialEntryData[]>([]);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const [shouldScroll, setShouldScroll] = useState(false);
@@ -149,7 +153,7 @@ export default function CredentialIssuance({
       (cred) =>
         cred.credentialTypeId &&
         cred.credentialData &&
-        isCredentialDataComplete(cred.credentialData, cred.schema)
+        isCredentialDataComplete(cred.credentialData, cred.schema),
     );
   const handleSubmit = async () => {
     if (
@@ -163,7 +167,7 @@ export default function CredentialIssuance({
       return;
     }
     const filled = credentials.filter(
-      (c) => c.credentialTypeId && c.credentialData
+      (c) => c.credentialTypeId && c.credentialData,
     );
 
     if (credentials.length === 0 || filled.length !== credentials.length) {
@@ -231,7 +235,7 @@ export default function CredentialIssuance({
     setClaimMode(StartIssuanceInputClaimModeEnum.FixedHolder);
     setHolderDid(session?.userId || "");
     setCredentials([]);
-    setExpirationInMinutes(30);
+    setExpirationInMinutes(defaultExpirationTimeMinutes);
   }
 
   const hasErrors = !featureAvailable || !session || !session.userId;

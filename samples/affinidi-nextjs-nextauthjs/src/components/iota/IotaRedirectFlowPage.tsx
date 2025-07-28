@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
 import { VaultUtils } from "@affinidi-tdk/common";
 import { v4 as uuidv4 } from "uuid";
@@ -7,10 +6,11 @@ import { useState } from "react";
 import Select, { SelectOption } from "src/components/core/Select";
 import Button from "src/components/core/Button";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import QRCode from "qrcode.react";
 
 const fetchIotaConfigurations = (): Promise<IotaConfigurationDto[]> =>
   fetch("/api/iota/redirect-configurations", { method: "GET" }).then((res) =>
-    res.json()
+    res.json(),
   );
 
 const getQueryOptions = async (configurationId: string) => {
@@ -21,7 +21,7 @@ const getQueryOptions = async (configurationId: string) => {
       }),
     {
       method: "GET",
-    }
+    },
   );
   return (await response.json()) as SelectOption[];
 };
@@ -31,14 +31,13 @@ export default function IotaRedirectFlowPage({
 }: {
   featureAvailable: boolean;
 }) {
-  const router = useRouter();
-
   const [selectedConfigId, setSelectedConfigId] = useState<string>("");
   const [selectedQuery, setSelectedQuery] = useState<string>("");
   const [nonce, setNonce] = useState<string>("");
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [selectedRedirectUri, setSelectedRedirectUri] = useState<string>("");
   const [_, setIotaRedirect] = useLocalStorage("iotaRedirect", "{}");
+  const [shareLink, setShareLink] = useState<string>("");
 
   const configurationsQuery = useQuery({
     queryKey: ["iotaConfigurations"],
@@ -60,7 +59,7 @@ export default function IotaRedirectFlowPage({
   }
 
   const selectedConfiguration = configurationsQuery?.data?.find(
-    (query) => query.configurationId === selectedConfigId
+    (query) => query.configurationId === selectedConfigId,
   );
 
   async function handleRedirectFlowShare(queryId: string) {
@@ -92,7 +91,8 @@ export default function IotaRedirectFlowPage({
     setIotaRedirect(JSON.stringify(toStore));
 
     const vaultLink = VaultUtils.buildShareLink(data.jwt, "client_id");
-    router.push(vaultLink);
+    console.log("hello");
+    setShareLink(vaultLink);
   }
 
   async function clearSession() {
@@ -194,13 +194,22 @@ export default function IotaRedirectFlowPage({
             <>
               <h1>Generated nonce: {nonce}</h1>
               <br />
-
               <Button
                 disabled={isFormDisabled}
                 onClick={() => handleRedirectFlowShare(selectedQuery)}
               >
-                Share
+                Get Share Link
               </Button>
+
+              <br />
+              <br />
+              <a className="text-blue-500" href={shareLink}>
+                {shareLink}
+              </a>
+
+              {shareLink && (
+                <QRCode className="my-6" value={shareLink} size={256} />
+              )}
             </>
           )}
         </>

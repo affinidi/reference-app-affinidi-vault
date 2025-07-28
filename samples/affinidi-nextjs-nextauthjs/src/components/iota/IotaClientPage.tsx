@@ -12,6 +12,7 @@ import { useState } from "react";
 import Button from "../core/Button";
 import Select, { SelectOption } from "../core/Select";
 import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
+import QRCode from "qrcode.react";
 
 const openModeOptions = [
   {
@@ -34,7 +35,7 @@ type DataRequests = {
 
 const fetchIotaConfigurations = (): Promise<IotaConfigurationDto[]> =>
   fetch("/api/iota/configurations", { method: "GET" }).then((res) =>
-    res.json()
+    res.json(),
   );
 
 const getQueryOptions = async (configurationId: string) => {
@@ -73,6 +74,7 @@ export default function IotaSessionMultipleRequestsPage({
   const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.NewTab);
   const [dataRequests, setDataRequests] = useState<DataRequests>({});
   const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [shareLink, setShareLink] = useState<string>("");
 
   // Get did from session
   const { data: session } = useSession();
@@ -114,7 +116,7 @@ export default function IotaSessionMultipleRequestsPage({
       const request = await iotaSessionQuery.data.prepareRequest({ queryId });
       setIsFormDisabled(false);
       addNewDataRequest(request);
-      request.openVault({ mode: openMode });
+      setShareLink(request.getSuggestedLink());
       const response = await request.getResponse();
       updateDataRequestWithResponse(response);
     } catch (error) {
@@ -265,12 +267,24 @@ export default function IotaSessionMultipleRequestsPage({
             )}
 
           {iotaSessionQuery.isSuccess && selectedQuery && (
-            <Button
-              disabled={isFormDisabled}
-              onClick={() => handleTDKShare(selectedQuery)}
-            >
-              Share
-            </Button>
+            <div>
+              <Button
+                disabled={isFormDisabled}
+                onClick={() => handleTDKShare(selectedQuery)}
+              >
+                Get Share Link
+              </Button>
+
+              <br />
+              <br />
+              <a className="text-blue-500" href={shareLink}>
+                {shareLink}
+              </a>
+
+              {shareLink && (
+                <QRCode className="my-6" value={shareLink} size={256} />
+              )}
+            </div>
           )}
 
           {iotaSessionQuery.isFetching && (
@@ -299,7 +313,7 @@ export default function IotaSessionMultipleRequestsPage({
                             {JSON.stringify(
                               dataRequests[id].error,
                               undefined,
-                              2
+                              2,
                             )}
                           </pre>
                         </>
@@ -313,7 +327,7 @@ export default function IotaSessionMultipleRequestsPage({
                             {JSON.stringify(
                               dataRequests[id].response,
                               undefined,
-                              2
+                              2,
                             )}
                           </pre>
                         </>

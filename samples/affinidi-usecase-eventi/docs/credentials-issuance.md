@@ -99,40 +99,45 @@ const IssueTicketVC = async () => {
 
   //Prepare Data (the structure should match with Event Ticket VC Schema)
   //TODO - Few attributes are hardcoded, we can get this during login by updating Login PEX to request more information like name/address/phonenumber/dob etc.. https://docs.affinidi.com/docs/affinidi-vault/affinidi-vault-data/personal-information/
-  const ticketCredentailData = {
-    event: items.map((item: any) => {
-      return {
-        eventId: item.product.itemid?.toString(),
-        name: item.product.name,
-        location: item.product.location,
-        startDate: item.product.startDate,
-        endDate: item.product.endDate,
-      };
-    })[0],
-    ticket: items.map((item: any) => {
-      return {
-        ticketId: item.product.itemid?.toString(),
-        ticketType: item.product.name,
-        seat: item.product.description,
-      };
-    })[0],
-    createdAt: new Date(),
-    attendeeAtrributes: {
-      email: consumer.user.email,
-      firstName: consumer.user.givenName || "John",
-      lastName: consumer.user.familyName || "Doe",
-      dateOfBirth: consumer.user.birthdate || "2010-10-17",
-    },
-    secrete: date,
-  };
+  const credentials = [
+    {
+      credentialTypeId: "ticketCredential",
+      credentialData: {
+        event: items.map((item: any) => {
+          return {
+            eventId: item.product.itemid?.toString(),
+            name: item.product.name,
+            location: item.product.location,
+            startDate: item.product.startDate,
+            endDate: item.product.endDate,
+          };
+        })[0],
+        ticket: items.map((item: any) => {
+          return {
+            ticketId: item.product.itemid?.toString(),
+            ticketType: item.product.name,
+            seat: item.product.description,
+          };
+        })[0],
+        createdAt: new Date(),
+        attendeeAtrributes: {
+          email: consumer.user.email,
+          firstName: consumer.user.givenName || "John",
+          lastName: consumer.user.familyName || "Doe",
+          dateOfBirth: consumer.user.birthdate || "2010-10-17",
+        },
+        secrete: date,
+      }
+    }
+  ];
 
   //Call API to start VC issuance
   const response = await fetch("/api/issuance/start", {
     method: "POST",
     body: JSON.stringify({
-      credentialData: ticketCredentailData,
-      credentialTypeId: eventTicketVCTypeID,
       claimMode: StartIssuanceInputClaimModeEnum.FixedHolder,
+      holderDid: 'did:key:test',
+      credentials,
     }),
     headers: {
       "Content-Type": "application/json",
@@ -184,7 +189,7 @@ Add the issuance logic in the API Handler `src\pages\api\issuance\start.ts`
 
 ```javascript
 //Add VC Issuance Logic here
-const { credentialTypeId, credentialData, claimMode } =
+const { claimMode, holderDid, credentials } =
   issuanceStartSchema.parse(req.body);
 
 const session = await getServerSession(req, res, authOptions);
@@ -202,14 +207,7 @@ if (!holderDid && claimMode == StartIssuanceInputClaimModeEnum.FixedHolder) {
 const apiData: StartIssuanceInput = {
   claimMode,
   ...(holderDid && { holderDid }),
-  data: [
-    {
-      credentialTypeId,
-      credentialData: {
-        ...credentialData,
-      },
-    },
-  ],
+  data: credentials,
 };
 
 //Initialize the Affinidi TDK with Personal Access Token(PAT) details

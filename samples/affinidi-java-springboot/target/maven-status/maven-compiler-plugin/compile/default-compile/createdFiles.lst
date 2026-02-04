@@ -1,0 +1,4 @@
+login/affinidi/client/controller/UserController.class
+login/affinidi/client/security/OAuth2SecurityConfig.class
+login/affinidi/client/ClientApplication.class
+login/affinidi/client/security/OAuth2SecurityConfig$1.class

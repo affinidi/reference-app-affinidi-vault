@@ -38,12 +38,21 @@ const claimModeOptions = [
   { value: StartIssuanceInputClaimModeEnum.TxCode },
 ];
 
+const expirationOptions: SelectOption[] = [
+  { label: "Never", value: -1 },
+  { label: "1 minute", value: 1 },
+  { label: "30 minutes", value: 30 },
+  { label: "1 day", value: 1440 },
+  { label: "7 days", value: 10080 },
+  { label: "30 days", value: 43200 },
+];
+
 const fetchCredentialTypes = async (
   issuanceConfigurationId: string
 ): Promise<CredentialSupportedObject[]> => {
   const response = await fetch(
     "/api/issuance/credential-types?" +
-      new URLSearchParams({ issuanceConfigurationId }),
+    new URLSearchParams({ issuanceConfigurationId }),
     { method: "GET" }
   );
   return await response.json();
@@ -83,7 +92,7 @@ export default function CredentialIssuance({
     StartIssuanceInputClaimModeEnum.FixedHolder
   );
   const [isRevocable, setRevocable] = useState(false);
-  const [expirationInMinutes, setExpirationInMinutes] = useState(30);
+  const [expirationInMinutes, setExpirationInMinutes] = useState<number>(-1);
   const [credentials, setCredentials] = useState<CredentialEntryData[]>([]);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const [shouldScroll, setShouldScroll] = useState(false);
@@ -105,6 +114,7 @@ export default function CredentialIssuance({
       addCredential();
       setShouldScroll(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedConfigId]);
 
   const configurationsQuery = useQuery({
@@ -185,9 +195,11 @@ export default function CredentialIssuance({
           return {
             credentialTypeId,
             credentialData,
-            metaData: {
-              expirationDate: addMinutesFromNow(expirationInMinutes),
-            },
+            ...(expirationInMinutes >= 0 && {
+              metaData: {
+                expirationDate: addMinutesFromNow(expirationInMinutes),
+              },
+            }),
             ...(isRevocable && {
               statusListDetails: [
                 {
@@ -231,7 +243,7 @@ export default function CredentialIssuance({
     setClaimMode(StartIssuanceInputClaimModeEnum.FixedHolder);
     setHolderDid(session?.userId || "");
     setCredentials([]);
-    setExpirationInMinutes(30);
+    setExpirationInMinutes(-1);
   }
 
   const hasErrors = !featureAvailable || !session || !session.userId;
@@ -300,6 +312,14 @@ export default function CredentialIssuance({
                   claimMode == StartIssuanceInputClaimModeEnum.FixedHolder
                 }
                 onChange={(e) => setHolderDid(e.target.value)}
+              />
+              <Select
+                id="expirationSelect"
+                label="Expiration"
+                options={expirationOptions}
+                value={expirationInMinutes}
+                disabled={isFormDisabled}
+                onChange={(val) => setExpirationInMinutes(Number(val))}
               />
               <div className="mb-4">
                 <label className="flex items-center space-x-3 cursor-pointer">

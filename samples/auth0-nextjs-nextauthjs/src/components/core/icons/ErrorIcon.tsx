@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 export const ErrorIcon: React.FC = () => (
   <svg
     width="20"

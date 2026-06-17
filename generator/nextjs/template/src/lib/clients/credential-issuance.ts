@@ -80,11 +80,12 @@ export async function listIssuanceDataRecords(
     res = await api.listIssuanceDataRecords(
       projectId,
       configurationId,
+      undefined,
       10,
       exclusiveStartKey
     );
   } else {
-    res = await api.listIssuanceDataRecords(projectId, configurationId, 10);
+    res = await api.listIssuanceDataRecords(projectId, configurationId, undefined, 10);
   }
   return res.data;
 }

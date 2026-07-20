@@ -3,7 +3,7 @@ import { getSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import Button from "./core/Button";
-import { clientLogin } from "src/lib/auth/client-login";
+import { clientLogin, clientLoginAuth0 } from "src/lib/auth/client-login";
 
 const NavBar: FC = () => {
   const [session, setSession] = useState<Session>();
@@ -23,6 +23,10 @@ const NavBar: FC = () => {
 
   async function handleLogin() {
     await clientLogin();
+  }
+
+  async function handleLoginAuth0() {
+    await clientLoginAuth0();
   }
 
   async function handleLogOut() {
@@ -97,13 +101,18 @@ const NavBar: FC = () => {
           </div>
         )}
         {!session && (
-          <button
-            id="affinidiLogin"
-            onClick={handleLogin}
-            className="affinidi-login affinidi-login-m"
-          >
-            Affinidi Login
-          </button>
+          <div className="flex items-center space-x-2">
+            <button
+              id="affinidiLogin"
+              onClick={handleLogin}
+              className="affinidi-login affinidi-login-m"
+            >
+              Affinidi Login
+            </button>
+            <Button id="auth0Login" onClick={handleLoginAuth0}>
+              Auth0 Login
+            </Button>
+          </div>
         )}
       </div>
     </header>

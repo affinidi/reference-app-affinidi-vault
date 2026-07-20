@@ -2,6 +2,7 @@ import {
   Configuration,
   ConfigurationsApi,
   PexQueryApi,
+  DcqlQueryApi,
   IotaApi,
   CallbackApi,
   IotaConfigurationDtoModeEnum,
@@ -52,6 +53,18 @@ export async function listPexQueriesByConfigurationId(configurationId: string) {
   return data.pexQueries;
 }
 
+export async function listDcqlQueriesByConfigurationId(configurationId: string) {
+  const authProvider = getAuthProvider();
+  const api = new DcqlQueryApi(
+    new Configuration({
+      apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+      basePath: `${apiGatewayUrl}/ais`,
+    }),
+  );
+  const { data } = await api.listDcqlQueries(configurationId);
+  return data.dcqlQueries;
+}
+
 export async function initiateDataSharingRequest(
   configurationId: string,
   queryId: string,
@@ -95,7 +108,7 @@ export async function fetchIotaVpResponse(
     })
   );
 
-  const iotaVpResponse: FetchIOTAVPResponseOK = await api.fetchIotaVpResponse({
+  const iotaVpResponse: any = await api.fetchIotaVpResponse({
     configurationId,
     correlationId,
     transactionId,
@@ -103,5 +116,5 @@ export async function fetchIotaVpResponse(
   });
 
   const vp = JSON.parse((iotaVpResponse.data as any).vpToken);
-  return { vp: vp, nonce: iotaVpResponse.data.nonce };
+  return { vp: vp, nonce: iotaVpResponse?.data?.nonce };
 }

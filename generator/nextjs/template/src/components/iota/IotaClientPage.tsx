@@ -13,6 +13,25 @@ import Button from "../core/Button";
 import Select, { SelectOption } from "../core/Select";
 import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
 
+// TODO: hardcoded Affinidi Vault webhook/login URL used to detect the
+// "Affinidi Vault" case (duplicated from the redirect page / dev portal).
+// Move to @affinidi-tdk/common once VaultUtils supports custom vault base URLs.
+const AFFINIDI_VAULT_WEBHOOK_URL = "https://vault.affinidi.com/login";
+
+// TODO: Move into @affinidi-tdk/common alongside buildShareLink. `webhookUrl`
+// already includes the share path (".../login"), e.g. a TDK Vault deep link
+// "tdkref://login".
+function buildShareLinkForWebhook(
+  webhookUrl: string,
+  request: string,
+  clientId: string,
+): string {
+  const params = new URLSearchParams();
+  params.append("request", request);
+  params.append("client_id", clientId);
+  return `${webhookUrl}?${params.toString()}`;
+}
+
 const openModeOptions = [
   {
     label: "New Tab",
@@ -73,14 +92,17 @@ export default function IotaSessionMultipleRequestsPage({
   const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.NewTab);
   const [dataRequests, setDataRequests] = useState<DataRequests>({});
   const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [shareLink, setShareLink] = useState<string>("");
 
-  // Get did from session
+  // authN for the websocket flow: Affinidi Login OR Auth0 (both via NextAuth).
   const { data: session } = useSession();
 
   const configurationsQuery = useQuery({
     queryKey: ["iotaConfigurations"],
     queryFn: fetchIotaConfigurations,
-    enabled: !!featureAvailable,
+    // Only fetch once authenticated — the endpoint returns 401 (not an array)
+    // when not logged in, which would break the list/find below.
+    enabled: !!featureAvailable && !!session,
   });
 
   const iotaSessionQuery = useQuery({
@@ -100,6 +122,12 @@ export default function IotaSessionMultipleRequestsPage({
     enabled: !!selectedConfigId,
   });
 
+  const selectedConfiguration = Array.isArray(configurationsQuery.data)
+    ? configurationsQuery.data.find(
+        (configuration) => configuration.configurationId === selectedConfigId,
+      )
+    : undefined;
+
   async function handleConfigurationChange(value: string | number) {
     clearSession();
     setSelectedConfigId(value as string);
@@ -114,7 +142,26 @@ export default function IotaSessionMultipleRequestsPage({
       const request = await iotaSessionQuery.data.prepareRequest({ queryId });
       setIsFormDisabled(false);
       addNewDataRequest(request);
-      request.openVault({ mode: openMode });
+
+      // For the Affinidi Vault, open the web vault directly. For a custom vault
+      // (e.g. the TDK Vault reference app) the webhook is a deep link
+      // (e.g. "tdkref://login") that can't be opened from a desktop browser, so
+      // we surface the link for manual delivery to the vault app. The signed
+      // request travels over the websocket, so its JWT is in request.payload.
+      // TODO: source the Affinidi Vault detection + link building from
+      // @affinidi-tdk/common once it supports custom vault webhook URLs.
+      const webhookUrl = selectedConfiguration?.iotaResponseWebhookURL;
+      if (!webhookUrl || webhookUrl === AFFINIDI_VAULT_WEBHOOK_URL) {
+        request.openVault({ mode: openMode });
+      } else {
+        const link = buildShareLinkForWebhook(
+          webhookUrl,
+          request.payload.request,
+          request.payload.client_id,
+        );
+        setShareLink(link);
+      }
+
       const response = await request.getResponse();
       updateDataRequestWithResponse(response);
     } catch (error) {
@@ -156,6 +203,7 @@ export default function IotaSessionMultipleRequestsPage({
 
   async function clearSession() {
     setSelectedQuery("");
+    setShareLink("");
     setIsFormDisabled(false);
   }
 
@@ -170,7 +218,7 @@ export default function IotaSessionMultipleRequestsPage({
     );
   };
 
-  const hasErrors = !featureAvailable || !session || !session.userId;
+  const hasErrors = !featureAvailable || !session;
   const renderErrors = () => {
     if (!featureAvailable) {
       return (
@@ -181,10 +229,11 @@ export default function IotaSessionMultipleRequestsPage({
       );
     }
 
-    if (!session || !session.userId) {
+    if (!session) {
       return (
         <div>
-          You must be logged in to request credentials from your Affinidi Vault
+          You must be logged in (Affinidi Login or Auth0) to use the websocket
+          data sharing flow.
         </div>
       );
     }
@@ -197,7 +246,7 @@ export default function IotaSessionMultipleRequestsPage({
       {renderErrors()}
       {!hasErrors && (
         <>
-          {renderVerifiedHolder(session.userId)}
+          {session?.userId && renderVerifiedHolder(session.userId)}
 
           {configurationsQuery.isPending && (
             <div className="py-3">Loading configurations...</div>
@@ -271,6 +320,27 @@ export default function IotaSessionMultipleRequestsPage({
             >
               Share
             </Button>
+          )}
+
+          {shareLink && (
+            <div className="mt-6 p-4 border rounded-md">
+              <p className="pb-2 font-semibold">
+                Open this link in the TDK vault app (or paste it into &quot;Share
+                VC&quot; &rarr; &quot;Paste request URL&quot;), then wait for the
+                response below:
+              </p>
+              <pre className="whitespace-pre-wrap break-all text-sm">
+                {shareLink}
+              </pre>
+              <div className="mt-3 flex gap-2">
+                <Button onClick={() => navigator.clipboard.writeText(shareLink)}>
+                  Copy link
+                </Button>
+                <Button onClick={() => window.open(shareLink, "_self")}>
+                  Open link
+                </Button>
+              </div>
+            </div>
           )}
 
           {iotaSessionQuery.isFetching && (

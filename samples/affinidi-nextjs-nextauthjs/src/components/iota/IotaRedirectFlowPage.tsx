@@ -8,6 +8,29 @@ import Select, { SelectOption } from "src/components/core/Select";
 import Button from "src/components/core/Button";
 import { useLocalStorage } from "@uidotdev/usehooks";
 
+// TODO: This Affinidi Vault webhook/login URL is hardcoded here to detect the
+// "Affinidi Vault" case. It duplicates AFFINIDI_VAULT_WEBHOOK_URL used by the
+// dev portal (dev-portal-spa). Once @affinidi-tdk/common `VaultUtils.buildShareLink`
+// supports a custom vault base URL, this constant and `buildShareLinkForWebhook`
+// below should be removed in favour of the shared helper.
+const AFFINIDI_VAULT_WEBHOOK_URL = "https://vault.affinidi.com/login";
+
+// TODO: Move this into @affinidi-tdk/common (alongside `buildShareLink` /
+// `buildClaimLink`) so custom vault webhook URLs — e.g. a TDK Vault deep link
+// like "tdkref://login" — are supported there instead of being hardcoded in the
+// reference app. `webhookUrl` already includes the share path (".../login"),
+// matching VaultUtils' SHARE_PATH.
+function buildShareLinkForWebhook(
+  webhookUrl: string,
+  request: string,
+  clientId: string,
+): string {
+  const params = new URLSearchParams();
+  params.append("request", request);
+  params.append("client_id", clientId);
+  return `${webhookUrl}?${params.toString()}`;
+}
+
 const fetchIotaConfigurations = (): Promise<IotaConfigurationDto[]> =>
   fetch("/api/iota/redirect-configurations", { method: "GET" }).then((res) =>
     res.json()
@@ -38,6 +61,7 @@ export default function IotaRedirectFlowPage({
   const [nonce, setNonce] = useState<string>("");
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [selectedRedirectUri, setSelectedRedirectUri] = useState<string>("");
+  const [shareLink, setShareLink] = useState<string>("");
   const [_, setIotaRedirect] = useLocalStorage("iotaRedirect", "{}");
 
   const configurationsQuery = useQuery({
@@ -91,12 +115,29 @@ export default function IotaRedirectFlowPage({
 
     setIotaRedirect(JSON.stringify(toStore));
 
-    const vaultLink = VaultUtils.buildShareLink(data.jwt, "client_id");
-    router.push(vaultLink);
+    // For the Affinidi Vault the vault is a web app, so we auto-redirect the
+    // browser to it. For a custom vault (e.g. the TDK Vault reference app) the
+    // webhook is a deep link (e.g. "tdkref://login") that can't be opened from a
+    // desktop browser, so we surface the link for the tester to open / paste
+    // into the vault app manually.
+    // TODO: source the Affinidi Vault detection + link building from
+    // @affinidi-tdk/common once it supports custom vault webhook URLs.
+    const webhookUrl = selectedConfiguration?.iotaResponseWebhookURL;
+
+    if (!webhookUrl || webhookUrl === AFFINIDI_VAULT_WEBHOOK_URL) {
+      const vaultLink = VaultUtils.buildShareLink(data.jwt, "client_id");
+      router.push(vaultLink);
+      return;
+    }
+
+    const link = buildShareLinkForWebhook(webhookUrl, data.jwt, "client_id");
+    setShareLink(link);
+    setIsFormDisabled(false);
   }
 
   async function clearSession() {
     setSelectedQuery("");
+    setShareLink("");
     setIsFormDisabled(false);
   }
 
@@ -202,6 +243,26 @@ export default function IotaRedirectFlowPage({
                 Share
               </Button>
             </>
+          )}
+
+          {shareLink && (
+            <div className="mt-6 p-4 border rounded-md">
+              <p className="pb-2 font-semibold">
+                Open this link in the TDK vault app (or paste it into &quot;Share
+                VC&quot; &rarr; &quot;Paste request URL&quot;):
+              </p>
+              <pre className="whitespace-pre-wrap break-all text-sm">
+                {shareLink}
+              </pre>
+              <div className="mt-3 flex gap-2">
+                <Button onClick={() => navigator.clipboard.writeText(shareLink)}>
+                  Copy link
+                </Button>
+                <Button onClick={() => window.open(shareLink, "_self")}>
+                  Open link
+                </Button>
+              </div>
+            </div>
           )}
         </>
       )}

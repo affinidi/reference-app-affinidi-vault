@@ -2,16 +2,23 @@ import { NextAuthOptions } from "next-auth";
 import {
   PROVIDER_ATTRIBUTES_KEY,
   provider,
+  providers,
+  AUTH0_PROVIDER_ID,
 } from "src/lib/auth/next-auth-provider";
 import { UserInfo } from "src/types/types";
 
 export const authOptions: NextAuthOptions = {
   // debug: true,
   session: { strategy: "jwt" },
-  providers: [provider],
+  providers,
   callbacks: {
     // checks whether user is allowed to sign in
     async signIn({ account }) {
+      // Auth0 (generic OIDC) authenticates via id_token; used as authN for the
+      // websocket flow when not using Affinidi Login.
+      if (account?.provider === AUTH0_PROVIDER_ID) {
+        return Boolean(account.id_token);
+      }
       return Boolean(
         account?.provider === provider.id &&
           account.access_token &&

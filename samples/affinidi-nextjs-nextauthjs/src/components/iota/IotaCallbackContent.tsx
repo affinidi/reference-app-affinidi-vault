@@ -20,6 +20,29 @@ const getIotaResponse = async (params: GetIotaResponseParams) => {
   return await response.json();
 };
 
+/**
+ * Returns the credentials shared in a parsed `vp_token`, supporting both
+ * response shapes:
+ * - PEX: a single Verifiable Presentation object.
+ * - DCQL (OID4VP 1.0 §8.1): an object keyed by credential-query id whose values
+ *   are the presentation(s) that satisfy each query.
+ */
+const getSharedCredentials = (vp: any): any[] => {
+  if (!vp || typeof vp !== "object") return [];
+  const presentations =
+    "proof" in vp || "holder" in vp || "verifiableCredential" in vp
+      ? [vp]
+      : Object.values(vp).flatMap((value: any) =>
+          Array.isArray(value) ? value : [value]
+        );
+  return presentations.flatMap((presentation: any) => {
+    const credentials = presentation?.verifiableCredential;
+    if (Array.isArray(credentials)) return credentials;
+    if (credentials) return [credentials];
+    return [];
+  });
+};
+
 const IotaCallbackContent = ({
   responseCode,
 }: {
@@ -45,6 +68,9 @@ const IotaCallbackContent = ({
   const receivedNonce = iotaResponseQuery?.data?.nonce;
   const matched = generatedNonce === receivedNonce;
 
+  // Works for both PEX and DCQL (OID4VP 1.0 §8.1) vp_token shapes.
+  const sharedCredentials = getSharedCredentials(iotaResponseQuery?.data?.vp);
+
   return (
     <>
       <pre>
@@ -54,6 +80,17 @@ const IotaCallbackContent = ({
       <br />
       <br />
       <h1>Data Loaded:</h1>
+      {sharedCredentials.length > 0 && (
+        <ul>
+          {sharedCredentials.map((vc: any, index: number) => (
+            <li key={vc?.id ?? index}>
+              {((vc?.type ?? []) as string[])
+                .filter((type) => type !== "VerifiableCredential")
+                .join(", ") || "Credential"}
+            </li>
+          ))}
+        </ul>
+      )}
       <pre>{JSON.stringify(iotaResponseQuery.data, null, 2)}</pre>
     </>
   );

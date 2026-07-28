@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { getSharedCredentials } from "src/lib/iota/share";
 
 interface GetIotaResponseParams {
   configurationId: string;
@@ -18,29 +19,6 @@ const getIotaResponse = async (params: GetIotaResponseParams) => {
     },
   });
   return await response.json();
-};
-
-/**
- * Returns the credentials shared in a parsed `vp_token`, supporting both
- * response shapes:
- * - PEX: a single Verifiable Presentation object.
- * - DCQL (OID4VP 1.0 §8.1): an object keyed by credential-query id whose values
- *   are the presentation(s) that satisfy each query.
- */
-const getSharedCredentials = (vp: any): any[] => {
-  if (!vp || typeof vp !== "object") return [];
-  const presentations =
-    "proof" in vp || "holder" in vp || "verifiableCredential" in vp
-      ? [vp]
-      : Object.values(vp).flatMap((value: any) =>
-          Array.isArray(value) ? value : [value]
-        );
-  return presentations.flatMap((presentation: any) => {
-    const credentials = presentation?.verifiableCredential;
-    if (Array.isArray(credentials)) return credentials;
-    if (credentials) return [credentials];
-    return [];
-  });
 };
 
 const IotaCallbackContent = ({
@@ -69,7 +47,31 @@ const IotaCallbackContent = ({
   const matched = generatedNonce === receivedNonce;
 
   // Works for both PEX and DCQL (OID4VP 1.0 §8.1) vp_token shapes.
-  const sharedCredentials = getSharedCredentials(iotaResponseQuery?.data?.vp);
+  const vp = iotaResponseQuery?.data?.vp;
+  const sharedCredentials = getSharedCredentials(vp);
+  const credentialSubjects = sharedCredentials
+    .map((vc: any) => vc?.credentialSubject)
+    .filter(Boolean);
+  const credentialTypes = sharedCredentials
+    .map(
+      (vc: any) =>
+        ((vc?.type ?? []) as string[])
+          .filter((type) => type !== "VerifiableCredential")
+          .join(", ") || "Credential"
+    )
+    .join(", ");
+  const credentialSubjectInline = credentialSubjects
+    .map((s: any) => JSON.stringify(s, null, 2).replace(/\s+/g, " "))
+    .join(", ");
+  // DCQL responses are a vp_token object keyed by query id (no single top-level
+  // VP); PEX responses are a single VP.
+  const queryFormat =
+    vp &&
+    typeof vp === "object" &&
+    !("proof" in vp || "holder" in vp || "verifiableCredential" in vp)
+      ? "DCQL"
+      : "PEX";
+  const integrationMode = iotaRedirect?.integrationMode ?? "Affinidi Vault";
 
   return (
     <>
@@ -78,20 +80,32 @@ const IotaCallbackContent = ({
         Nonce matched: {matched ? "✅" : "❌"}
       </pre>
       <br />
-      <br />
-      <h1>Data Loaded:</h1>
-      {sharedCredentials.length > 0 && (
-        <ul>
-          {sharedCredentials.map((vc: any, index: number) => (
-            <li key={vc?.id ?? index}>
-              {((vc?.type ?? []) as string[])
-                .filter((type) => type !== "VerifiableCredential")
-                .join(", ") || "Credential"}
-            </li>
-          ))}
-        </ul>
+      <p className="pb-2 font-semibold">Response received:</p>
+      <p className="pb-2">
+        Query format: <span className="font-bold">{queryFormat}</span>
+      </p>
+      <p className="pb-2">
+        Integration Mode: <span className="font-bold">{integrationMode}</span>
+      </p>
+      {credentialTypes && (
+        <p className="pb-2">
+          Credential Type: <span className="font-bold">{credentialTypes}</span>
+        </p>
       )}
-      <pre>{JSON.stringify(iotaResponseQuery.data, null, 2)}</pre>
+      {credentialSubjectInline && (
+        <p className="pb-2 break-all">
+          CredentialSubject:{" "}
+          <span className="font-bold">{credentialSubjectInline}</span>
+        </p>
+      )}
+      <details className="mt-2">
+        <summary className="cursor-pointer font-semibold">
+          Full response
+        </summary>
+        <pre className="mt-2">
+          {JSON.stringify(iotaResponseQuery.data, null, 2)}
+        </pre>
+      </details>
     </>
   );
 };

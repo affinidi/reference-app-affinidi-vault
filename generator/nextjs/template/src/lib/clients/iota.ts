@@ -108,7 +108,7 @@ export async function fetchIotaVpResponse(
     })
   );
 
-  const iotaVpResponse: FetchIOTAVPResponseOK = await api.fetchIotaVpResponse({
+  const iotaVpResponse: any = await api.fetchIotaVpResponse({
     configurationId,
     correlationId,
     transactionId,

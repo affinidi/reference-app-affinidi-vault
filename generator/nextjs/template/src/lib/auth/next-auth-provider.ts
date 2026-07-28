@@ -55,6 +55,9 @@ export const auth0Provider: Provider = {
   authorization: {
     params: {
       scope: "openid profile email",
+      // Force the Auth0 login screen instead of silently reusing an existing
+      // SSO session, so a rejected user can retry with a different account.
+      prompt: "login",
     },
   },
   idToken: true,

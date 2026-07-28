@@ -9,6 +9,7 @@ declare module "next-auth" {
     user?: UserInfo;
     accessToken: string;
     idToken: string;
+    provider?: string;
   }
 }
 
@@ -18,5 +19,6 @@ declare module "next-auth/jwt" {
     user?: UserInfo;
     accessToken: string;
     idToken: string;
+    provider?: string;
   }
 }

@@ -90,6 +90,12 @@ const NavBar: FC = () => {
             <div className="flex flex-col justify-center px-4 font-bold">
               <p>{session.user?.email}</p>
               {session.user?.country && <p>From: {session.user?.country}</p>}
+              {session.provider && (
+                <p className="text-xs font-normal text-gray-500">
+                  Logged in with{" "}
+                  {session.provider === "auth0" ? "Auth0" : "Affinidi"}
+                </p>
+              )}
             </div>
             <Button
               id="logout"
@@ -109,9 +115,11 @@ const NavBar: FC = () => {
             >
               Affinidi Login
             </button>
-            <Button id="auth0Login" onClick={handleLoginAuth0}>
-              Auth0 Login
-            </Button>
+            <span title="Login for TDK WebSocket data sharing">
+              <Button id="auth0Login" onClick={handleLoginAuth0}>
+                Auth0 Login
+              </Button>
+            </span>
           </div>
         )}
       </div>

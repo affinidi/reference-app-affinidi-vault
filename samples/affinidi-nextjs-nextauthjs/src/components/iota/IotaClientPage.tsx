@@ -12,6 +12,17 @@ import { useState } from "react";
 import Button from "../core/Button";
 import Select, { SelectOption } from "../core/Select";
 import { IotaConfigurationDto } from "@affinidi-tdk/iota-client";
+import {
+  AFFINIDI_VAULT_WEBHOOK_URL,
+  buildShareLinkForWebhook,
+  getSharedCredentials,
+} from "src/lib/iota/share";
+
+// NextAuth provider ids. Kept in sync with next-auth-provider.ts; defined
+// locally to avoid importing that server-only module (it reads secret env
+// vars) into this client component.
+const AUTH0_PROVIDER_ID = "auth0";
+const AFFINIDI_PROVIDER_ID = "affinidi";
 
 const openModeOptions = [
   {
@@ -73,14 +84,23 @@ export default function IotaSessionMultipleRequestsPage({
   const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.NewTab);
   const [dataRequests, setDataRequests] = useState<DataRequests>({});
   const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [shareLink, setShareLink] = useState<string>("");
+  const [requiredLogin, setRequiredLogin] = useState<
+    null | "auth0" | "affinidi"
+  >(null);
+  const [showFullLink, setShowFullLink] = useState(false);
 
-  // Get did from session
+  // authN for the websocket flow: Affinidi Login OR Auth0 (both via NextAuth).
   const { data: session } = useSession();
+  const isAuth0 = session?.provider === AUTH0_PROVIDER_ID;
+  const isAffinidiLogin = session?.provider === AFFINIDI_PROVIDER_ID;
 
   const configurationsQuery = useQuery({
     queryKey: ["iotaConfigurations"],
     queryFn: fetchIotaConfigurations,
-    enabled: !!featureAvailable,
+    // Only fetch once authenticated — the endpoint returns 401 (not an array)
+    // when not logged in, which would break the list/find below.
+    enabled: !!featureAvailable && !!session,
   });
 
   const iotaSessionQuery = useQuery({
@@ -100,6 +120,12 @@ export default function IotaSessionMultipleRequestsPage({
     enabled: !!selectedConfigId,
   });
 
+  const selectedConfiguration = Array.isArray(configurationsQuery.data)
+    ? configurationsQuery.data.find(
+        (configuration) => configuration.configurationId === selectedConfigId,
+      )
+    : undefined;
+
   async function handleConfigurationChange(value: string | number) {
     clearSession();
     setSelectedConfigId(value as string);
@@ -109,12 +135,47 @@ export default function IotaSessionMultipleRequestsPage({
     if (!iotaSessionQuery.data) {
       throw new Error("Iota session not initialized");
     }
+
+    // Each vault target requires a matching login provider:
+    // - Affinidi Vault  -> Affinidi Login
+    // - custom vault (e.g. the TDK Vault reference app) -> Auth0
+    // The TDK Vault app rejects requests carrying the `aud` claim that Affinidi
+    // Login adds, so prompt for the correct provider instead of generating a
+    // request/link that won't work.
+    const webhookUrl = selectedConfiguration?.iotaResponseWebhookURL;
+    const isCustomVault =
+      !!webhookUrl && webhookUrl !== AFFINIDI_VAULT_WEBHOOK_URL;
+    setRequiredLogin(null);
+    if (isCustomVault && !isAuth0) {
+      setRequiredLogin("auth0");
+      return;
+    }
+    if (!isCustomVault && !isAffinidiLogin) {
+      setRequiredLogin("affinidi");
+      return;
+    }
+
     try {
       setIsFormDisabled(true);
       const request = await iotaSessionQuery.data.prepareRequest({ queryId });
       setIsFormDisabled(false);
       addNewDataRequest(request);
-      request.openVault({ mode: openMode });
+
+      // Affinidi Vault: open the web vault directly. Custom vault (e.g. the TDK
+      // Vault reference app): the webhook is a deep link that can't be opened
+      // from a desktop browser, so surface the link for manual delivery. The
+      // signed request travels over the websocket (JWT in request.payload).
+      if (!isCustomVault) {
+        request.openVault({ mode: openMode });
+      } else {
+        const link = buildShareLinkForWebhook(
+          webhookUrl!,
+          request.payload.request,
+          request.payload.client_id,
+        );
+        setShareLink(link);
+      }
+
       const response = await request.getResponse();
       updateDataRequestWithResponse(response);
     } catch (error) {
@@ -156,6 +217,9 @@ export default function IotaSessionMultipleRequestsPage({
 
   async function clearSession() {
     setSelectedQuery("");
+    setShareLink("");
+    setShowFullLink(false);
+    setRequiredLogin(null);
     setIsFormDisabled(false);
   }
 
@@ -170,7 +234,7 @@ export default function IotaSessionMultipleRequestsPage({
     );
   };
 
-  const hasErrors = !featureAvailable || !session || !session.userId;
+  const hasErrors = !featureAvailable || !session;
   const renderErrors = () => {
     if (!featureAvailable) {
       return (
@@ -181,10 +245,11 @@ export default function IotaSessionMultipleRequestsPage({
       );
     }
 
-    if (!session || !session.userId) {
+    if (!session) {
       return (
         <div>
-          You must be logged in to request credentials from your Affinidi Vault
+          You must be logged in (Affinidi Login or Auth0) to use the websocket
+          data sharing flow.
         </div>
       );
     }
@@ -197,7 +262,7 @@ export default function IotaSessionMultipleRequestsPage({
       {renderErrors()}
       {!hasErrors && (
         <>
-          {renderVerifiedHolder(session.userId)}
+          {session?.userId && renderVerifiedHolder(session.userId)}
 
           {configurationsQuery.isPending && (
             <div className="py-3">Loading configurations...</div>
@@ -273,6 +338,40 @@ export default function IotaSessionMultipleRequestsPage({
             </Button>
           )}
 
+          {requiredLogin && (
+            <div className="mt-6 p-4 border rounded-md">
+              <p className="font-semibold">
+                {requiredLogin === "auth0"
+                  ? "Please login with Auth0"
+                  : "Please login with Affinidi"}
+              </p>
+            </div>
+          )}
+
+          {shareLink && !requiredLogin && (
+            <div className="mt-6 p-4 border rounded-md">
+              <p className="pb-2 font-semibold">
+                Open this link in the TDK vault app (or paste it into &quot;Share
+                VC&quot; &rarr; &quot;Paste request URL&quot;), then wait for the
+                response below:
+              </p>
+              <pre className="whitespace-pre-wrap break-all text-sm">
+                {showFullLink ? shareLink : `${shareLink.slice(0, 80)}\u2026`}
+              </pre>
+              <div className="mt-3 flex gap-2">
+                <Button onClick={() => navigator.clipboard.writeText(shareLink)}>
+                  Copy link
+                </Button>
+                <Button onClick={() => setShowFullLink((v) => !v)}>
+                  {showFullLink ? "Collapse" : "Expand"}
+                </Button>
+                <Button onClick={() => window.open(shareLink, "_self")}>
+                  Open link
+                </Button>
+              </div>
+            </div>
+          )}
+
           {iotaSessionQuery.isFetching && (
             <div className="py-3">
               Initializing session with Affinidi Iota Framework...
@@ -289,8 +388,9 @@ export default function IotaSessionMultipleRequestsPage({
                     key={id}
                     className="mt-4 p-6 px-6 border rounded-md overflow-x-auto"
                   >
-                    <p className="pb-2 font-semibold">Request:</p>
-                    <p className="pb-4">{id}</p>
+                    <p className="pb-4">
+                      <span className="font-semibold">Request:</span> {id}
+                    </p>
                     <div>
                       {dataRequests[id].error && (
                         <>
@@ -304,20 +404,91 @@ export default function IotaSessionMultipleRequestsPage({
                           </pre>
                         </>
                       )}
-                      {dataRequests[id].response && (
-                        <>
-                          <p className="pb-2 font-semibold">
-                            Response received:
-                          </p>
-                          <pre>
-                            {JSON.stringify(
-                              dataRequests[id].response,
-                              undefined,
-                              2
-                            )}
-                          </pre>
-                        </>
-                      )}
+                      {dataRequests[id].response &&
+                        (() => {
+                          const response = dataRequests[id].response!;
+                          let parsedVpToken: any = null;
+                          try {
+                            parsedVpToken = response.vpToken
+                              ? JSON.parse(response.vpToken)
+                              : null;
+                          } catch {
+                            parsedVpToken = null;
+                          }
+                          const sharedCredentials =
+                            getSharedCredentials(parsedVpToken);
+                          const credentialSubjects = sharedCredentials
+                            .map((vc: any) => vc?.credentialSubject)
+                            .filter(Boolean);
+                          const credentialTypes = sharedCredentials
+                            .map(
+                              (vc: any) =>
+                                ((vc?.type ?? []) as string[])
+                                  .filter(
+                                    (type) => type !== "VerifiableCredential"
+                                  )
+                                  .join(", ") || "Credential"
+                            )
+                            .join(", ");
+                          const credentialSubjectInline = credentialSubjects
+                            .map((s: any) =>
+                              JSON.stringify(s, null, 2).replace(/\s+/g, " ")
+                            )
+                            .join(", ");
+                          // DCQL responses (OID4VP 1.0 §8.1) carry no
+                          // presentation_submission; PEX responses do.
+                          const format = response.presentationSubmission
+                            ? "PEX"
+                            : "DCQL";
+                          const webhookUrl =
+                            selectedConfiguration?.iotaResponseWebhookURL;
+                          const integrationMode =
+                            !webhookUrl ||
+                            webhookUrl === AFFINIDI_VAULT_WEBHOOK_URL
+                              ? "Affinidi Vault"
+                              : "Affinidi TDK Vault";
+                          return (
+                            <>
+                              <p className="pb-2 font-semibold">
+                                Response received:
+                              </p>
+                              <p className="pb-2">
+                                Query format:{" "}
+                                <span className="font-bold">{format}</span>
+                              </p>
+                              <p className="pb-2">
+                                Integration Mode:{" "}
+                                <span className="font-bold">
+                                  {integrationMode}
+                                </span>
+                              </p>
+                              {credentialTypes && (
+                                <p className="pb-2">
+                                  Credential Type:{" "}
+                                  <span className="font-bold">
+                                    {credentialTypes}
+                                  </span>
+                                </p>
+                              )}
+                              {credentialSubjectInline && (
+                                <p className="pb-2 break-all">
+                                  CredentialSubject:{" "}
+                                  <span className="font-bold">
+                                    {credentialSubjectInline}
+                                  </span>
+                                </p>
+                              )}
+                              <details className="mt-2">
+                                <summary className="cursor-pointer font-semibold">
+                                  Full response
+                                </summary>
+                                <pre className="mt-2">
+                                  {JSON.stringify(response, undefined, 2)}
+                                </pre>
+                              </details>
+                            </>
+                          );
+                        })()}
                     </div>
                   </div>
                 ))}

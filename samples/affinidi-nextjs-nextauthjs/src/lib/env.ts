@@ -26,6 +26,18 @@ export const privateKey = process.env.PRIVATE_KEY!;
 export const passphrase = process.env.PASSPHRASE!;
 export const keyId = process.env.KEY_ID!;
 
+// Optional envs for a second, non-Affinidi login provider (Auth0) used as authN
+// for the websocket flow when the holder is NOT using Affinidi Vault (e.g. the
+// TDK Vault). Optional so the app still runs with only Affinidi Login.
+// TODO: swap these for any OIDC IdP (Keycloak, etc.) — no code change needed.
+export const auth0Issuer = process.env.AUTH0_ISSUER;
+export const auth0ClientId = process.env.AUTH0_CLIENT_ID;
+export const auth0ClientSecret = process.env.AUTH0_CLIENT_SECRET;
+
+export function auth0Configured(): boolean {
+  return Boolean(auth0Issuer && auth0ClientId && auth0ClientSecret);
+}
+
 export function personalAccessTokenConfigured(): boolean {
   return (
     projectId !== undefined && tokenId !== undefined && privateKey !== undefined

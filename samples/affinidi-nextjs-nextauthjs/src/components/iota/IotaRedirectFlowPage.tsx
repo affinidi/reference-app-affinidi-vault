@@ -7,6 +7,10 @@ import { useState } from "react";
 import Select, { SelectOption } from "src/components/core/Select";
 import Button from "src/components/core/Button";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import {
+  AFFINIDI_VAULT_WEBHOOK_URL,
+  buildShareLinkForWebhook,
+} from "src/lib/iota/share";
 
 const fetchIotaConfigurations = (): Promise<IotaConfigurationDto[]> =>
   fetch("/api/iota/redirect-configurations", { method: "GET" }).then((res) =>
@@ -38,6 +42,8 @@ export default function IotaRedirectFlowPage({
   const [nonce, setNonce] = useState<string>("");
   const [isFormDisabled, setIsFormDisabled] = useState(false);
   const [selectedRedirectUri, setSelectedRedirectUri] = useState<string>("");
+  const [shareLink, setShareLink] = useState<string>("");
+  const [showFullLink, setShowFullLink] = useState(false);
   const [_, setIotaRedirect] = useLocalStorage("iotaRedirect", "{}");
 
   const configurationsQuery = useQuery({
@@ -82,21 +88,40 @@ export default function IotaRedirectFlowPage({
 
     const data = await response.json();
 
+    const webhookUrl = selectedConfiguration?.iotaResponseWebhookURL;
+    const integrationMode =
+      !webhookUrl || webhookUrl === AFFINIDI_VAULT_WEBHOOK_URL
+        ? "Affinidi Vault"
+        : "Affinidi TDK Vault";
+
     const toStore = {
       nonce,
       configurationId: selectedConfigId,
       correlationId: data.correlationId,
       transactionId: data.transactionId,
+      integrationMode,
     };
 
     setIotaRedirect(JSON.stringify(toStore));
 
-    const vaultLink = VaultUtils.buildShareLink(data.jwt, "client_id");
-    router.push(vaultLink);
+    // Affinidi Vault: auto-redirect the browser to the web vault. Custom vault
+    // (e.g. the TDK Vault reference app): the webhook is a deep link that can't
+    // be opened from a desktop browser, so surface the link for manual delivery.
+    if (!webhookUrl || webhookUrl === AFFINIDI_VAULT_WEBHOOK_URL) {
+      const vaultLink = VaultUtils.buildShareLink(data.jwt, "client_id");
+      router.push(vaultLink);
+      return;
+    }
+
+    const link = buildShareLinkForWebhook(webhookUrl, data.jwt, "client_id");
+    setShareLink(link);
+    setIsFormDisabled(false);
   }
 
   async function clearSession() {
     setSelectedQuery("");
+    setShareLink("");
+    setShowFullLink(false);
     setIsFormDisabled(false);
   }
 
@@ -202,6 +227,29 @@ export default function IotaRedirectFlowPage({
                 Share
               </Button>
             </>
+          )}
+
+          {shareLink && (
+            <div className="mt-6 p-4 border rounded-md">
+              <p className="pb-2 font-semibold">
+                Open this link in the TDK vault app (or paste it into &quot;Share
+                VC&quot; &rarr; &quot;Paste request URL&quot;):
+              </p>
+              <pre className="whitespace-pre-wrap break-all text-sm">
+                {showFullLink ? shareLink : `${shareLink.slice(0, 80)}\u2026`}
+              </pre>
+              <div className="mt-3 flex gap-2">
+                <Button onClick={() => navigator.clipboard.writeText(shareLink)}>
+                  Copy link
+                </Button>
+                <Button onClick={() => setShowFullLink((v) => !v)}>
+                  {showFullLink ? "Collapse" : "Expand"}
+                </Button>
+                <Button onClick={() => window.open(shareLink, "_self")}>
+                  Open link
+                </Button>
+              </div>
+            </div>
           )}
         </>
       )}

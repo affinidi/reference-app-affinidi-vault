@@ -13,6 +13,7 @@ export default async function handler(
   res: NextApiResponse<IotaConfigurationDto[] | ResponseError>
 ) {
   try {
+    // authN gate for the websocket flow (Affinidi Login or Auth0).
     const session = await getServerSession(req, res, authOptions);
     if (!session) {
       res.status(401).json({ message: "You must be logged in." });

@@ -3,7 +3,7 @@
 Building a Laravel Web Application with Affinidi Login Integration via HybridAuth.
 
 ## Prerequisites
-Your local machine should have [PHP 8.1](https://www.php.net/downloads) and [Composer](https://getcomposer.org/download/) installed.
+Your local machine should have [PHP 8.2 or higher](https://www.php.net/downloads), on a patched release (8.2.35, 8.3.36, 8.4.27, 8.5.12 or later), and [Composer](https://getcomposer.org/download/) installed.
 
 ## Learning 
 

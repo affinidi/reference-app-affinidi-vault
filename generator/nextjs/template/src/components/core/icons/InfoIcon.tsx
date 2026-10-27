@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 export const InfoIcon: React.FC = () => (
   <svg
     width="20"

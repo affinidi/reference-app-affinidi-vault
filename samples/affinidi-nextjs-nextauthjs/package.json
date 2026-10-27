@@ -12,7 +12,7 @@
     "@affinidi-tdk/auth-provider": "^1.33.3",
     "@affinidi-tdk/common": "^1.26.0",
     "@affinidi-tdk/credential-issuance-client": "^1.47.0",
-    "@affinidi-tdk/iota-browser": "^1.25.4",
+    "@affinidi-tdk/iota-browser": "^1.25.6",
     "@affinidi-tdk/iota-client": "^1.46.0",
     "@affinidi-tdk/iota-core": "^1.23.0",
     "@aws-sdk/client-cognito-identity": "^3.590.0",
